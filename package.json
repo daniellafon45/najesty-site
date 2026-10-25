@@ -11,9 +11,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "cf:build": "astro build",
-    "cf:preview": "npm run build && wrangler pages dev ./dist",
-    "deploy": "npm run build && wrangler pages deploy ./dist --project-name=najesty-site",
-    "deploy:dry": "npm run build && wrangler pages deploy ./dist --project-name=najesty-site --dry-run"
+    "cf:preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:dry": "npm run build && wrangler deploy --dry-run"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.2",
