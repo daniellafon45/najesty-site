@@ -1,8 +1,6 @@
 import type { APIRoute } from 'astro';
 import { brand, getContent } from '../data';
 
-export const prerender = false;
-
 const STATIC_PAIRS: { fr: string; en: string }[] = [
   { fr: '/', en: '/en/' },
   { fr: '/work', en: '/en/work' },

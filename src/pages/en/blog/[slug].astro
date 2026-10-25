@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import { brand, getContent } from '../../../data';
@@ -15,12 +13,6 @@ import {
   getBlogPostByKey,
   getBlogPosts,
 } from '../../../data/blog';
-
-export function getStaticPaths() {
-  return getBlogPosts('en').map((post) => ({
-    params: { slug: post.slug },
-  }));
-}
 
 const locale = 'en' as const;
 const content = getContent(locale);
