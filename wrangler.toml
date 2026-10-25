@@ -2,6 +2,12 @@
 name = "najesty-site"
 compatibility_date = "2025-10-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+# Sous-domaine Stride QC
+routes = [
+  { pattern = "najesty.stride-qc.ca", custom_domain = true }
+]
 
 [[kv_namespaces]]
 binding = "SESSION"
