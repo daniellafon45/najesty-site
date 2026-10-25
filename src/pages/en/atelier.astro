@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { getContent } from '../../data';
+
+const content = getContent('en');
+const { atelier, atelierPage, pages } = content;
+---
+
+<BaseLayout
+  locale="en"
+  title={pages.atelier.title}
+  description={pages.atelier.description}
+  forceLightHeader
+  activePath="/en/atelier"
+>
+  <main class="page-atelier" data-node-id="2:2157">
+    <header class="page-atelier__hero">
+      <h1 class="page-atelier__marquee" aria-label={atelier.title}>
+        <span class="page-atelier__marquee-track">
+          <span>{atelier.title}</span>
+          <span aria-hidden="true">{atelier.title}</span>
+          <span aria-hidden="true">{atelier.title}</span>
+        </span>
+      </h1>
+    </header>
+
+    <section class="page-atelier__manifesto container" data-node-id="2:2183">
+      <p class="page-atelier__lead">
+        {atelierPage.intro}
+        <img
+          class="page-atelier__glyph"
+          src="/images/icons/copyright-circle.svg"
+          alt=""
+          width={61}
+          height={61}
+        />
+      </p>
+
+      <p class="page-atelier__body">
+        <span class="page-atelier__arrow" aria-hidden="true">→</span>
+        {atelierPage.body1}
+      </p>
+
+      <p class="page-atelier__body">
+        <span class="page-atelier__arrow" aria-hidden="true">→</span>
+        {atelierPage.body2}
+      </p>
+    </section>
+
+    <section class="page-atelier__welcome container">
+      <div class="page-atelier__welcome-media">
+        <img
+          src="/images/hero/deco-01-salon.jpg"
+          alt={atelierPage.welcomeImageAlt}
+          loading="lazy"
+        />
+      </div>
+      <div class="page-atelier__welcome-copy">
+        <h2>{atelierPage.welcome.title}</h2>
+        <p class="page-atelier__role">{atelierPage.welcome.role}</p>
+        <p>{atelierPage.welcome.body}</p>
+        <ul class="page-atelier__services">
+          {atelier.services.map((s) => <li>{s}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="page-atelier__pillars container">
+      {
+        atelierPage.pillars.map((p) => (
+          <article>
+            <h3>
+              <span class="page-atelier__arrow" aria-hidden="true">→</span>
+              {p.title}
+            </h3>
+            <p>{p.body}</p>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+
+  <SiteFooter locale="en" />
+</BaseLayout>

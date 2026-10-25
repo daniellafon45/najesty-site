@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { getContent } from '../../data';
+
+const content = getContent('fr');
+const { workItems, workCategories, ui } = content;
+const { id } = Astro.params;
+
+if (id === 'secteurs') {
+  return Astro.redirect('/work/secteurs');
+}
+
+const item = workItems.find((w) => w.id === id);
+
+if (!item) {
+  return Astro.redirect('/work');
+}
+
+const category = workCategories.find((c) => c.id === item.category);
+const index = workItems.findIndex((w) => w.id === item.id);
+const prev = workItems[(index - 1 + workItems.length) % workItems.length];
+const next = workItems[(index + 1) % workItems.length];
+const related =
+  category?.projects.filter((p) => p.id !== item.id).slice(0, 3) ??
+  workItems
+    .filter((w) => w.id !== item.id)
+    .slice(0, 3)
+    .map((w) => ({ id: w.id, name: w.name, image: w.image, alt: w.alt }));
+---
+
+<BaseLayout
+  locale="fr"
+  title={`${item.name} — Najesty`}
+  description={
+    item.description ??
+    `Projet ${item.name} par Najesty — design d'intérieur et décoration au Canada.`
+  }
+  forceLightHeader
+  activePath="/work"
+  ogImage={item.image}
+>
+  <main class="page-project">
+    <div class="page-project__hero container">
+      <p class="page-project__crumb">
+        <a href="/work">Work</a>
+        {
+          category && (
+            <>
+              <span aria-hidden="true"> / </span>
+              <a href={`/work#${category.id}`}>{category.title}</a>
+            </>
+          )
+        }
+      </p>
+      <h1>{item.name}</h1>
+      {item.description && <p class="page-project__lead">{item.description}</p>}
+    </div>
+
+    <div class="page-project__media container">
+      <img src={item.image} alt={item.alt} />
+    </div>
+
+    <section class="page-project__body container">
+      <div>
+        <h2>{ui.thePlace}</h2>
+        <p>{ui.projectBody.replace('{name}', item.name)}</p>
+      </div>
+      <div>
+        <h2>{ui.expertises}</h2>
+        <ul>
+          <li>{category?.title ?? content.atelier.services[0]}</li>
+          <li>{content.atelier.services[1]}</li>
+          <li>{content.atelierPage.pillars[2].title}</li>
+        </ul>
+        <a class="page-project__cta" href="/contact">{ui.talkCta}</a>
+      </div>
+    </section>
+
+    {
+      related.length > 0 && (
+        <section class="page-project__related container">
+          <div class="page-project__related-head">
+            <h2>{ui.discover}</h2>
+            <a href="/work">{ui.allProjects}</a>
+          </div>
+          <div class="page-work__row">
+            {related.map((p) => (
+              <a
+                class="page-work__card"
+                href={`/work/${p.id}`}
+                data-cursor="view"
+                data-cursor-label={p.name}
+              >
+                <div class="page-work__frame">
+                  <img src={p.image} alt={'alt' in p ? p.alt : p.name} loading="lazy" />
+                </div>
+                <h3>{p.name}</h3>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <nav class="page-project__nav container" aria-label="Projets voisins">
+      <a href={`/work/${prev.id}`}>
+        <span>{ui.prev}</span>
+        <strong>{prev.name}</strong>
+      </a>
+      <a href={`/work/${next.id}`}>
+        <span>{ui.next}</span>
+        <strong>{next.name}</strong>
+      </a>
+    </nav>
+  </main>
+
+  <SiteFooter locale="fr" />
+</BaseLayout>

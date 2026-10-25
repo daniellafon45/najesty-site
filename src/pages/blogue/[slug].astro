@@ -1,0 +1,177 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { brand, getContent } from '../../data';
+import {
+  blogAudiences,
+  blogCategories,
+  blogContactPath,
+  blogIndexPath,
+  blogPostPath,
+  formatBlogDate,
+  getBlogPost,
+  getBlogPostByKey,
+  getBlogPosts,
+} from '../../data/blog';
+
+export function getStaticPaths() {
+  return getBlogPosts('fr').map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const locale = 'fr' as const;
+const content = getContent(locale);
+const meta = content.pages.blog;
+const { slug } = Astro.params;
+const post = getBlogPost(locale, slug!);
+
+if (!post) {
+  return Astro.redirect('/blogue');
+}
+
+const enTwin = getBlogPostByKey('en', post.key);
+const related = getBlogPosts(locale)
+  .filter((p) => p.key !== post.key && (p.category === post.category || p.audience === post.audience))
+  .slice(0, 3);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description: post.description,
+  image: new URL(post.image, brand.siteUrl).href,
+  datePublished: post.pubDate,
+  dateModified: post.updatedDate,
+  author: {
+    '@type': 'Organization',
+    name: brand.legalName,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: brand.legalName,
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/brand/logo-najette.png', brand.siteUrl).href,
+    },
+  },
+  mainEntityOfPage: new URL(blogPostPath(locale, post.slug), brand.siteUrl).href,
+  inLanguage: 'fr-CA',
+};
+
+const faqSchema =
+  post.faq.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: post.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      }
+    : null;
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${post.title} — Najesty`}
+  description={post.description}
+  forceLightHeader
+  activePath="/blogue"
+  ogImage={post.image}
+  jsonLd={faqSchema ? [articleSchema, faqSchema] : articleSchema}
+>
+  <main class="page-blog-post">
+    <article class="page-blog-post__article">
+      <header class="page-blog-post__hero container">
+        <p class="page-blog__eyebrow">
+          <a href={blogIndexPath(locale)}>{meta.backToBlog}</a>
+        </p>
+        <p class="page-blog__meta">
+          <span>{blogCategories[locale][post.category]}</span>
+          <span aria-hidden="true">·</span>
+          <span>{blogAudiences[locale][post.audience]}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={post.pubDate}>{formatBlogDate(post.pubDate, locale)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{post.readingMinutes} {meta.minRead}</span>
+        </p>
+        <h1>{post.title}</h1>
+        <p class="page-blog-post__answer">{post.answerBlock}</p>
+        {
+          enTwin && (
+            <p class="page-blog-post__lang">
+              <a href={blogPostPath('en', enTwin.slug)}>{meta.alsoInEn}</a>
+            </p>
+          )
+        }
+      </header>
+
+      <figure class="page-blog-post__figure container">
+        <img src={post.image} alt={post.imageAlt} width={1400} height={900} />
+      </figure>
+
+      <div class="page-blog-post__body container">
+        {
+          post.sections.map((section) => (
+            <section>
+              <h2>{section.h2}</h2>
+              {section.paragraphs.map((p) => (
+                <p>{p}</p>
+              ))}
+              {section.list && (
+                <ul>
+                  {section.list.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))
+        }
+
+        {
+          post.faq.length > 0 && (
+            <section class="page-blog-post__faq" aria-labelledby="blog-faq">
+              <h2 id="blog-faq">{meta.faqTitle}</h2>
+              {post.faq.map((item) => (
+                <details>
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </section>
+          )
+        }
+
+        <aside class="page-blog-post__cta">
+          <h2>{post.cta.title}</h2>
+          <p>{post.cta.body}</p>
+          <a class="page-blog-post__btn" href={blogContactPath(locale)}>
+            {post.cta.label} →
+          </a>
+        </aside>
+      </div>
+    </article>
+
+    {
+      related.length > 0 && (
+        <section class="page-blog-post__related container" aria-labelledby="related-title">
+          <h2 id="related-title">{meta.relatedTitle}</h2>
+          <ul>
+            {related.map((r) => (
+              <li>
+                <a href={blogPostPath(locale, r.slug)}>{r.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </main>
+
+  <SiteFooter locale={locale} />
+</BaseLayout>

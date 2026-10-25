@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { brand, getContent } from '../data';
+
+const content = getContent('fr');
+const { contactPage, pages, ui } = content;
+---
+
+<BaseLayout
+  locale="fr"
+  title={pages.contact.title}
+  description={pages.contact.description}
+  forceDarkHeader
+  activePath="/contact"
+>
+  <main class="page-contact" data-node-id="2:2020">
+    <div class="page-contact__inner container">
+      <h1 class="page-contact__kicker">{contactPage.headline}</h1>
+      <a class="page-contact__email" href={`mailto:${contactPage.email}`}>
+        <span>bonjour@</span>
+        <span>najesty.ca</span>
+      </a>
+
+      <div class="page-contact__meta">
+        <div class="page-contact__cols">
+          <div class="page-contact__row">
+            <span class="page-contact__label">{contactPage.addressLabel}</span>
+            <span class="page-contact__value">
+              <span aria-hidden="true">↗</span>
+              {brand.address}
+            </span>
+          </div>
+          <div class="page-contact__row">
+            <span class="page-contact__label">{contactPage.regionLabel}</span>
+            <span class="page-contact__value">{brand.region}</span>
+          </div>
+        </div>
+        <ul class="page-contact__social">
+          <li>
+            <a href={brand.instagram} target="_blank" rel="noopener noreferrer">
+              <span aria-hidden="true">↗</span> Instagram
+            </a>
+          </li>
+          <li>
+            <a href={brand.linkedin} target="_blank" rel="noopener noreferrer">
+              <span aria-hidden="true">↗</span> LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={brand.tiktok} target="_blank" rel="noopener noreferrer">
+              <span aria-hidden="true">↗</span> TikTok
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-contact__legal">
+      <div class="container page-contact__legal-inner">
+        <a href={ui.legalHref}
+          ><span aria-hidden="true">↗</span> {ui.legalLink}</a
+        >
+        <span class="page-contact__copy">© {brand.name}</span>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

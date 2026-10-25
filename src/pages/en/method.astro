@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { getContent } from '../../data';
+
+const content = getContent('en');
+const m = content.pages.method;
+---
+
+<BaseLayout
+  locale="en"
+  title={m.title}
+  description={m.description}
+  forceLightHeader
+  activePath="/en/method"
+>
+  <main class="page-method">
+    <header class="page-method__hero container">
+      <h1>{m.h1}</h1>
+      <p class="page-method__lead">{m.lead}</p>
+    </header>
+
+    <section class="page-method__compare container">
+      <article>
+        <h2>{m.remoteTitle}</h2>
+        <p>{m.remoteBody}</p>
+      </article>
+      <article>
+        <h2>{m.localTitle}</h2>
+        <p>{m.localBody}</p>
+      </article>
+    </section>
+
+    <section class="page-method__who container">
+      <h2>{m.whoTitle}</h2>
+      <ul>
+        <li>{m.whoRemote}</li>
+        <li>{m.whoLocal}</li>
+      </ul>
+    </section>
+
+    <section class="page-method__steps container">
+      <h2>{m.stepsTitle}</h2>
+      <ol>
+        {
+          m.steps.map((step) => (
+            <li>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="page-method__cta container">
+      <h2>{m.ctaTitle}</h2>
+      <p>{m.ctaBody}</p>
+      <a class="page-method__btn" href="/en/contact">{m.cta} →</a>
+    </section>
+  </main>
+
+  <SiteFooter locale="en" />
+</BaseLayout>

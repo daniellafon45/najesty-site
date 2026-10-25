@@ -1,0 +1,65 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { getContent } from '../../data';
+import {
+  blogAudiences,
+  blogCategories,
+  blogPostPath,
+  formatBlogDate,
+  getBlogPosts,
+} from '../../data/blog';
+
+const locale = 'fr' as const;
+const content = getContent(locale);
+const posts = getBlogPosts(locale);
+const meta = content.pages.blog;
+---
+
+<BaseLayout
+  locale={locale}
+  title={meta.title}
+  description={meta.description}
+  forceLightHeader
+  activePath="/blogue"
+>
+  <main class="page-blog">
+    <header class="page-blog__hero container">
+      <p class="page-blog__eyebrow">{meta.eyebrow}</p>
+      <h1>{meta.h1}</h1>
+      <p class="page-blog__lead">{meta.lead}</p>
+    </header>
+
+    <section class="page-blog__grid container" aria-label={meta.listLabel}>
+      {
+        posts.map((post) => (
+          <article class="page-blog__card">
+            <a class="page-blog__card-media" href={blogPostPath(locale, post.slug)}>
+              <img src={post.image} alt={post.imageAlt} width={800} height={560} loading="lazy" />
+            </a>
+            <div class="page-blog__card-body">
+              <p class="page-blog__meta">
+                <span>{blogCategories[locale][post.category]}</span>
+                <span aria-hidden="true">·</span>
+                <span>{blogAudiences[locale][post.audience]}</span>
+                <span aria-hidden="true">·</span>
+                <time datetime={post.pubDate}>{formatBlogDate(post.pubDate, locale)}</time>
+              </p>
+              <h2>
+                <a href={blogPostPath(locale, post.slug)}>{post.title}</a>
+              </h2>
+              <p>{post.description}</p>
+              <a class="page-blog__read" href={blogPostPath(locale, post.slug)}>
+                {meta.readMore} →
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+
+  <SiteFooter locale={locale} />
+</BaseLayout>

@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# AI search / citation crawlers (GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Optional: block training-only crawl
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://najesty.ca/sitemap.xml

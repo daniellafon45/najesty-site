@@ -1,0 +1,155 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header';
+import SmoothScroll from '../components/SmoothScroll';
+import CustomCursor from '../components/CustomCursor';
+import {
+  brand,
+  getContent,
+  hreflangAlternates,
+  resolveLocale,
+  type Locale,
+} from '../data';
+
+interface Props {
+  title?: string;
+  description?: string;
+  forceLightHeader?: boolean;
+  forceDarkHeader?: boolean;
+  activePath?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Emit FAQPage schema only when FAQ is visible on the page */
+  includeFaqSchema?: boolean;
+  locale?: Locale;
+}
+
+const pathname = Astro.url.pathname;
+const locale = Astro.props.locale ?? resolveLocale(pathname);
+const content = getContent(locale);
+
+const {
+  title = content.meta.homeTitle,
+  description = content.meta.homeDescription,
+  forceLightHeader = false,
+  forceDarkHeader = false,
+  activePath = locale === 'en' ? '/en/' : '/',
+  ogImage = '/brand/logo-najette.png',
+  jsonLd,
+  includeFaqSchema = false,
+} = Astro.props;
+
+const canonical = new URL(pathname, brand.siteUrl).href;
+const alternates = hreflangAlternates(pathname);
+
+function alternatePathFromAbs(abs: string) {
+  try {
+    return new URL(abs).pathname;
+  } catch {
+    return locale === 'fr' ? '/en/' : '/';
+  }
+}
+
+const switchPath =
+  locale === 'fr' ? alternatePathFromAbs(alternates.en) : alternatePathFromAbs(alternates.fr);
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'InteriorDesignBusiness',
+  name: brand.legalName,
+  alternateName: brand.name,
+  url: brand.siteUrl,
+  email: brand.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressRegion: 'QC',
+    addressCountry: 'CA',
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'Canada' },
+    { '@type': 'Place', name: 'Europe' },
+    { '@type': 'Place', name: 'Africa' },
+  ],
+  description,
+  sameAs: [brand.instagram, brand.linkedin, brand.tiktok].filter(
+    (u) => u && !u.endsWith('instagram.com/') && !u.endsWith('linkedin.com/') && !u.endsWith('tiktok.com/'),
+  ),
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: content.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+
+const schemas = [
+  orgSchema,
+  ...(includeFaqSchema ? [faqSchema] : []),
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+];
+---
+
+<!doctype html>
+<html lang={content.htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="author" content={brand.legalName} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr-CA" href={alternates.fr} />
+    <link rel="alternate" hreflang="en-CA" href={alternates.en} />
+    <link rel="alternate" hreflang="x-default" href={alternates.xDefault} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={content.ogLocale} />
+    <meta
+      property="og:locale:alternate"
+      content={locale === 'fr' ? 'en_CA' : 'fr_CA'}
+    />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, brand.siteUrl).href} />
+    <meta property="og:site_name" content={brand.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, brand.siteUrl).href} />
+    <link rel="icon" type="image/png" href="/brand/logo-najette.png" />
+    <title>{title}</title>
+    {
+      schemas.map((schema) => (
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      ))
+    }
+  </head>
+  <body>
+    <div class="site-shell">
+      <Header
+        client:load
+        forceLight={forceLightHeader}
+        forceDark={forceDarkHeader}
+        activePath={activePath}
+        locale={locale}
+        nav={content.nav}
+        brandName={brand.name}
+        legalName={brand.legalName}
+        ui={{
+          navLabel: content.ui.navLabel,
+          openMenu: content.ui.openMenu,
+          closeMenu: content.ui.closeMenu,
+          langSwitchLabel: content.ui.langSwitchLabel,
+        }}
+        homeHref={locale === 'en' ? '/en/' : '/'}
+        langSwitchHref={switchPath}
+      />
+      <SmoothScroll client:load />
+      <CustomCursor client:load />
+      <slot />
+    </div>
+  </body>
+</html>

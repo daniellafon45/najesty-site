@@ -1,0 +1,88 @@
+---
+import ContactForm from './ContactForm';
+import { brand, getContent, resolveLocale, type Locale } from '../data';
+
+interface Props {
+  showMarquee?: boolean;
+  showForm?: boolean;
+  darkOnly?: boolean;
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? resolveLocale(Astro.url.pathname);
+const content = getContent(locale);
+const { showMarquee = true, showForm = true, darkOnly = false } = Astro.props;
+const marqueeLoop = [...content.marqueeWords, ...content.marqueeWords];
+---
+
+{
+  showMarquee && (
+    <section class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        {marqueeLoop.map((word) => (
+          <span class="marquee__item">
+            <span class="marquee__word">{word}</span>
+            <span class="marquee__plus">+</span>
+          </span>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<footer class={`site-footer${darkOnly ? ' site-footer--page' : ''}`} id="contact" data-node-id="1:466">
+  <div class="footer__top">
+    <div class="footer__links">
+      <div>
+        <span class="label">{content.ui.menu}</span>
+        {
+          content.nav.map((item) => (
+            <a href={item.href}>
+              <span class="footer__link-arrow" aria-hidden="true">
+                →
+              </span>
+              {item.label}
+            </a>
+          ))
+        }
+      </div>
+      <div>
+        <span class="label">{content.ui.followUs}</span>
+        <a href={brand.instagram} target="_blank" rel="noopener noreferrer">
+          <span class="footer__link-arrow" aria-hidden="true">↗</span>
+          Instagram
+        </a>
+        <a href={brand.linkedin} target="_blank" rel="noopener noreferrer">
+          <span class="footer__link-arrow" aria-hidden="true">↗</span>
+          LinkedIn
+        </a>
+        <a href={brand.tiktok} target="_blank" rel="noopener noreferrer">
+          <span class="footer__link-arrow" aria-hidden="true">↗</span>
+          TikTok
+        </a>
+      </div>
+    </div>
+    <div>
+      <h2 class="footer__contact-title">{content.contact.title}</h2>
+      <p class="footer__contact-body">{content.contact.body}</p>
+      <a
+        class="footer__email"
+        href={`mailto:${brand.email}`}
+        data-cursor="view"
+        data-cursor-label={content.ui.writeLabel}
+      >
+        {brand.email}
+      </a>
+      <p class="footer__contact-region">{brand.region}</p>
+      {
+        showForm && (
+          <ContactForm client:visible labels={content.form} />
+        )
+      }
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© {new Date().getFullYear()} {brand.legalName}</span>
+    <a href={content.ui.legalHref}>{content.ui.legalLink}</a>
+  </div>
+</footer>

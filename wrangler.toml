@@ -1,0 +1,14 @@
+# Cloudflare Pages — projet Najesty
+# Build : npm run build
+# Deploy : npm run deploy
+name = "najesty-site"
+compatibility_date = "2025-10-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "./dist"
+
+# Sessions Astro (@astrojs/cloudflare) — créer le namespace KV une fois :
+#   npx wrangler kv namespace create SESSION
+# puis coller l'id ci-dessous.
+# [[kv_namespaces]]
+# binding = "SESSION"
+# id = "REMPLACER_PAR_ID_KV"

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { brand, getContent } from '../data';
+
+const content = getContent('fr');
+const { pages } = content;
+---
+
+<BaseLayout locale="fr" title={pages.legal.title} activePath="/mentions-legales">
+  <main class="legal-page">
+    <h1>{pages.legal.h1}</h1>
+    <p>
+      {pages.legal.p1}
+      <a href={`mailto:${brand.email}`}>{brand.email}</a>.
+    </p>
+    <p>{pages.legal.p2}</p>
+    <p>
+      <a href="/">{pages.legal.back}</a>
+    </p>
+  </main>
+</BaseLayout>

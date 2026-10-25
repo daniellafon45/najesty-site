@@ -1,0 +1,43 @@
+# Najesty Design & Pictures
+
+> Canadian studio for interior design, decoration, home staging and photography. Spaces you feel before you describe them. Site available in French (default) and English.
+
+## Primary market
+
+- Canada (design remote nationwide; on-site styling where local)
+- Remote design for clients in Europe and Africa
+
+## Pages (FR)
+
+- [Home](https://najesty.ca/): brand and signatures
+- [Work](https://najesty.ca/work): projects by expertise
+- [Vision](https://najesty.ca/vision): philosophy — strategy, identity, design + FAQ
+- [Studio](https://najesty.ca/atelier): approach, services, method
+- [Method](https://najesty.ca/methode): remote design vs on-site styling
+- [Blog](https://najesty.ca/blogue): 25 guides for Canadian homes, sellers, hospitality, Europe & Africa remote
+- [Contact](https://najesty.ca/contact): bonjour@najesty.ca
+
+## Pages (EN)
+
+- [Home](https://najesty.ca/en/): English home
+- [Work](https://najesty.ca/en/work)
+- [Vision](https://najesty.ca/en/vision)
+- [Studio](https://najesty.ca/en/atelier)
+- [Method](https://najesty.ca/en/method)
+- [Blog](https://najesty.ca/en/blog): English versions of the 25 guides
+- [Contact](https://najesty.ca/en/contact)
+- [llms.txt EN](https://najesty.ca/en/llms.txt)
+
+## Services
+
+- Interior design (remote across Canada; Europe & Africa remote)
+- Decoration
+- Home staging
+- Photography
+- Sourcing and shopping
+- Styling and installation (Canada local)
+
+## Contact
+
+- Email: bonjour@najesty.ca
+- Region: Canada (Québec base)

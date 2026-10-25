@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import { getContent } from '../../../data';
+
+const content = getContent('en');
+const { workFilters, workSectors, workMeta, ui } = content;
+---
+
+<BaseLayout
+  locale="en"
+  title={workMeta.sectorsTitle}
+  description={workMeta.sectorsDescription}
+  forceLightHeader
+  activePath="/en/work"
+>
+  <main class="page-work" data-node-id="2:2">
+    <header class="page-work__hero">
+      <h1 class="page-work__marquee" aria-label="Work">
+        <span class="page-work__marquee-track">
+          <span>Work</span>
+          <span aria-hidden="true">Work</span>
+          <span aria-hidden="true">Work</span>
+        </span>
+      </h1>
+    </header>
+
+    <div class="page-work__layout container">
+      <aside class="page-work__filters" aria-label={ui.filtersLabel}>
+        <ul>
+          {
+            workFilters.map((f) => (
+              <li>
+                <a href={f.href} class={f.id === 'secteurs' ? 'is-active' : undefined}>
+                  {f.label}
+                  {f.id === 'secteurs' && (
+                    <span class="page-work__filter-dots" aria-hidden="true" />
+                  )}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+
+      <div class="page-work__grid" id="work-grid">
+        {
+          workSectors.map((cat) => (
+            <section class="page-work__cat" id={cat.id}>
+              <div class="page-work__cat-head">
+                <h2>{cat.title}</h2>
+                <a class="page-work__voir" href={`#${cat.id}`}>
+                  {ui.see}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+              <div class="page-work__row">
+                {cat.projects.map((p) => (
+                  <a
+                    class="page-work__card"
+                    href={`/en/work/${p.id}`}
+                    data-cursor="view"
+                    data-cursor-label={p.name}
+                  >
+                    <div class="page-work__frame">
+                      <img src={p.image} alt={p.alt} loading="lazy" />
+                    </div>
+                    <h3>{p.name}</h3>
+                  </a>
+                ))}
+              </div>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </main>
+
+  <SiteFooter locale="en" />
+</BaseLayout>

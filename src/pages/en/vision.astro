@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { brand, getContent } from '../../data';
+
+const content = getContent('en');
+const { visionPage, faq, pages } = content;
+---
+
+<BaseLayout
+  locale="en"
+  title={pages.vision.title}
+  description={pages.vision.description}
+  forceLightHeader
+  activePath="/en/vision"
+  includeFaqSchema
+>
+  <main class="page-vision" data-node-id="2:3148">
+    <section class="page-vision__hero" data-node-id="2:3152" aria-labelledby="vision-wordmark">
+      <h1 id="vision-wordmark" class="page-vision__wordmark">
+        {visionPage.wordmark}
+        <sup class="page-vision__copy" aria-hidden="true">©</sup>
+        <span class="page-vision__heart" aria-hidden="true">♥</span>
+      </h1>
+
+      <div class="page-vision__ticker" aria-hidden="true">
+        <div class="page-vision__ticker-track">
+          {
+            Array.from({ length: 6 }).map(() => (
+              <span>{visionPage.ticker} · </span>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="page-vision__video-wrap container">
+        <div class="page-vision__video" data-node-id="2:3178">
+          <video
+            src={visionPage.video}
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            title={`${brand.name} — 3D`}
+          >
+            <track kind="captions" />
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-vision__body container" data-node-id="2:3180">
+      <h2 class="page-vision__title">
+        {visionPage.sectionTitle.map((line) => <span>{line}</span>)}
+      </h2>
+
+      <div class="page-vision__blocks">
+        {
+          visionPage.blocks.map((block) => (
+            <article class="page-vision__block">
+              <h3>
+                <img
+                  src="/images/icons/arrow-orange-vision.svg"
+                  alt=""
+                  width={82}
+                  height={57}
+                  class="page-vision__arrow"
+                />
+                {block.title}
+              </h3>
+              <p>{block.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <blockquote class="page-vision__quote container">
+      <p>“{visionPage.quote.text}”</p>
+      <cite>— {visionPage.quote.author}</cite>
+    </blockquote>
+
+    <section class="page-vision__faq container" aria-labelledby="vision-faq">
+      <h2 id="vision-faq">{visionPage.faqTitle}</h2>
+      {
+        faq.map((item) => (
+          <details class="page-vision__faq-item">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
+    </section>
+  </main>
+
+  <SiteFooter locale="en" />
+</BaseLayout>
