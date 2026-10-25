@@ -6,13 +6,21 @@ type Props = {
   lines: Line[];
   cta: string;
   ctaHref: string;
+  secondaryCta?: string;
+  secondaryCtaHref?: string;
 };
 
 /**
  * Reveal ligne par ligne au scroll — même logique que Generous (.b-scroll-text) :
  * future → visible (wipe) → past (opacité faible).
  */
-export default function Manifesto({ lines, cta, ctaHref }: Props) {
+export default function Manifesto({
+  lines,
+  cta,
+  ctaHref,
+  secondaryCta,
+  secondaryCtaHref,
+}: Props) {
   const rootRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -121,15 +129,28 @@ export default function Manifesto({ lines, cta, ctaHref }: Props) {
               </div>
             ))}
           </div>
-          <a
-            className="manifesto__cta"
-            href={ctaHref}
-            data-cursor="cta"
-            data-cursor-label="Go"
-          >
-            {cta}
-            <span aria-hidden="true">↗</span>
-          </a>
+          <div className="manifesto__actions">
+            <a
+              className="manifesto__cta"
+              href={ctaHref}
+              data-cursor="cta"
+              data-cursor-label="Go"
+            >
+              {cta}
+              <span aria-hidden="true">↗</span>
+            </a>
+            {secondaryCta && secondaryCtaHref && (
+              <a
+                className="manifesto__cta manifesto__cta--secondary"
+                href={secondaryCtaHref}
+                data-cursor="cta"
+                data-cursor-label="Go"
+              >
+                {secondaryCta}
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </section>

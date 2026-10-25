@@ -1,0 +1,54 @@
+---
+interface Props {
+  src: string;
+  title: string;
+  className?: string;
+  poster?: string;
+}
+
+const { src, title, className = '', poster } = Astro.props;
+---
+
+<video
+  class={className}
+  data-lazy-src={src}
+  poster={poster}
+  muted
+  loop
+  playsinline
+  preload="none"
+  title={title}
+>
+  <track kind="captions" />
+</video>
+
+<script>
+  const videos = document.querySelectorAll<HTMLVideoElement>('video[data-lazy-src]');
+  if (videos.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLVideoElement;
+          const lazy = el.dataset.lazySrc;
+          if (lazy && !el.src) {
+            el.src = lazy;
+            el.load();
+            void el.play().catch(() => {});
+          }
+          io.unobserve(el);
+        }
+      },
+      { rootMargin: '200px 0px' },
+    );
+    videos.forEach((v) => io.observe(v));
+  } else {
+    videos.forEach((el) => {
+      const lazy = el.dataset.lazySrc;
+      if (lazy) {
+        el.src = lazy;
+        el.setAttribute('autoplay', '');
+      }
+    });
+  }
+</script>

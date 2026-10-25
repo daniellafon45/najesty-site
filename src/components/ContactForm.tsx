@@ -4,15 +4,17 @@ type Props = {
   labels: {
     namePlaceholder: string;
     emailPlaceholder: string;
+    phonePlaceholder: string;
     messagePlaceholder: string;
     submit: string;
     sending: string;
     ok: string;
     error: string;
   };
+  className?: string;
 };
 
-export default function ContactForm({ labels }: Props) {
+export default function ContactForm({ labels, className = 'footer__form' }: Props) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle');
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -27,7 +29,9 @@ export default function ContactForm({ labels }: Props) {
         body: JSON.stringify({
           name: data.get('name'),
           email: data.get('email'),
+          phone: data.get('phone'),
           message: data.get('message'),
+          company: data.get('company'),
         }),
       });
       if (!res.ok) throw new Error('fail');
@@ -39,11 +43,20 @@ export default function ContactForm({ labels }: Props) {
   }
 
   return (
-    <form className="footer__form" onSubmit={onSubmit}>
+    <form className={className} onSubmit={onSubmit}>
+      <input
+        name="company"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hp-field"
+      />
       <input
         name="name"
         type="text"
         required
+        maxLength={120}
         placeholder={labels.namePlaceholder}
         autoComplete="name"
       />
@@ -51,10 +64,23 @@ export default function ContactForm({ labels }: Props) {
         name="email"
         type="email"
         required
+        maxLength={254}
         placeholder={labels.emailPlaceholder}
         autoComplete="email"
       />
-      <textarea name="message" required placeholder={labels.messagePlaceholder} />
+      <input
+        name="phone"
+        type="tel"
+        maxLength={40}
+        placeholder={labels.phonePlaceholder}
+        autoComplete="tel"
+      />
+      <textarea
+        name="message"
+        required
+        maxLength={4000}
+        placeholder={labels.messagePlaceholder}
+      />
       <button type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? labels.sending : labels.submit}
       </button>

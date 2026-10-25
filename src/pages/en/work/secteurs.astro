@@ -16,13 +16,23 @@ const { workFilters, workSectors, workMeta, ui } = content;
 >
   <main class="page-work" data-node-id="2:2">
     <header class="page-work__hero">
-      <h1 class="page-work__marquee" aria-label="Work">
+      <h1 class="page-work__marquee" aria-label={workMeta.heroMarquee.join(' · ')}>
         <span class="page-work__marquee-track">
-          <span>Work</span>
-          <span aria-hidden="true">Work</span>
-          <span aria-hidden="true">Work</span>
+          {
+            [...workMeta.heroMarquee, ...workMeta.heroMarquee].map((phrase, i) => (
+              <span aria-hidden={i >= workMeta.heroMarquee.length ? 'true' : undefined}>
+                {phrase}
+              </span>
+            ))
+          }
         </span>
       </h1>
+      <div class="page-work__hero-copy container">
+        <p class="page-work__hero-lead">{workMeta.heroLead}</p>
+        <a class="page-work__hero-cta" href={workMeta.heroCtaHref}>
+          {workMeta.heroCta} →
+        </a>
+      </div>
     </header>
 
     <div class="page-work__layout container">

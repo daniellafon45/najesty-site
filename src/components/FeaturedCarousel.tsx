@@ -21,7 +21,6 @@ export default function FeaturedCarousel({ image, video, alt }: Props) {
       return () => window.clearTimeout(id);
     }
 
-    const el = videoRef.current;
     let advanced = false;
     const advance = () => {
       if (advanced) return;
@@ -29,16 +28,42 @@ export default function FeaturedCarousel({ image, video, alt }: Props) {
       setIndex(0);
     };
 
-    if (el) {
-      el.currentTime = 0;
-      void el.play().catch(() => {});
-      el.addEventListener('ended', advance);
+    const onEnded = () => advance();
+    const onError = () => advance();
+
+    const startPlayback = () => {
+      const node = videoRef.current;
+      if (!node) return;
+      try {
+        if (node.readyState >= 1) node.currentTime = 0;
+      } catch {
+        /* ignore seek before metadata */
+      }
+      void node.play().catch(() => advance());
+    };
+
+    const node = videoRef.current;
+    if (node) {
+      node.addEventListener('ended', onEnded);
+      node.addEventListener('error', onError);
+      if (node.readyState >= 2) startPlayback();
+      else {
+        node.addEventListener('canplay', startPlayback, { once: true });
+        node.load();
+      }
     }
 
     const fallback = window.setTimeout(advance, VIDEO_FALLBACK_MS);
     return () => {
-      el?.removeEventListener('ended', advance);
-      el?.pause();
+      const v = videoRef.current ?? node;
+      v?.removeEventListener('ended', onEnded);
+      v?.removeEventListener('error', onError);
+      v?.removeEventListener('canplay', startPlayback);
+      try {
+        v?.pause();
+      } catch {
+        /* ignore */
+      }
       window.clearTimeout(fallback);
     };
   }, [active]);
@@ -55,16 +80,20 @@ export default function FeaturedCarousel({ image, video, alt }: Props) {
         className={`work__featured-slide${active === 'video' ? ' is-active' : ''}`}
         aria-hidden={active !== 'video'}
       >
-        <video
-          ref={videoRef}
-          className="work__featured-video"
-          src={video}
-          poster={image}
-          muted
-          playsInline
-          preload="auto"
-          aria-label={alt}
-        />
+        {active === 'video' && (
+          <video
+            ref={videoRef}
+            className="work__featured-video"
+            src={video}
+            poster={image}
+            muted
+            playsInline
+            autoPlay
+            preload="metadata"
+            disablePictureInPicture
+            aria-label={alt}
+          />
+        )}
       </div>
       <div className="work__featured-dots" role="tablist" aria-label="Médias">
         {slides.map((slide, i) => (

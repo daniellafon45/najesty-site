@@ -4,9 +4,11 @@ import Hero from '../components/Hero';
 import Manifesto from '../components/Manifesto';
 import FeaturedCarousel from '../components/FeaturedCarousel';
 import SiteFooter from '../components/SiteFooter.astro';
+import SiteCtaBand from '../components/SiteCtaBand.astro';
 import { getContent } from '../data';
 
 const content = getContent('fr');
+const { ctas } = content;
 const featured = content.workItems.find((w) => w.size === 'featured')!;
 const rest = content.workItems.filter((w) => w.size !== 'featured');
 const gridSlots = [
@@ -35,6 +37,10 @@ const grid = rest.map((item, i) => ({
     slides={content.heroSlides}
     seoH1={content.heroSeoH1}
     scrollLabel={content.ui.scrollVision}
+    primaryCta={ctas.primary}
+    primaryHref={ctas.primaryHref}
+    secondaryCta={ctas.secondary}
+    secondaryHref={ctas.secondaryHref}
   />
 
   <Manifesto
@@ -42,6 +48,8 @@ const grid = rest.map((item, i) => ({
     lines={content.manifesto.lines}
     cta={content.manifesto.cta}
     ctaHref={content.manifesto.ctaHref}
+    secondaryCta={content.manifesto.secondaryCta}
+    secondaryCtaHref={content.manifesto.secondaryCtaHref}
   />
 
   <section class="work" id="work" data-node-id="1:307">
@@ -127,9 +135,15 @@ const grid = rest.map((item, i) => ({
         <ul>
           {content.atelier.services.map((s) => <li>{s}</li>)}
         </ul>
-        <p style="margin-top: 1.5rem">
-          <a href="/atelier" style="letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.95rem">
-            Découvrir l’atelier →
+        <p class="atelier__actions">
+          <a class="atelier__cta atelier__cta--primary" href={ctas.primaryHref}>
+            {ctas.primary} →
+          </a>
+          <a class="atelier__cta" href={ctas.atelierHref}>
+            {ctas.atelierDiscover} →
+          </a>
+          <a class="atelier__cta" href={ctas.methodHref}>
+            {ctas.methodDiscover} →
           </a>
         </p>
       </div>
@@ -140,13 +154,36 @@ const grid = rest.map((item, i) => ({
         {
           content.atelier.partners.map((partner) => (
             <li>
-              <img src={partner.logo} alt={partner.name} loading="lazy" width="220" height="56" />
+              <a
+                href={partner.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${partner.name} (site officiel)`}
+              >
+                <img
+                  src={partner.logo}
+                  alt=""
+                  loading="lazy"
+                  width={280}
+                  height={72}
+                  decoding="async"
+                />
+              </a>
             </li>
           ))
         }
       </ul>
     </div>
   </section>
+
+  <SiteCtaBand
+    title={ctas.bandTitle}
+    body={ctas.bandBody}
+    primary={ctas.primary}
+    primaryHref={ctas.primaryHref}
+    secondary={ctas.secondary}
+    secondaryHref={ctas.secondaryHref}
+  />
 
   <SiteFooter locale="fr" />
 </BaseLayout>

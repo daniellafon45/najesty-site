@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import SiteCtaBand from '../components/SiteCtaBand.astro';
+import LazyVideo from '../components/LazyVideo.astro';
 import { brand, getContent } from '../data';
 
 const content = getContent('fr');
-const { visionPage, faq, pages } = content;
+const { visionPage, faq, pages, ctas } = content;
 ---
 
 <BaseLayout
@@ -35,17 +37,11 @@ const { visionPage, faq, pages } = content;
 
       <div class="page-vision__video-wrap container">
         <div class="page-vision__video" data-node-id="2:3178">
-          <video
+          <LazyVideo
             src={visionPage.video}
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
             title={`${brand.name} — 3D`}
-          >
-            <track kind="captions" />
-          </video>
+            poster="/images/work/01-featured-najesty.jpg"
+          />
         </div>
       </div>
     </section>
@@ -93,6 +89,15 @@ const { visionPage, faq, pages } = content;
       }
     </section>
   </main>
+
+  <SiteCtaBand
+    title={ctas.bandTitle}
+    body={ctas.bandBody}
+    primary={ctas.primary}
+    primaryHref={ctas.primaryHref}
+    secondary={ctas.secondary}
+    secondaryHref={ctas.secondaryHref}
+  />
 
   <SiteFooter locale="fr" />
 </BaseLayout>

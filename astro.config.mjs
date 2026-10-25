@@ -6,6 +6,14 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://najesty.ca',
   output: 'server',
+  compressHTML: true,
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'viewport',
+  },
+  build: {
+    inlineStylesheets: 'auto',
+  },
   adapter: cloudflare({
     platformProxy: { enabled: false },
   }),
@@ -17,4 +25,14 @@ export default defineConfig({
     },
   },
   integrations: [react()],
+  vite: {
+    build: {
+      cssMinify: true,
+      rollupOptions: {
+        output: {
+          manualChunks: undefined,
+        },
+      },
+    },
+  },
 });

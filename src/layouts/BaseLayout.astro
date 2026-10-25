@@ -60,6 +60,7 @@ const orgSchema = {
   alternateName: brand.name,
   url: brand.siteUrl,
   email: brand.email,
+  ...(brand.phone ? { telephone: brand.phone } : {}),
   address: {
     '@type': 'PostalAddress',
     addressRegion: 'QC',
@@ -120,6 +121,20 @@ const schemas = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(ogImage, brand.siteUrl).href} />
     <link rel="icon" type="image/png" href="/brand/logo-najette.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
     <title>{title}</title>
     {
       schemas.map((schema) => (
@@ -147,8 +162,8 @@ const schemas = [
         homeHref={locale === 'en' ? '/en/' : '/'}
         langSwitchHref={switchPath}
       />
-      <SmoothScroll client:load />
-      <CustomCursor client:load />
+      <SmoothScroll client:idle />
+      <CustomCursor client:idle />
       <slot />
     </div>
   </body>

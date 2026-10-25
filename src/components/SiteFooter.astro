@@ -73,6 +73,15 @@ const marqueeLoop = [...content.marqueeWords, ...content.marqueeWords];
       >
         {brand.email}
       </a>
+      {
+        brand.phone?.trim() && (
+          <p class="footer__contact-phone">
+            <a href={brand.phoneHref || `tel:${brand.phone.replace(/[^\d+]/g, '')}`}>
+              {brand.phone}
+            </a>
+          </p>
+        )
+      }
       <p class="footer__contact-region">{brand.region}</p>
       {
         showForm && (

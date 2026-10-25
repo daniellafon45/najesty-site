@@ -24,7 +24,12 @@ function resolveMode(el: Element | null): CursorMode {
 
   if (isProjectMedia(el)) return 'go';
   if (el.closest('input, textarea, [contenteditable="true"]')) return 'text';
-  if (el.closest('.manifesto__cta, .footer__form button, button[type="submit"]')) return 'cta';
+  if (
+    el.closest(
+      '.manifesto__cta, .hero__cta, .site-cta-band__btn, .atelier__cta--primary, .footer__form button, button[type="submit"]',
+    )
+  )
+    return 'cta';
   if (
     el.closest(
       'a, button, [role="button"], summary, label, .hero__dot, .hero__scroll, [data-cursor]',

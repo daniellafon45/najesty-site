@@ -65,17 +65,33 @@ export type SiteContent = {
   };
   heroSlides: HeroSlide[];
   heroSeoH1: string;
+  /** CTAs conversion — labels + liens par locale */
+  ctas: {
+    primary: string;
+    primaryHref: string;
+    secondary: string;
+    secondaryHref: string;
+    atelierDiscover: string;
+    atelierHref: string;
+    methodDiscover: string;
+    methodHref: string;
+    bandTitle: string;
+    bandBody: string;
+    sectionEnd: string;
+  };
   manifesto: {
     lines: { text: string; accent?: 'arrow' }[];
     cta: string;
     ctaHref: string;
+    secondaryCta: string;
+    secondaryCtaHref: string;
   };
   atelier: {
     title: string;
     body: string;
     services: string[];
     partnersLabel: string;
-    partners: { name: string; logo: string }[];
+    partners: { name: string; logo: string; href: string }[];
   };
   atelierPage: {
     marquee: string;
@@ -99,7 +115,9 @@ export type SiteContent = {
     headline: string;
     email: string;
     addressLabel: string;
+    phoneLabel: string;
     regionLabel: string;
+    formTitle: string;
   };
   workItems: WorkItem[];
   workCategories: WorkCategory[];
@@ -110,6 +128,11 @@ export type SiteContent = {
     description: string;
     sectorsTitle: string;
     sectorsDescription: string;
+    /** Phrases du bandeau défilant (conversion) */
+    heroMarquee: string[];
+    heroLead: string;
+    heroCta: string;
+    heroCtaHref: string;
   };
   marqueeWords: string[];
   contact: {
@@ -121,6 +144,7 @@ export type SiteContent = {
   form: {
     namePlaceholder: string;
     emailPlaceholder: string;
+    phonePlaceholder: string;
     messagePlaceholder: string;
     submit: string;
     sending: string;

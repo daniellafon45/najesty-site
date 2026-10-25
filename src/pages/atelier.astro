@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import SiteCtaBand from '../components/SiteCtaBand.astro';
 import { getContent } from '../data';
 
 const content = getContent('fr');
-const { atelier, atelierPage, pages } = content;
+const { atelier, atelierPage, pages, ctas } = content;
 ---
 
 <BaseLayout
@@ -80,6 +81,15 @@ const { atelier, atelierPage, pages } = content;
       }
     </section>
   </main>
+
+  <SiteCtaBand
+    title={ctas.bandTitle}
+    body={ctas.bandBody}
+    primary={ctas.primary}
+    primaryHref={ctas.primaryHref}
+    secondary={ctas.methodDiscover}
+    secondaryHref={ctas.methodHref}
+  />
 
   <SiteFooter locale="fr" />
 </BaseLayout>

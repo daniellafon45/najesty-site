@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm';
 import { brand, getContent } from '../data';
 
 const content = getContent('fr');
 const { contactPage, pages, ui } = content;
+const phone = brand.phone?.trim();
+const phoneHref = brand.phoneHref || (phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : '');
 ---
 
 <BaseLayout
@@ -15,43 +18,63 @@ const { contactPage, pages, ui } = content;
 >
   <main class="page-contact" data-node-id="2:2020">
     <div class="page-contact__inner container">
-      <h1 class="page-contact__kicker">{contactPage.headline}</h1>
-      <a class="page-contact__email" href={`mailto:${contactPage.email}`}>
-        <span>bonjour@</span>
-        <span>najesty.ca</span>
-      </a>
+      <div class="page-contact__grid">
+        <div class="page-contact__main">
+          <h1 class="page-contact__kicker">{contactPage.headline}</h1>
+          <a class="page-contact__email" href={`mailto:${contactPage.email}`}>
+            <span>bonjour@</span>
+            <span>najesty.ca</span>
+          </a>
 
-      <div class="page-contact__meta">
-        <div class="page-contact__cols">
-          <div class="page-contact__row">
-            <span class="page-contact__label">{contactPage.addressLabel}</span>
-            <span class="page-contact__value">
-              <span aria-hidden="true">↗</span>
-              {brand.address}
-            </span>
-          </div>
-          <div class="page-contact__row">
-            <span class="page-contact__label">{contactPage.regionLabel}</span>
-            <span class="page-contact__value">{brand.region}</span>
+          <div class="page-contact__meta">
+            <div class="page-contact__cols">
+              <div class="page-contact__row">
+                <span class="page-contact__label">{contactPage.addressLabel}</span>
+                <span class="page-contact__value">
+                  <span aria-hidden="true">↗</span>
+                  {brand.address}
+                </span>
+              </div>
+              {
+                phone && (
+                  <div class="page-contact__row">
+                    <span class="page-contact__label">{contactPage.phoneLabel}</span>
+                    <a class="page-contact__value page-contact__phone" href={phoneHref}>
+                      <span aria-hidden="true">↗</span>
+                      {phone}
+                    </a>
+                  </div>
+                )
+              }
+              <div class="page-contact__row">
+                <span class="page-contact__label">{contactPage.regionLabel}</span>
+                <span class="page-contact__value">{brand.region}</span>
+              </div>
+            </div>
+            <ul class="page-contact__social">
+              <li>
+                <a href={brand.instagram} target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true">↗</span> Instagram
+                </a>
+              </li>
+              <li>
+                <a href={brand.linkedin} target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true">↗</span> LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href={brand.tiktok} target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true">↗</span> TikTok
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-        <ul class="page-contact__social">
-          <li>
-            <a href={brand.instagram} target="_blank" rel="noopener noreferrer">
-              <span aria-hidden="true">↗</span> Instagram
-            </a>
-          </li>
-          <li>
-            <a href={brand.linkedin} target="_blank" rel="noopener noreferrer">
-              <span aria-hidden="true">↗</span> LinkedIn
-            </a>
-          </li>
-          <li>
-            <a href={brand.tiktok} target="_blank" rel="noopener noreferrer">
-              <span aria-hidden="true">↗</span> TikTok
-            </a>
-          </li>
-        </ul>
+
+        <div class="page-contact__form-wrap">
+          <h2 class="page-contact__form-title">{contactPage.formTitle}</h2>
+          <ContactForm client:visible labels={content.form} className="page-contact__form" />
+        </div>
       </div>
     </div>
 

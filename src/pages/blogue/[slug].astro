@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import { brand, getContent } from '../../data';
@@ -13,6 +15,12 @@ import {
   getBlogPostByKey,
   getBlogPosts,
 } from '../../data/blog';
+
+export function getStaticPaths() {
+  return getBlogPosts('fr').map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
 
 const locale = 'fr' as const;
 const content = getContent(locale);
@@ -103,7 +111,14 @@ const faqSchema =
       </header>
 
       <figure class="page-blog-post__figure container">
-        <img src={post.image} alt={post.imageAlt} width={1400} height={900} />
+        <img
+          src={post.image}
+          alt={post.imageAlt}
+          width={1400}
+          height={900}
+          decoding="async"
+          fetchpriority="high"
+        />
       </figure>
 
       <div class="page-blog-post__body container">

@@ -8,54 +8,110 @@ type Props = {
   slides: HeroSlide[];
   seoH1: string;
   scrollLabel: string;
+  primaryCta: string;
+  primaryHref: string;
+  secondaryCta: string;
+  secondaryHref: string;
 };
 
-export default function Hero({ slides, seoH1, scrollLabel }: Props) {
+export default function Hero({
+  slides,
+  seoH1,
+  scrollLabel,
+  primaryCta,
+  primaryHref,
+  secondaryCta,
+  secondaryHref,
+}: Props) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const active = slides[index];
 
   useEffect(() => {
+    setVideoFailed(false);
+  }, [index]);
+
+  useEffect(() => {
     if (paused) return;
 
     const slide = slides[index];
+    const hasVideo = Boolean(slide.video) && !videoFailed;
 
-    if (slide.video) {
-      const video = videoRef.current;
-      let advanced = false;
-      const advance = () => {
-        if (advanced) return;
-        advanced = true;
+    if (!hasVideo) {
+      const id = window.setInterval(() => {
         setIndex((i) => (i + 1) % slides.length);
-      };
-
-      if (video) {
-        video.currentTime = 0;
-        void video.play().catch(() => {});
-        video.addEventListener('ended', advance);
-      }
-
-      const fallback = window.setTimeout(advance, VIDEO_FALLBACK_MS);
-
-      return () => {
-        video?.removeEventListener('ended', advance);
-        video?.pause();
-        window.clearTimeout(fallback);
-      };
+      }, IMAGE_INTERVAL_MS);
+      return () => window.clearInterval(id);
     }
 
-    const id = window.setInterval(() => {
+    const video = videoRef.current;
+    let advanced = false;
+    const advance = () => {
+      if (advanced) return;
+      advanced = true;
       setIndex((i) => (i + 1) % slides.length);
-    }, IMAGE_INTERVAL_MS);
+    };
 
-    return () => window.clearInterval(id);
-  }, [index, paused, slides]);
+    const onEnded = () => advance();
+    const onError = () => {
+      setVideoFailed(true);
+      advance();
+    };
+
+    let fallback = 0;
+    let removed = false;
+
+    const startPlayback = () => {
+      if (removed || !video) return;
+      try {
+        if (video.readyState >= 1) {
+          video.currentTime = 0;
+        }
+      } catch {
+        /* ignore seek before metadata */
+      }
+      void video.play().catch(() => {
+        setVideoFailed(true);
+      });
+    };
+
+    if (video) {
+      video.addEventListener('ended', onEnded);
+      video.addEventListener('error', onError);
+      if (video.readyState >= 2) {
+        startPlayback();
+      } else {
+        video.addEventListener('canplay', startPlayback, { once: true });
+        video.load();
+      }
+    }
+
+    fallback = window.setTimeout(advance, VIDEO_FALLBACK_MS);
+
+    return () => {
+      removed = true;
+      video?.removeEventListener('ended', onEnded);
+      video?.removeEventListener('error', onError);
+      video?.removeEventListener('canplay', startPlayback);
+      try {
+        video?.pause();
+      } catch {
+        /* ignore */
+      }
+      window.clearTimeout(fallback);
+    };
+  }, [index, paused, slides, videoFailed]);
 
   useEffect(() => {
     if (!paused) return;
-    videoRef.current?.pause();
+    try {
+      videoRef.current?.pause();
+    } catch {
+      /* ignore */
+    }
   }, [paused]);
 
   return (
@@ -71,6 +127,7 @@ export default function Hero({ slides, seoH1, scrollLabel }: Props) {
       <div className="hero__slides">
         {slides.map((slide, i) => {
           const activeSlide = i === index;
+          const slideShowVideo = activeSlide && Boolean(slide.video) && !videoFailed;
           return (
             <div
               key={slide.id}
@@ -80,21 +137,28 @@ export default function Hero({ slides, seoH1, scrollLabel }: Props) {
               <div className="hero__media">
                 {slide.image && (
                   <img
-                    key={activeSlide && !slide.video ? `zoom-${slide.id}` : slide.id}
-                    className={`hero__image${activeSlide && !slide.video ? ' is-zooming' : ''}${slide.video ? ' hero__image--poster' : ''}`}
+                    key={activeSlide && !slideShowVideo ? `zoom-${slide.id}` : slide.id}
+                    className={`hero__image${activeSlide && !slideShowVideo ? ' is-zooming' : ''}${slideShowVideo ? ' hero__image--poster' : ''}`}
                     src={slide.image}
                     alt={slide.caption}
+                    width={1920}
+                    height={1080}
+                    decoding={i === 0 ? 'sync' : 'async'}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={i === 0 ? 'high' : 'low'}
                   />
                 )}
-                {slide.video && (
+                {slideShowVideo && slide.video && (
                   <video
-                    ref={activeSlide ? videoRef : undefined}
+                    ref={videoRef}
                     className="hero__video"
                     src={slide.video}
                     poster={slide.image}
                     muted
                     playsInline
-                    preload="auto"
+                    autoPlay
+                    preload="none"
+                    disablePictureInPicture
                     aria-label={slide.title}
                   />
                 )}
@@ -104,10 +168,27 @@ export default function Hero({ slides, seoH1, scrollLabel }: Props) {
         })}
       </div>
 
-      <a className="hero__copy" href={active.href} data-cursor="view">
+      <div className="hero__copy">
         <p className="hero__title">{active.title}</p>
         <p className="hero__caption">{active.caption}</p>
-      </a>
+        <div className="hero__actions">
+          <a
+            className="hero__cta hero__cta--primary"
+            href={primaryHref}
+            data-cursor="cta"
+            data-cursor-label="Go"
+          >
+            {primaryCta}
+          </a>
+          <a
+            className="hero__cta hero__cta--ghost"
+            href={secondaryHref}
+            data-cursor="view"
+          >
+            {secondaryCta}
+          </a>
+        </div>
+      </div>
 
       <div className="hero__dots" role="tablist" aria-label="Slides">
         {slides.map((slide, i) => (

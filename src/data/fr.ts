@@ -41,6 +41,20 @@ export const fr: SiteContent = {
       'Chez Najesty, chaque projet part d’un usage et d’une émotion. {name} transforme le lieu en espace vivable, productif et zen — décoré avec expertise, dans le budget.',
   },
   heroSeoH1: 'Najesty — Design d’intérieur et décoration au Canada',
+  ctas: {
+    primary: 'Demander une orientation',
+    primaryHref: '/contact',
+    secondary: 'Voir les projets',
+    secondaryHref: '/work',
+    atelierDiscover: 'Découvrir l’atelier',
+    atelierHref: '/atelier',
+    methodDiscover: 'Comparer remote vs sur place',
+    methodHref: '/methode',
+    bandTitle: 'Prêt à transformer votre espace ?',
+    bandBody:
+      'Orientation offerte de 15 minutes. On clarifie usages, budget et format — sans engagement.',
+    sectionEnd: 'Parler de votre projet',
+  },
   heroSlides: [
     {
       id: 'h0',
@@ -102,6 +116,8 @@ export const fr: SiteContent = {
     ],
     cta: 'Voir les projets',
     ctaHref: '/work',
+    secondaryCta: 'Demander une orientation',
+    secondaryCtaHref: '/contact',
   },
   atelier: {
     title: "L'Atelier",
@@ -116,13 +132,29 @@ export const fr: SiteContent = {
     ],
     partnersLabel: 'Partenaires sourcing',
     partners: [
-      { name: 'IKEA', logo: '/images/partners/ikea.svg' },
-      { name: 'Structube', logo: '/images/partners/structube.svg' },
-      { name: 'EQ3', logo: '/images/partners/eq3.svg' },
-      { name: 'Wayfair', logo: '/images/partners/wayfair.svg' },
-      { name: 'Bouclair', logo: '/images/partners/bouclair.svg' },
-      { name: 'Article', logo: '/images/partners/article.svg' },
-      { name: 'HomeSense', logo: '/images/partners/homesense.svg' },
+      { name: 'IKEA', logo: '/images/partners/ikea.svg', href: 'https://www.ikea.com/ca/fr/' },
+      {
+        name: 'Structube',
+        logo: '/images/partners/structube.svg',
+        href: 'https://www.structube.com/fr_ca/',
+      },
+      { name: 'EQ3', logo: '/images/partners/eq3.svg', href: 'https://www.eq3.com/ca/fr' },
+      { name: 'Wayfair', logo: '/images/partners/wayfair.svg', href: 'https://www.wayfair.ca/' },
+      {
+        name: 'Bouclair',
+        logo: '/images/partners/bouclair.svg',
+        href: 'https://www.bouclair.com/',
+      },
+      {
+        name: 'Article',
+        logo: '/images/partners/article.svg',
+        href: 'https://www.article.com/ca/fr/',
+      },
+      {
+        name: 'HomeSense',
+        logo: '/images/partners/homesense.svg',
+        href: 'https://www.homesense.ca/fr/',
+      },
     ],
   },
   atelierPage: {
@@ -183,7 +215,9 @@ export const fr: SiteContent = {
     headline: 'Mettons votre espace au cœur :',
     email: 'bonjour@najesty.ca',
     addressLabel: 'Adresse',
+    phoneLabel: 'Téléphone',
     regionLabel: 'Région',
+    formTitle: 'Écrivez-nous',
   },
   workItems: [
     {
@@ -202,7 +236,7 @@ export const fr: SiteContent = {
       image: '/images/ceb/01-ordre-douceur.jpg?v=4',
       size: 'lg',
       description:
-        'Signature CEB : ranger sans rigidité — un ordre qui respire, des volumes qui apaisent.',
+        'Ranger sans rigidité : un ordre qui respire, des volumes qui apaisent le quotidien.',
       category: 'decoration',
       alt: 'Ordre & douceur — illustration CEB bibliothèque',
     },
@@ -212,7 +246,7 @@ export const fr: SiteContent = {
       image: '/images/ceb/02-chaque-chose.jpg?v=4',
       size: 'md',
       description:
-        'Signature CEB : l’évidence du rangement juste — chaque objet trouve son geste et son lieu.',
+        'Le rangement juste : chaque objet trouve son geste, son tiroir, son lieu.',
       category: 'mise-en-place',
       alt: 'Chaque chose a sa place — illustration CEB placard',
     },
@@ -222,7 +256,7 @@ export const fr: SiteContent = {
       image: '/images/ceb/03-ranger-mieux-vivre.jpg?v=4',
       size: 'sm',
       description:
-        'Signature CEB : l’art de bien ranger comme levier de quotidien — plus clair, plus léger.',
+        'Bien ranger pour alléger le quotidien — plus clair, plus simple, plus léger.',
       category: 'home-staging',
       alt: 'Ranger pour mieux vivre — illustration CEB commode',
     },
@@ -232,16 +266,17 @@ export const fr: SiteContent = {
       image: '/images/work/02-longue-vie.jpg',
       size: 'lg',
       description:
-        'Meubles, matières, gestes : ce que vous choisissez aujourd’hui, vous voudrez encore le garder demain.',
+        'Des meubles et des matières choisis pour durer — ce que vous aimez encore demain.',
       category: 'decoration',
-      alt: 'Longue Vie — décoration durable et matières choisies',
+      alt: 'Longue Vie — meubles et matières durables',
     },
     {
       id: 'somewhere-else',
       name: 'Somewhere Else',
       image: '/images/work/03-somewhere-else.jpg',
       size: 'md',
-      description: 'Un intérieur qui voyage sans quitter la maison — ailleurs, chez vous.',
+      description:
+        'Un intérieur qui évoque l’ailleurs — voyage, destination, évasion, chez vous.',
       category: 'interieur',
       alt: 'Somewhere Else — intérieur inspiré du voyage',
     },
@@ -251,7 +286,7 @@ export const fr: SiteContent = {
       image: '/images/work/04-night.jpg',
       size: 'sm',
       description:
-        'Scénographier la nuit : lumière, texture et présence pour un moment qui reste.',
+        'Scénographier la soirée : lumière, texture et ambiance pour un moment qui marque.',
       category: 'mise-en-place',
       alt: 'A Night to Remember — mise en place et éclairage d’ambiance',
     },
@@ -260,7 +295,8 @@ export const fr: SiteContent = {
       name: "Brise d'été",
       image: '/images/work/05-brise.jpg',
       size: 'sm',
-      description: 'Cette sensation de fraîcheur quand tout paraît plus léger.',
+      description:
+        'Une décoration légère et aérée — fraîcheur d’été, pièces qui respirent.',
       category: 'decoration',
       alt: "Brise d'été — décoration légère et aérée",
     },
@@ -270,9 +306,9 @@ export const fr: SiteContent = {
       image: '/images/work/06-echos.jpg',
       size: 'sm',
       description:
-        'Faire dialoguer l’existant et le nouveau sans écraser l’histoire du lieu.',
+        'Réutiliser de vieux meubles et du patrimoine dans le décor — le passé qui vit aujourd’hui.',
       category: 'interieur',
-      alt: 'Échos du passé — design d’intérieur patrimoine et contemporain',
+      alt: 'Échos du passé — vieux meubles et patrimoine réutilisés',
     },
     {
       id: 'seconde-vie',
@@ -280,9 +316,9 @@ export const fr: SiteContent = {
       image: '/images/work/07-seconde-vie.jpg',
       size: 'sm',
       description:
-        'Donner une nouvelle lecture à ce qui était déjà là — objet, pièce, parcours.',
+        'Rénover sans tout casser : une nouvelle lecture de la pièce, du parcours, de l’ambiance.',
       category: 'home-staging',
-      alt: 'Seconde Vie — home staging et reconversion d’espace',
+      alt: 'Seconde Vie — rénovation douce et nouvelle lecture d’espace',
     },
     {
       id: 'gens',
@@ -290,7 +326,7 @@ export const fr: SiteContent = {
       image: '/images/work/08-gens.jpg',
       size: 'lg',
       description:
-        'Faire une place au Canada dans le décor — avec présence, sans folklore.',
+        'Ancrer le décor au Canada et au Québec — présence locale, sans folklore.',
       category: 'decoration',
       alt: 'Gens du pays — décoration ancrée au Canada',
     },
@@ -299,9 +335,10 @@ export const fr: SiteContent = {
       name: 'Bon Coup',
       image: '/images/work/09-bon-coup.jpg',
       size: 'md',
-      description: 'Un geste juste, au bon endroit — l’impact sans le superflu.',
+      description:
+        'Un seul geste juste — le bon meuble, le bon angle — pour un impact immédiat.',
       category: 'photographie',
-      alt: 'Bon Coup — photographie d’espace Najesty',
+      alt: 'Bon Coup — un geste juste en photographie d’espace',
     },
     {
       id: 'next-level',
@@ -309,7 +346,7 @@ export const fr: SiteContent = {
       image: '/images/work/10-next-level.jpg',
       size: 'sm',
       description:
-        'Passer à l’échelle suivante : plus d’ambition, même exigence émotionnelle.',
+        'Monter d’un cran : plus d’ambition dans l’espace, même exigence émotionnelle.',
       category: 'interieur',
       alt: 'Next Level — design d’intérieur ambitieux',
     },
@@ -329,7 +366,7 @@ export const fr: SiteContent = {
           id: 'echos',
           name: 'Échos du passé',
           image: '/images/work/06-echos.jpg',
-          alt: 'Échos du passé — design d’intérieur',
+          alt: 'Échos du passé — vieux meubles réutilisés',
         },
         {
           id: 'next-level',
@@ -498,7 +535,7 @@ export const fr: SiteContent = {
           id: 'echos',
           name: 'Échos du passé',
           image: '/images/work/06-echos.jpg',
-          alt: 'Échos du passé — résidentiel',
+          alt: 'Échos du passé — vieux meubles en résidentiel',
         },
         {
           id: 'longue-vie',
@@ -588,21 +625,23 @@ export const fr: SiteContent = {
     sectorsTitle: 'Work · Secteurs — Najesty',
     sectorsDescription:
       'Projets Najesty par secteur : résidentiel, mise en marché, hospitalité et signatures.',
+    heroMarquee: ['Votre espace', 'Se sent', 'Parlons-en'],
+    heroLead:
+      'Des intérieurs qui se sentent avant de se décrire — design à distance partout au Canada, mise en place locale quand le lieu doit vraiment prendre vie.',
+    heroCta: 'Orientation offerte 15 min',
+    heroCtaHref: '/contact',
   },
   marqueeWords: [
-    'Ordre & douceur',
-    'Chaque chose a sa place',
-    'Ranger pour mieux vivre',
-    'Longue Vie',
-    'Somewhere Else',
-    "Brise d'été",
-    'Gens du pays',
-    'Seconde Vie',
-    'Tout redémarre',
-    'Échos du passé',
-    'A Night to Remember',
-    'Bon Coup',
-    'Next Level',
+    'Un intérieur qui respire',
+    'Vivable · productif · zen',
+    'Dans votre budget',
+    'Expertise & beaucoup d’émotion',
+    'Orientation 15 min offerte',
+    'Parlons de votre espace',
+    'Design au Canada',
+    'À distance en Europe & Afrique',
+    'Décorer juste, pas trop',
+    'Du ressenti à la mise en place',
   ],
   contact: {
     title: 'Parlons de votre espace',
@@ -639,6 +678,7 @@ export const fr: SiteContent = {
   form: {
     namePlaceholder: 'Votre nom',
     emailPlaceholder: 'Votre courriel',
+    phonePlaceholder: 'Votre téléphone',
     messagePlaceholder:
       'Décrivez votre espace, votre projet, ou ce que vous aimeriez changer',
     submit: 'Envoyer mon message',

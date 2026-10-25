@@ -10,10 +10,10 @@ Choix adaptés au sens de chaque signature Najesty.
 | 03-somewhere-else.jpg | Somewhere Else | Destination, ailleurs |
 | 04-night.jpg | A Night to Remember | Restaurant, ambiance nocturne |
 | 05-brise.jpg | Brise d'été | Chambre légère, fraîcheur |
-| 06-echos.jpg | Échos du passé | Intérieur classicisant |
-| 07-seconde-vie.jpg | Seconde Vie | Mobilier revisité |
+| 06-echos.jpg | Échos du passé | Vieux meubles / patrimoine réutilisés |
+| 07-seconde-vie.jpg | Seconde Vie | Pièce rénovée sans tout casser |
 | 08-gens.jpg | Gens du pays | Chalet / Québec |
-| 09-bon-coup.jpg | Bon Coup | Un geste design juste |
+| 09-bon-coup.jpg | Bon Coup | Fauteuil crème en contexte salon — photo éditoriale (remplacé 2026-10-25) |
 | 10-next-level.jpg | Next Level | Salon ambitieux |
 
 Source: https://unsplash.com

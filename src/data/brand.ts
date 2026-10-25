@@ -4,7 +4,9 @@ export const brand = {
   tagline: 'design and pictures',
   email: 'bonjour@najesty.ca',
   region: 'Canada',
+  /** Affiché sur /contact — renseigner le vrai numéro Najesty */
   phone: '',
+  phoneHref: '',
   address: 'Québec, Canada',
   /** Remplacer par les URLs réelles dès disponibilité */
   instagram: 'https://instagram.com/',
