@@ -127,48 +127,11 @@ export default function CustomCursor() {
       if (pressedRef.current === value) return;
       pressedRef.current = value;
       applyClasses();
-      start();
-    };
-
-    let running = false;
-    let pending: { x: number; y: number } | null = null;
-
-    const updateMode = (x: number, y: number, force: boolean) => {
-      const el = document.elementFromPoint(x, y);
-      const nextMode = resolveMode(el);
-      const nextLabel = resolveLabel(nextMode, el);
-      const nextInverted = isDarkSurface(el);
-      if (
-        force ||
-        nextMode !== modeRef.current ||
-        nextLabel !== labelRef.current ||
-        nextInverted !== invertedRef.current
-      ) {
-        modeRef.current = nextMode;
-        labelRef.current = nextLabel;
-        invertedRef.current = nextInverted;
-        applyClasses();
-      }
-    };
-
-    const start = () => {
-      if (running) return;
-      running = true;
-      raf = requestAnimationFrame(render);
     };
 
     const render = () => {
-      // Une seule résolution DOM (elementFromPoint) par frame, pas par événement.
-      if (pending) {
-        const { x, y } = pending;
-        pending = null;
-        updateMode(x, y, false);
-      }
-
-      const dx = target.current.x - pos.current.x;
-      const dy = target.current.y - pos.current.y;
-      pos.current.x += dx * lerp;
-      pos.current.y += dy * lerp;
+      pos.current.x += (target.current.x - pos.current.x) * lerp;
+      pos.current.y += (target.current.y - pos.current.y) * lerp;
 
       const ring = ringRef.current;
       const dot = dotRef.current;
@@ -182,11 +145,6 @@ export default function CustomCursor() {
         dot.style.transform = `translate3d(${target.current.x}px, ${target.current.y}px, 0) translate(-50%, -50%) scale(${dotScale})`;
       }
 
-      // Souris immobile : on arrête la boucle (0 travail par frame).
-      if (!pending && Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
-        running = false;
-        return;
-      }
       raf = requestAnimationFrame(render);
     };
 
@@ -194,14 +152,30 @@ export default function CustomCursor() {
       target.current.x = e.clientX;
       target.current.y = e.clientY;
 
+      let becameVisible = false;
       if (!visibleRef.current) {
         visibleRef.current = true;
+        becameVisible = true;
         pos.current.x = e.clientX;
         pos.current.y = e.clientY;
-        updateMode(e.clientX, e.clientY, true);
       }
-      pending = { x: e.clientX, y: e.clientY };
-      start();
+
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const nextMode = resolveMode(el);
+      const nextLabel = resolveLabel(nextMode, el);
+      const nextInverted = isDarkSurface(el);
+
+      if (
+        becameVisible ||
+        nextMode !== modeRef.current ||
+        nextLabel !== labelRef.current ||
+        nextInverted !== invertedRef.current
+      ) {
+        modeRef.current = nextMode;
+        labelRef.current = nextLabel;
+        invertedRef.current = nextInverted;
+        applyClasses();
+      }
     };
 
     const onEnter = () => {
@@ -216,10 +190,7 @@ export default function CustomCursor() {
       applyClasses();
     };
     const onDown = (e: PointerEvent) => {
-      if (e.pointerType === 'mouse' || e.pointerType === 'pen') {
-        setPressed(true);
-        start();
-      }
+      if (e.pointerType === 'mouse' || e.pointerType === 'pen') setPressed(true);
     };
     const onUp = () => setPressed(false);
     const onCancel = () => setPressed(false);
@@ -234,6 +205,7 @@ export default function CustomCursor() {
     window.addEventListener('pointercancel', onCancel);
     window.addEventListener('blur', onBlur);
     document.addEventListener('visibilitychange', onBlur);
+    raf = requestAnimationFrame(render);
 
     return () => {
       root.classList.remove('has-custom-cursor');

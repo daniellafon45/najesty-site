@@ -21,12 +21,12 @@ const founderSlides = await getFounderGallery();
   includeFaqSchema
 >
   <main class="page-vision" data-node-id="2:3148">
-    <section class="page-vision__hero" data-node-id="2:3152">
-      <p class="page-vision__wordmark" aria-hidden="true">
+    <section class="page-vision__hero" data-node-id="2:3152" aria-labelledby="vision-wordmark">
+      <h1 id="vision-wordmark" class="page-vision__wordmark">
         {visionPage.wordmark}
         <sup class="page-vision__copy" aria-hidden="true">©</sup>
         <span class="page-vision__heart" aria-hidden="true">♥</span>
-      </p>
+      </h1>
 
       <div class="page-vision__ticker" aria-hidden="true">
         <div class="page-vision__ticker-track">
@@ -51,9 +51,9 @@ const founderSlides = await getFounderGallery();
 
     <section class="page-vision__body container" data-node-id="2:3180">
       <div class="page-vision__brand">
-        <h1 class="page-vision__title">
-          {visionPage.sectionTitle.map((line) => <span>{line} </span>)}
-        </h1>
+        <h2 class="page-vision__title">
+          {visionPage.sectionTitle.map((line) => <span>{line}</span>)}
+        </h2>
         <FounderCarousel
           client:visible
           slides={founderSlides}

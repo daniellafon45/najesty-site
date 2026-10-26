@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteCtaBand from '../../components/SiteCtaBand.astro';
-import ServicesGrid from '../../components/ServicesGrid.astro';
 import { getContent } from '../../data';
 
 const content = getContent('en');
@@ -50,8 +49,6 @@ const { atelier, atelierPage, pages, ctas } = content;
       </p>
     </section>
 
-    <ServicesGrid locale="en" id="services" />
-
     <section class="page-atelier__welcome container">
       <div class="page-atelier__welcome-media">
         <img
@@ -64,6 +61,15 @@ const { atelier, atelierPage, pages, ctas } = content;
         <h2>{atelierPage.welcome.title}</h2>
         <p class="page-atelier__role">{atelierPage.welcome.role}</p>
         <p>{atelierPage.welcome.body}</p>
+        <ul class="page-atelier__services">
+          {
+            atelier.services.map((s) => (
+              <li>
+                <a href={s.href}>{s.label}</a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </section>
 
@@ -87,8 +93,8 @@ const { atelier, atelierPage, pages, ctas } = content;
     body={ctas.bandBody}
     primary={ctas.primary}
     primaryHref={ctas.primaryHref}
-    secondary={ctas.secondary}
-    secondaryHref={ctas.secondaryHref}
+    secondary={ctas.methodDiscover}
+    secondaryHref={ctas.methodHref}
   />
 
   <SiteFooter locale="en" />

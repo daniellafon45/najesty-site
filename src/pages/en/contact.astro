@@ -21,14 +21,6 @@ const phoneHref = brand.phoneHref || (phone ? `tel:${phone.replace(/[^\d+]/g, ''
       <div class="page-contact__grid">
         <div class="page-contact__main">
           <h1 class="page-contact__kicker">{contactPage.headline}</h1>
-          <p class="page-contact__lead">{contactPage.lead}</p>
-          <div class="page-contact__next">
-            <h2>{contactPage.nextTitle}</h2>
-            <ol>
-              {contactPage.nextSteps.map((step) => <li>{step}</li>)}
-            </ol>
-          </div>
-          <span class="page-contact__email-label">{contactPage.emailLabel}</span>
           <a class="page-contact__email" href={`mailto:${contactPage.email}`}>
             <span>bonjour@</span>
             <span>najesty.ca</span>

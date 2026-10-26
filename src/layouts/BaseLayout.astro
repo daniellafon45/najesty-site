@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header';
+import SmoothScroll from '../components/SmoothScroll';
 import CustomCursor from '../components/CustomCursor';
 import {
   brand,
@@ -161,7 +162,8 @@ const schemas = [
         homeHref={locale === 'en' ? '/en/' : '/'}
         langSwitchHref={switchPath}
       />
-      <CustomCursor client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)" />
+      <SmoothScroll client:idle />
+      <CustomCursor client:idle />
       <slot />
     </div>
   </body>

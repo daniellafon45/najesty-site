@@ -5,17 +5,17 @@ export const en: SiteContent = {
   htmlLang: 'en-CA',
   ogLocale: 'en_CA',
   meta: {
-    homeTitle: 'Remote Interior Design & Decorating in Canada | Najesty',
+    homeTitle: 'Najesty — Interior design & decoration in Canada',
     homeDescription:
-      'Interior design, decorating, home staging and interior photography. Remote across Canada, Europe and Africa, and on-site in Canada. Free 15-min call, no commitment.',
+      'Najesty makes interiors livable, productive and calm — with expertise, real emotion, and decoration that respects your budget. In Canada, and remotely in Europe and Africa.',
   },
   nav: [
-    { label: 'Services', href: '/en/atelier' },
-    { label: 'Projects', href: '/en/work' },
-    { label: 'How it works', href: '/en/method' },
-    { label: 'About', href: '/en/vision' },
+    { label: 'Work', href: '/en/work' },
+    { label: 'Vision', href: '/en/vision' },
+    { label: 'Studio', href: '/en/atelier' },
+    { label: 'Method', href: '/en/method' },
     { label: 'Blog', href: '/en/blog' },
-    { label: 'Free call', href: '/en/contact', cta: true },
+    { label: 'Contact', href: '/en/contact' },
   ],
   ui: {
     navLabel: 'Main navigation',
@@ -28,195 +28,109 @@ export const en: SiteContent = {
     legalHref: '/en/legal-notice',
     see: 'View',
     filtersLabel: 'Filters',
-    scrollVision: 'See our services',
+    scrollVision: 'Scroll to vision',
     langSwitchLabel: 'Français',
     prev: 'Previous',
     next: 'Next',
-    discover: 'More projects',
+    discover: 'More to explore',
     allProjects: 'All projects →',
-    thePlace: 'How we work',
-    expertises: 'Services',
-    talkCta: 'Book my free call (15 min) →',
+    thePlace: 'The place',
+    expertises: 'Expertise',
+    talkCta: 'Talk about your space →',
     projectBody:
-      'Like every Najesty project, it starts with how the space is used day to day. We first set a clear direction (moodboard, layout plan, shopping list), then choose, buy and install what is needed — within the agreed budget. Have a project like “{name}”? Let’s talk during a free 15-minute call.',
+      'At Najesty, every project starts with use and emotion. {name} turns the place into a livable, productive, calm space — decorated with expertise, within budget.',
   },
-  heroSeoH1: 'Interior design and decorating in Canada — Najesty',
-  hero: {
-    eyebrow: 'Interior design & decorating · Canada, Europe, Africa',
-    headline: 'A beautiful, practical home that feels like you — within your budget.',
-    subline:
-      'Najesty designs and decorates your space: interior design, decorating, home staging and photography. Remote across Canada, Europe and Africa — on-site in Canada.',
-    reassurance: 'Free · 15 minutes · No commitment',
-    slideLabel: 'Project',
-  },
+  heroSeoH1: 'Najesty — Interior design and decoration in Canada',
   ctas: {
-    primary: 'Book my free call (15 min)',
+    primary: 'Request an orientation',
     primaryHref: '/en/contact',
-    secondary: 'See projects',
+    secondary: 'See the work',
     secondaryHref: '/en/work',
-    atelierDiscover: 'See all services',
+    atelierDiscover: 'Discover the studio',
     atelierHref: '/en/atelier',
-    methodDiscover: 'How it works',
+    methodDiscover: 'Compare remote vs on-site',
     methodHref: '/en/method',
-    reassurance: 'Free, 15 minutes, no commitment. You leave with clear next steps.',
-    bandTitle: 'Let’s talk about your space. 15 minutes, free.',
+    bandTitle: 'Ready to transform your space?',
     bandBody:
-      'Tell us what you want to change. We’ll explain what’s possible with your budget, remotely or on-site. No commitment: you leave with clear next steps.',
-    sectionEnd: 'Book my free call (15 min)',
+      'A free 15-minute orientation. We clarify uses, budget and format — no commitment.',
+    sectionEnd: 'Talk about your project',
   },
   heroSlides: [
     {
       id: 'h0',
       image: '/images/hero/deco-01-salon.jpg',
       video: '/videos/Najesty-Deco-Construction-16x9.mp4',
-      title: 'Living room decorating',
-      caption: 'Living room decorated by Najesty: furniture, textiles and objects chosen for a warm space.',
+      title: 'Najesty',
+      caption:
+        'Livable, productive, calm spaces — expertise and real emotion, within your budget.',
       href: '/en/work',
     },
     {
       id: 'h1',
       image: '/images/work/03-somewhere-else.jpg',
       title: 'Somewhere Else',
-      caption: 'Travel-inspired interior design, to feel elsewhere without leaving home.',
+      caption: 'Travel without leaving home: an interior that opens other horizons.',
       href: '/en/work#somewhere-else',
     },
     {
       id: 'h2',
       image: '/images/hero/deco-02-cafe.jpg',
       title: 'Summer Breeze',
-      caption: 'Light, airy decorating: natural textures and rooms that breathe.',
+      caption: 'Lighten the room until the air moves — light, texture, breath.',
       href: '/en/work#brise',
     },
     {
       id: 'h3',
       image: '/images/hero/deco-03-salle-a-manger.jpg',
       title: 'Long Life',
-      caption: 'Dining room with furniture and materials chosen to last.',
+      caption: 'Choose today what you will still want to keep tomorrow.',
       href: '/en/work#longue-vie',
     },
     {
       id: 'h4',
       image: '/images/hero/deco-04-cuisine.jpg',
       title: 'People of the Land',
-      caption: 'Décor that celebrates Canada and Québec, without folklore.',
+      caption: 'Root Canada in the décor — with presence, without folklore.',
       href: '/en/work#gens',
     },
     {
       id: 'h5',
       image: '/images/hero/deco-05-maison.jpg',
       title: 'Fresh Start',
-      caption: 'A home prepared for a new beginning.',
+      caption: 'A new space for the chapter you are writing now.',
       href: '/en/contact',
     },
   ],
-  home: {
-    servicesEyebrow: 'What we do for you',
-    servicesTitle: 'Sound familiar? Here’s how we help.',
-    servicesLead:
-      'From the first plan to the last photo, one studio takes care of everything. Pick one service or combine them.',
-    services: [
-      {
-        situation: 'Your room doesn’t work the way you’d like',
-        title: 'Interior design',
-        result:
-          'We rethink the layout, flow and lighting. You get a clear plan before you buy a single thing.',
-        href: '/en/services/interior-design',
-      },
-      {
-        situation: 'You just moved in and don’t know where to start',
-        title: 'Decorating',
-        result:
-          'Colours, textures, furniture and objects: a cohesive home that feels like you, without buying everything new.',
-        href: '/en/services/decoration',
-      },
-      {
-        situation: 'You’re putting your house or condo on the market',
-        title: 'Home staging',
-        result:
-          'We declutter, brighten and stage so your property makes a great first impression, starting with the listing photos.',
-        href: '/en/services/home-staging',
-      },
-      {
-        situation: 'You need beautiful photos of your space',
-        title: 'Interior photography',
-        result: 'Polished interior photos for a listing, your website or your social media.',
-        href: '/en/services/photography',
-      },
-      {
-        situation: 'You don’t have time to shop',
-        title: 'Sourcing & shopping',
-        result:
-          'We find the right furniture and décor within your budget and give you a clear shopping list — or shop for you.',
-        href: '/en/services/sourcing',
-      },
-      {
-        situation: 'Everything is bought, now it all needs setting up',
-        title: 'Installation & styling',
-        result:
-          'On-site in Canada: we install, place every object and handle the final details. All that’s left is to enjoy it.',
-        href: '/en/services/styling',
-      },
+  manifesto: {
+    lines: [
+      { text: 'Emotion at the heart of space.' },
+      { text: 'Identity. Design.' },
+      { text: 'At Najesty, it is the' },
+      { text: 'sum of every marker' },
+      { text: 'that makes a place' },
+      { text: 'come alive.' },
+      { text: 'Make experience', accent: 'arrow' },
+      { text: 'your signature —' },
+      { text: 'and leave room' },
+      { text: 'for feeling.' },
     ],
-    servicesLinkLabel: 'Learn more',
-    stepsEyebrow: 'How it works',
-    stepsTitle: 'Simple, in 4 steps.',
-    steps: [
-      {
-        title: 'Free 15-minute call',
-        body: 'Tell us about your space, your needs and your budget. No commitment: you leave with clear next steps.',
-      },
-      {
-        title: 'A proposal that fits your budget',
-        body: 'We suggest the format that suits you: remote, on-site, or both. You know what’s included before you say yes.',
-      },
-      {
-        title: 'Moodboard, plan and shopping list',
-        body: 'You see the direction before spending. We do the sourcing and shopping for you, within the agreed budget.',
-      },
-      {
-        title: 'Installation and photos',
-        body: 'In Canada, we can install and style everything on-site, then photograph the result. Remotely, you follow a clear plan, step by step.',
-      },
-    ],
-    formats: [
-      {
-        title: 'Remote',
-        where: 'Anywhere in Canada, Europe and Africa',
-        body: 'Moodboards, layout plans, shopping lists and sourcing, approved with you online. Ideal if you want a clear direction without travel.',
-      },
-      {
-        title: 'On-site',
-        where: 'In Canada',
-        body: 'Installation, styling and photography right in your home. Ideal for home staging, a photo shoot or the finishing touches.',
-      },
-    ],
-    projectsEyebrow: 'Our work',
-    projectsTitle: 'Spaces transformed, room by room.',
-    projectsLead:
-      'Living rooms, kitchens, dining rooms, storage, home staging: see what we’ve done and picture your own space.',
-    founderEyebrow: 'Who’s behind Najesty',
-    founderTitle: 'Eliahna, founder of Najesty',
-    founderBody: [
-      'Eliahna founded Najesty Design & Pictures on a simple belief: a space is felt before it is described. She designs practical, calming interiors that feel like you — without ever losing sight of your budget.',
-      'With Najesty, she works with clients remotely across Canada, Europe and Africa, and on-site in Canada for installation, styling and photography.',
-    ],
-    founderLink: 'More about Najesty',
-    founderImageAlt: 'Eliahna, founder of Najesty Design & Pictures',
-    faqEyebrow: 'Your questions',
-    faqTitle: 'Frequently asked questions',
+    cta: 'See the work',
+    ctaHref: '/en/work',
+    secondaryCta: 'Request an orientation',
+    secondaryCtaHref: '/en/contact',
   },
   atelier: {
-    title: 'Our services',
-    body: 'Interior design, decorating, home staging, photography, sourcing and installation: we take care of your space from the first plan to the last photo, within your budget.',
+    title: 'The Studio',
+    body: 'Before the décor, the feeling: a livable, productive, calm interior. Najesty brings expertise and real emotion — to decorate well, within your budget.',
     services: [
       { label: 'Interior design', href: '/en/services/interior-design' },
-      { label: 'Decorating', href: '/en/services/decoration' },
+      { label: 'Decoration', href: '/en/services/decoration' },
       { label: 'Home staging', href: '/en/services/home-staging' },
       { label: 'Photography', href: '/en/services/photography' },
       { label: 'Sourcing and shopping', href: '/en/services/sourcing' },
-      { label: 'Installation and styling', href: '/en/services/styling' },
+      { label: 'Styling and installation', href: '/en/services/styling' },
     ],
-    partnersLabel: 'We shop for you at stores such as:',
+    partnersLabel: 'Sourcing partners',
     partners: [
       { name: 'IKEA', logo: '/images/partners/ikea.svg', href: 'https://www.ikea.com/ca/en/' },
       {
@@ -248,83 +162,41 @@ export const en: SiteContent = {
       id: 'interieur',
       slug: 'interior-design',
       title: 'Interior design',
-      metaTitle: 'Remote & On-site Interior Design in Canada | Najesty',
+      metaTitle: 'Interior design in Canada — Najesty',
       metaDescription:
-        'Rethink your home’s layout with a clear plan before you buy: flow, lighting, furniture. Remote across Canada, Europe and Africa. Free 15-min call.',
-      intro:
-        'Your room doesn’t work the way you’d like? We rethink the layout so it’s beautiful, practical and pleasant to live in.',
-      body: 'We start with how you live: who uses the room, when, and for what. Then we define the layout, flow, lighting and materials. You get a clear direction — moodboard, layout plan and shopping list — before you spend a dollar.',
-      forYouTitle: 'This is for you if…',
-      forYou: [
-        'your living room, kitchen or office lacks space or logic;',
-        'you’re renovating or rearranging and want to avoid costly mistakes;',
-        'you want a cohesive result throughout your home.',
-      ],
-      includesTitle: 'What you get',
-      includes: [
-        'A moodboard showing the chosen look',
-        'A layout plan',
-        'A shopping list that fits your budget',
-        'Optional in Canada: on-site installation, styling and photos',
-      ],
-      projectsLabel: 'Interior design projects',
-      ctaLabel: 'Book my free call (15 min)',
+        'Livable, productive, calm interior design: plans, direction and emotion — within budget, in Canada and remotely.',
+      intro: 'A clear direction before a single purchase: uses, flow, light and feeling.',
+      body: 'We design interiors that truly serve your rhythm — calm to recharge, clear to move forward. Plans, materials and emotional direction, with a sharp image at every step.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Request a direction',
       image: '/images/work/03-somewhere-else.jpg',
       imageAlt: 'Najesty interior design project',
     },
     {
       id: 'decoration',
       slug: 'decoration',
-      title: 'Decorating',
-      metaTitle: 'Interior Decorating Within Your Budget in Canada | Najesty',
+      title: 'Decoration',
+      metaTitle: 'Interior decoration — Najesty',
       metaDescription:
-        'Colours, textures, furniture and objects: a home that feels like you, without buying everything new. Remote across Canada, Europe and Africa, or on-site in Canada. Free 15-min call.',
-      intro:
-        'Just moved in, or your décor no longer feels like you? We create a cohesive, warm home without replacing everything.',
-      body: 'Colours, textures, furniture, lighting and objects: we choose what works together and keep what you already love. The result: a home that feels like you and fits your budget.',
-      forYouTitle: 'This is for you if…',
-      forYou: [
-        'you just moved in and don’t know where to start;',
-        'your furniture is mismatched and you want a cohesive whole;',
-        'you want a new look without replacing everything.',
-      ],
-      includesTitle: 'What you get',
-      includes: [
-        'A moodboard with colours, materials and atmosphere',
-        'A clear shopping list, within your budget',
-        'Sourcing and shopping, if you wish',
-        'Optional in Canada: on-site installation and styling',
-      ],
-      projectsLabel: 'Decorating projects',
-      ctaLabel: 'Book my free call (15 min)',
+        'Thoughtful, emotional decoration: place identity, materials and styling within your budget.',
+      intro: 'More than pretty décor: the identity of the place, every day.',
+      body: 'Colors, textures, furniture and objects: we decorate with craft so the emotion lasts — without buying everything again, without improvisation.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Talk decoration',
       image: '/images/work/05-brise.jpg',
-      imageAlt: 'Interior decorating by Najesty',
+      imageAlt: 'Interior decoration by Najesty',
     },
     {
       id: 'home-staging',
       slug: 'home-staging',
       title: 'Home staging',
-      metaTitle: 'Home Staging to Sell Your Home in Canada | Najesty',
+      metaTitle: 'Home staging Canada — Najesty',
       metaDescription:
-        'Selling your house or condo? Decluttering, lighting, styling and photos for a listing that makes buyers want to visit. Free 15-min call.',
-      intro:
-        'Putting your property on the market? We prepare it to make a great first impression, starting with the listing photos.',
-      body: 'We declutter, improve the lighting and stage the key rooms so buyers can picture themselves there. We can also photograph the result for your listing.',
-      forYouTitle: 'This is for you if…',
-      forYou: [
-        'you’re selling your house or condo;',
-        'your property is empty, cluttered or not showing well;',
-        'you want listing photos that make people want to visit.',
-      ],
-      includesTitle: 'What you get',
-      includes: [
-        'A clear direction for each key room',
-        'Decluttering and staging of the key rooms',
-        'On-site styling in Canada',
-        'Interior photos for your listing (optional)',
-      ],
-      projectsLabel: 'Home staging projects',
-      ctaLabel: 'Book my free call (15 min)',
+        'Home staging to sell better: first glance, clear circulation, emotion that converts.',
+      intro: 'Prepare the place so it sells — and so it feels right.',
+      body: 'Declutter, light, targeted styling: Najesty home staging puts emotion at the service of the listing, with a clear image for marketing.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Prepare a sale',
       image: '/images/work/07-seconde-vie.jpg',
       imageAlt: 'Home staging by Najesty',
     },
@@ -332,116 +204,79 @@ export const en: SiteContent = {
       id: 'photographie',
       slug: 'photography',
       title: 'Photography',
-      metaTitle: 'Interior Photographer in Canada | Najesty',
+      metaTitle: 'Interior photography — Najesty',
       metaDescription:
-        'Polished interior photos for a real estate listing, a website or social media. On-site shoot in Canada. Free 15-min call.',
-      intro: 'Need beautiful photos of your space? We take them with a designer’s eye.',
-      body: 'Light, framing and details: we photograph your interior so it looks as good online as it does in person. Useful to sell, rent, present your business or keep a record of your project.',
-      forYouTitle: 'This is for you if…',
-      forYou: [
-        'you’re preparing a sale or rental listing;',
-        'you want to show your place on your website or social media;',
-        'you just finished a project and want to show it off.',
-      ],
-      includesTitle: 'What you get',
-      includes: [
-        'An on-site photo shoot in Canada',
-        'Images ready for the web and listings',
-      ],
-      projectsLabel: 'Photography projects',
-      ctaLabel: 'Book my free call (15 min)',
+        'Space photography: images that tell the feeling of the place for web, sales or brand.',
+      intro: 'The image that carries how the space feels.',
+      body: 'Light, framing, detail: photography designed for design and decoration — useful to sell, publish or document the project.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Book a shoot',
       image: '/images/work/09-bon-coup.jpg',
-      imageAlt: 'Najesty interior photography',
+      imageAlt: 'Interior photography by Najesty',
     },
     {
       id: 'sourcing',
       slug: 'sourcing',
       title: 'Sourcing and shopping',
-      metaTitle: 'Furniture & Décor Sourcing and Shopping | Najesty',
+      metaTitle: 'Decoration sourcing — Najesty',
       metaDescription:
-        'No time to shop? We find the right furniture and décor within your budget and give you a clear shopping list. Remote across Canada, Europe and Africa.',
-      intro:
-        'No time to shop, or afraid of getting it wrong? We find the right furniture and décor for you, within your budget.',
-      body: 'We select pieces that match the chosen direction, with alternatives for your budget. You get a clear shopping list — or we do the shopping for you. Nothing unnecessary, nothing random.',
-      forYouTitle: 'This is for you if…',
-      forYou: [
-        'you don’t have time to go shopping;',
-        'you’re torn between pieces and afraid of making a mistake;',
-        'you want to stick to a precise budget.',
-      ],
-      includesTitle: 'What you get',
-      includes: [
-        'A shopping list with alternatives',
-        'Choices that fit your budget',
-        'Shopping done for you, if you wish',
-      ],
-      projectsLabel: 'Projects with sourcing',
-      ctaLabel: 'Book my free call (15 min)',
+        'Decoration sourcing and shopping: lucid choices, Canadian partners, respected budget.',
+      intro: 'Find what fits — not too much, not at random.',
+      body: 'Shopping lists, alternatives, targeted sourcing with our partners: we buy to match the direction and the budget, without useless stock.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Start a sourcing',
       image: '/images/work/02-longue-vie.jpg',
-      imageAlt: 'Najesty décor sourcing',
+      imageAlt: 'Decoration sourcing by Najesty',
     },
     {
       id: 'mise-en-place',
       slug: 'styling',
-      title: 'Installation and styling',
-      metaTitle: 'On-site Interior Installation & Styling in Canada | Najesty',
+      title: 'Styling and installation',
+      metaTitle: 'Styling and installation — Najesty',
       metaDescription:
-        'Everything is bought, now it needs setting up? We handle installation, styling and final details, on-site in Canada. Free 15-min call.',
-      intro:
-        'Everything is bought but nothing is in place? We install, style and handle the final details.',
-      body: 'On-site in Canada: we place the furniture, hang, arrange the objects and adjust until everything is right. Remotely: we give you a clear set-up plan to do it yourself.',
-      forYouTitle: 'This is for you if…',
-      forYou: [
-        'your purchases have arrived and you don’t know how to arrange them;',
-        'you’re preparing a sale, a photo shoot or an event;',
-        'you want a finished result without spending your weekends on it.',
-      ],
-      includesTitle: 'What you get',
-      includes: [
-        'On-site installation and styling in Canada',
-        'A set-up plan if you’re remote',
-        'Photos of the result (optional)',
-      ],
-      projectsLabel: 'Installation projects',
-      ctaLabel: 'Book my free call (15 min)',
+        'On-site styling and installation in Canada: install, refine, make the space feel right.',
+      intro: 'Turn the plan into a lived-in place.',
+      body: 'On site in Canada: installation, styling, finishing touches. Remotely: clear direction so the scene stays true to the project’s emotion.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Plan an installation',
       image: '/images/work/04-night.jpg',
-      imageAlt: 'Installation and styling by Najesty',
+      imageAlt: 'Styling and installation by Najesty',
     },
   ],
   atelierPage: {
-    marquee: 'OUR SERVICES',
+    marquee: 'THE STUDIO',
     intro:
-      'Najesty is an interior design and decorating studio. We make your space beautiful, practical and calming — within your budget.',
+      'An interior design and decoration studio: making spaces livable, productive and calm',
     body1:
-      'Remote across Canada, Europe and Africa: moodboards, layout plans, shopping lists and sourcing.',
+      'We shape interiors where you can breathe, work better, and truly feel at home. Atmosphere, flow, materials, sourcing: everything starts from how you live — and how the place feels.',
     body2:
-      'On-site in Canada: installation, styling and photography. You can combine both in one project.',
+      'Expertise and emotion, together. From direction to installation, we decorate with craft — beautiful, realistic, within your budget.',
     welcome: {
-      title: 'Who’s behind Najesty',
-      role: 'Eliahna, founder — Najesty Design & Pictures',
-      body: 'Eliahna founded Najesty on a belief: a space is felt before it is described. She designs practical, calming interiors that feel like you and fit your budget. In Canada: remote design and on-site styling. In Europe and Africa: remote design and sourcing.',
+      title: 'Welcome to the studio',
+      role: 'Founder — Design & Pictures',
+      body: 'Najesty starts from a belief: a space is felt before it is described. We make it livable, productive and calm — with expertise, real emotion, and a project that fits the budget. In Canada: remote design and on-site styling. In Europe and Africa: design and sourcing remotely.',
     },
     pillars: [
       {
-        title: 'Practical every day',
-        body: 'We start with how you live: a place calm enough to rest, clear enough to get things done, easy to maintain.',
+        title: 'Livable & productive',
+        body: 'A place built for your rhythm: calm enough to rest, clear enough to move — zen without emptiness.',
       },
       {
         title: 'Within your budget',
-        body: 'We decorate smart, without buying everything new. You know what’s included and what to plan for before you start.',
+        body: 'Decorate well, not too much. Realistic sourcing, lucid choices, clear packages — beauty without tearing everything out or buying it all again.',
       },
       {
-        title: 'See it before you buy',
-        body: 'Moodboard, layout plan and shopping list at each step: you approve the direction before spending.',
+        title: 'Expertise & emotion',
+        body: 'The craft of design and styling, with feeling at the centre — and a clear image at every step so you move forward calmly.',
       },
     ],
     welcomeImageAlt: 'Eliahna, founder of Najesty — portrait with reflection',
   },
   visionPage: {
     wordmark: 'HEART',
-    ticker: 'Interior design · Decorating · Home staging · Photography',
+    ticker: 'The heart of our expertise is space',
     video: '/videos/Najesty-Au-Coeur-3D.mp4',
-    sectionTitle: ['About', 'Najesty'],
+    sectionTitle: ['THE BRAND', 'AT HEART'],
     founder: {
       name: 'Eliahna',
       caption: 'Eliahna — founder',
@@ -467,16 +302,16 @@ export const en: SiteContent = {
     },
     blocks: [
       {
-        title: 'Your daily life first',
-        body: 'Before choosing a colour or a piece of furniture, we look at how you live: resting, working, hosting. The space has to work for you first.',
+        title: 'Strategy',
+        body: 'We read how you live so the space actually serves you: live, produce, recharge. A clear direction — livable, productive, calm — before a single purchase.',
       },
       {
-        title: 'A place that feels like you',
-        body: 'Not a catalogue look: a home where you feel good, with your tastes, your story and the things you love.',
+        title: 'Identity',
+        body: 'More than pretty décor: the identity of the place. What makes you feel good there — and keeps the emotion in everyday life.',
       },
       {
-        title: 'A realistic project',
-        body: 'Moodboard, layout plan, shopping list: you see where we’re going before spending. Everything is designed to fit your budget.',
+        title: 'Design',
+        body: 'Plans, materials, styling: the expertise to turn feeling into a real space — within your budget, without improvisation.',
       },
     ],
     quote: {
@@ -486,20 +321,12 @@ export const en: SiteContent = {
     faqTitle: 'Frequently asked questions',
   },
   contactPage: {
-    headline: 'Book your free 15-minute call',
-    lead: 'Tell us about your space in a few lines. We’ll get back to you to schedule a 15-minute call — free, no commitment.',
-    nextTitle: 'What happens next',
-    nextSteps: [
-      'We read your message and reply to schedule the call.',
-      'For 15 minutes, we talk about your space, your needs and your budget.',
-      'You leave with clear next steps — and a proposal if you’d like one.',
-    ],
-    emailLabel: 'Prefer to write directly?',
+    headline: 'Put your space at the heart:',
     email: 'bonjour@najesty.ca',
     addressLabel: 'Address',
     phoneLabel: 'Phone',
     regionLabel: 'Region',
-    formTitle: 'Tell us about your project',
+    formTitle: 'Write to us',
   },
   workItems: [
     {
@@ -509,7 +336,7 @@ export const en: SiteContent = {
       video: '/videos/Najesty-Logo-Construction.mp4',
       size: 'featured',
       description:
-        'A look at our work: interior design, decorating, home staging and photography — practical, calming spaces designed within our clients’ budgets.',
+        'Projects that embody Najesty: livable, productive, calm — expertise and emotion, within budget.',
       alt: 'Najesty signature projects — interior design and decoration',
     },
     {
@@ -518,7 +345,7 @@ export const en: SiteContent = {
       image: '/images/ceb/01-ordre-douceur.jpg?v=4',
       size: 'lg',
       description:
-        'Storage and decorating idea for a bookcase: order that stays soft, with shapes that calm everyday life.',
+        'Tidy without rigidity: an order that breathes, volumes that calm everyday life.',
       category: 'decoration',
       alt: 'Order & Softness — CEB bookshelf illustration',
     },
@@ -528,7 +355,7 @@ export const en: SiteContent = {
       image: '/images/ceb/02-chaque-chose.jpg?v=4',
       size: 'md',
       description:
-        'Closet set-up: every object gets its place, so finding things is easy every day.',
+        'Right storage: every object finds its gesture, its drawer, its place.',
       category: 'mise-en-place',
       alt: 'Everything in its Place — CEB closet illustration',
     },
@@ -538,7 +365,7 @@ export const en: SiteContent = {
       image: '/images/ceb/03-ranger-mieux-vivre.jpg?v=4',
       size: 'sm',
       description:
-        'Decluttering and organizing a dresser to lighten everyday life — the foundation of good home staging.',
+        'Organize well to lighten daily life — clearer, simpler, lighter.',
       category: 'home-staging',
       alt: 'Tidy to Live Better — CEB dresser illustration',
     },
@@ -548,7 +375,7 @@ export const en: SiteContent = {
       image: '/images/work/02-longue-vie.jpg',
       size: 'lg',
       description:
-        'Decorating with furniture and materials chosen to last, pieces you still love years later.',
+        'Furniture and materials chosen to last — what you will still love tomorrow.',
       category: 'decoration',
       alt: 'Long Life — lasting furniture and materials',
     },
@@ -558,7 +385,7 @@ export const en: SiteContent = {
       image: '/images/work/03-somewhere-else.jpg',
       size: 'md',
       description:
-        'Travel-inspired interior design: a residential interior that brings a feeling of elsewhere home.',
+        'An interior that evokes elsewhere — travel, destination, escape, at home.',
       category: 'interieur',
       alt: 'Somewhere Else — travel-inspired interior',
     },
@@ -568,7 +395,7 @@ export const en: SiteContent = {
       image: '/images/work/04-night.jpg',
       size: 'sm',
       description:
-        'Set-up and mood lighting for an evening: light, textures and décor for a memorable moment.',
+        'Stage the evening: light, texture and ambiance for a moment that sticks.',
       category: 'mise-en-place',
       alt: 'A Night to Remember — styling and ambient lighting',
     },
@@ -578,7 +405,7 @@ export const en: SiteContent = {
       image: '/images/work/05-brise.jpg',
       size: 'sm',
       description:
-        'Light, airy decorating: natural textures, light and rooms that breathe.',
+        'Light, airy decoration — summer freshness, rooms that breathe.',
       category: 'decoration',
       alt: 'Summer Breeze — light, airy decoration',
     },
@@ -588,7 +415,7 @@ export const en: SiteContent = {
       image: '/images/work/06-echos.jpg',
       size: 'sm',
       description:
-        'Interior design that reuses old furniture and family pieces instead of buying everything new.',
+        'Reuse old furniture and heritage pieces in the décor — the past living today.',
       category: 'interieur',
       alt: 'Echoes of the Past — reused antique furniture and heritage pieces',
     },
@@ -598,7 +425,7 @@ export const en: SiteContent = {
       image: '/images/work/07-seconde-vie.jpg',
       size: 'sm',
       description:
-        'A refresh without major renovation: a new room layout and a new atmosphere, notably for a sale.',
+        'Renovate without tearing everything out: a new reading of the room, path and mood.',
       category: 'home-staging',
       alt: 'Second Life — soft renovation and new reading of space',
     },
@@ -608,7 +435,7 @@ export const en: SiteContent = {
       image: '/images/work/08-gens.jpg',
       size: 'lg',
       description:
-        'Decorating that celebrates Canada and Québec — grounded décor, without folklore.',
+        'Root the décor in Canada and Québec — local presence, without folklore.',
       category: 'decoration',
       alt: 'People of the Land — Canada-rooted decoration',
     },
@@ -618,7 +445,7 @@ export const en: SiteContent = {
       image: '/images/work/09-bon-coup.jpg',
       size: 'md',
       description:
-        'Interior photography: the right piece, the right angle, the right light for an image that draws people in.',
+        'One precise move — the right piece, the right angle — for immediate impact.',
       category: 'photographie',
       alt: 'Right Move — one precise gesture in space photography',
     },
@@ -628,7 +455,7 @@ export const en: SiteContent = {
       image: '/images/work/10-next-level.jpg',
       size: 'sm',
       description:
-        'More ambitious interior design: layout and materials pushed further, always within a set budget.',
+        'Level up: more ambition in the space, the same emotional standard.',
       category: 'interieur',
       alt: 'Next Level — ambitious interior design',
     },
@@ -660,7 +487,7 @@ export const en: SiteContent = {
     },
     {
       id: 'decoration',
-      title: 'Decorating',
+      title: 'Decoration',
       projects: [
         {
           id: 'ordre-douceur',
@@ -744,7 +571,7 @@ export const en: SiteContent = {
     },
     {
       id: 'mise-en-place',
-      title: 'Installation and styling',
+      title: 'Styling',
       projects: [
         {
           id: 'chaque-chose',
@@ -901,98 +728,87 @@ export const en: SiteContent = {
     },
   ],
   workMeta: {
-    title: 'Interior Design & Decorating Projects | Najesty',
+    title: 'Work — Najesty | Interior design projects in Canada',
     description:
-      'See our interior design, decorating, home staging, photography and installation work. Have a similar project? Free 15-min call.',
-    sectorsTitle: 'Projects by sector | Najesty',
+      'Explore Najesty projects: interior design, decoration, home staging, photography and styling in Canada.',
+    sectorsTitle: 'Work · Sectors — Najesty',
     sectorsDescription:
       'Najesty projects by sector: residential, go-to-market, hospitality and signatures.',
-    heroMarquee: ['Our projects', 'Interior design', 'Decorating', 'Home staging'],
+    heroMarquee: ['Your space', 'You feel', "Let's talk"],
     heroLead:
-      'Here is what we have done for other spaces: interior design, decorating, home staging, photography and installation. Remote across Canada, Europe and Africa — on-site in Canada.',
-    heroCta: 'Book my free call (15 min)',
+      'Interiors you feel before you describe them — remote design across Canada, on-site styling when the place must truly come alive.',
+    heroCta: 'Free 15-min orientation',
     heroCtaHref: '/en/contact',
   },
   marqueeWords: [
-    'Interior design',
-    'Decorating',
-    'Home staging',
-    'Photography',
-    'Sourcing and shopping',
-    'Installation and styling',
-    'Remote: Canada, Europe, Africa',
-    'On-site in Canada',
+    'A home that breathes',
+    'Livable · productive · calm',
     'Within your budget',
-    'Free 15-min call',
+    'Expertise & real emotion',
+    'Free 15-min orientation',
+    'Let’s talk about your space',
+    'Design in Canada',
+    'Remote across Europe & Africa',
+    'Decorate right, not excess',
+    'From feeling to styling',
   ],
   contact: {
     title: 'Let’s talk about your space',
-    body: 'Book a free 15-minute call, no commitment. We talk about your space, your needs and your budget — and you leave with clear next steps. Canada, Europe or Africa.',
-    cta: 'Book my free call (15 min)',
+    body: 'A free 15-minute orientation. We clarify what would make your place more livable, productive and calm — and what fits the budget. Then: inspiration or full support. Canada, Europe or Africa: we start with a conversation.',
+    cta: 'Write to Najesty',
   },
   faq: [
     {
-      question: 'How much does a project with Najesty cost?',
+      question: 'What is Najesty?',
       answer:
-        'Every project is different, so we don’t list fixed prices. The fee depends on the size of the space, the services you choose and your budget. After the free 15-minute call, you receive a clear proposal, with no commitment.',
+        'Najesty Design & Pictures is a Canadian studio for interior design and decoration. Our philosophy: livable, productive, calm spaces — with expertise, real emotion, and a project that respects your budget.',
     },
     {
-      question: 'Is the 15-minute call really free?',
+      question: 'Does Najesty work remotely?',
       answer:
-        'Yes. It’s a no-commitment conversation to understand your project, your budget and the format that suits you. You leave with clear next steps, whether you work with us or not.',
-    },
-    {
-      question: 'Do you work remotely or on-site?',
-      answer:
-        'Both. Design, moodboards, layout plans, shopping lists and sourcing are done remotely anywhere in Canada, Europe and Africa. Installation, styling and photography are done on-site in Canada — ask us during the call whether your address is covered.',
-    },
-    {
-      question: 'What do I actually get?',
-      answer:
-        'Depending on the services you choose: a moodboard (the look), a layout plan, a shopping list within your budget and sourcing of the items. On-site in Canada, we add installation, styling and photos.',
-    },
-    {
-      question: 'Do I have to replace everything?',
-      answer:
-        'No. We start from what you already have and keep what you love. We only add what’s missing, to decorate smart and stay within budget.',
-    },
-    {
-      question: 'How long does a project take?',
-      answer:
-        'It depends on the size of the space, the services chosen and furniture availability. We set a realistic timeline together at the start of the project.',
+        'Yes. Design, moodboards and sourcing happen remotely across Canada, and with clients in Europe and Africa. Styling and installation happen on site in Canada — always with a clear image at every step.',
     },
     {
       question: 'What services does Najesty offer?',
       answer:
-        'Interior design, decorating, home staging, interior photography, sourcing and shopping, installation and styling. You can choose one service or combine them.',
+        'Interior design, decoration, home staging, photography, sourcing and installation — for a place that is beautiful, useful and calm, without going over budget.',
+    },
+    {
+      question: 'Remote design or on-site: which should I choose?',
+      answer:
+        'Remote design fits if you want plans, moodboards and shopping lists without travel. On-site styling in Canada adds installation and photography in the room. Many projects combine both.',
+    },
+    {
+      question: 'Is the site available in French?',
+      answer:
+        'Yes. Najesty publishes in French (Canada) and English. Use the language switcher in the header to move between versions.',
     },
   ],
   form: {
     namePlaceholder: 'Your name',
     emailPlaceholder: 'Your email',
     phonePlaceholder: 'Your phone',
-    messagePlaceholder:
-      'Your project in a few words: which room, which city, what you want to change, your approximate budget',
-    submit: 'Book my free call',
+    messagePlaceholder: 'Describe your space, your project, or what you would like to change',
+    submit: 'Send my message',
     sending: 'Sending…',
-    ok: 'Thank you! Your request has been received. We’ll reply shortly to schedule your 15-minute call.',
+    ok: 'Message received. We will reply shortly.',
     error: 'Sending failed for now. Email us at bonjour@najesty.ca.',
   },
   pages: {
     vision: {
-      title: 'About Najesty and Eliahna, Interior Designer | Najesty',
+      title: 'Vision — Najesty | Emotion at the heart of space',
       description:
-        'Najesty Design & Pictures, founded by Eliahna: practical, calming interior design and decorating within your budget. Remote across Canada, Europe and Africa.',
+        'Najesty’s vision: livable, productive, calm interiors — expertise, emotion and decoration within your budget. In Canada, and remotely in Europe and Africa.',
     },
     atelier: {
-      title: 'Interior Design, Decorating & Home Staging Services | Najesty',
+      title: 'Studio — Najesty | Interior design in Canada',
       description:
-        'Interior design, decorating, home staging, photography, sourcing and installation. Remote across Canada, Europe and Africa, on-site in Canada. Free 15-min call.',
+        'Najesty is a studio for interior design and decoration. Livable, productive, calm spaces — expertise and emotion, within your budget.',
     },
     contact: {
-      title: 'Book a Free 15-min Call | Najesty',
+      title: 'Contact — Najesty | Let’s talk about your space',
       description:
-        'Book a free, no-commitment 15-minute call to discuss your interior design, decorating or home staging project. Canada, Europe, Africa.',
+        'Contact Najesty for a free 15-minute orientation. Make your space livable, productive and calm — in Canada, and remotely in Europe and Africa.',
     },
     legal: {
       title: 'Legal notice — Najesty',
@@ -1002,53 +818,49 @@ export const en: SiteContent = {
       back: '← Back to home',
     },
     method: {
-      title: 'How It Works: Remote or On-site Interior Design | Najesty',
+      title: 'Method — Remote design vs on-site | Najesty',
       description:
-        'How a Najesty project works: free 15-min call, a proposal within your budget, moodboard, layout plan and shopping list, then on-site installation in Canada.',
-      h1: 'How it works',
-      lead: 'A Najesty project can be remote, on-site, or both. Either way, it starts with a free 15-minute call, no commitment.',
-      remoteTitle: 'Remote — anywhere in Canada, Europe and Africa',
+        'Compare remote interior design and on-site styling with Najesty. Canada first; Europe and Africa via remote design.',
+      h1: 'Remote design or on-site?',
+      lead: 'Two paths to the same result: a livable, productive, calm space. Remote design (Canada, Europe, Africa) and on-site styling in Canada — depending on what you need.',
+      remoteTitle: 'Remote design',
       remoteBody:
-        'Moodboards, layout plans, shopping lists and sourcing, approved with you online. You move forward with a clear direction, without travel, and decorate within your budget.',
-      localTitle: 'On-site — in Canada',
+        'Moodboards, plans, shopping lists and online approvals. Move forward with clarity — and decorate within budget — without travel.',
+      localTitle: 'On-site styling (Canada)',
       localBody:
-        'Installation, styling and photography right in your home. Ideal when being there matters: home staging, photo shoots, finishing touches.',
-      whoTitle: 'Which format should I choose?',
+        'Styling, installation and photography in the room. So the calm is truly felt — real light, textures, final gesture.',
+      whoTitle: 'Who is it for?',
       whoRemote:
-        'Remote if you live elsewhere in Canada, in Europe or in Africa, or if you want a clear plan to carry out yourself.',
+        'Homes and decision-makers in Canada outside the local zone; clients in Europe or Africa who want clear design direction remotely.',
       whoLocal:
-        'On-site if you’re selling your property, need photos, or would rather we install everything for you. The two formats are often combined.',
-      stepsTitle: 'The steps',
+        'Projects where presence matters: home staging, shoots, final installation in Canada.',
+      stepsTitle: 'How it works',
       steps: [
         {
-          title: '1. Free call (15 min)',
-          body: 'Tell us about your space, your needs and your budget. No commitment: you leave with clear next steps.',
+          title: '1. Orientation (15 min)',
+          body: 'We clarify uses, budget and what would make the place calmer — no commitment.',
         },
         {
-          title: '2. Proposal',
-          body: 'We suggest the format that fits your budget: remote, on-site, or both. You know what’s included before you say yes.',
+          title: '2. Design',
+          body: 'Emotional direction, plans, sourcing. Expertise and emotion, with a clear image at every milestone.',
         },
         {
-          title: '3. Design',
-          body: 'Moodboard, layout plan and shopping list. We do the sourcing and shopping for you. You approve before spending.',
-        },
-        {
-          title: '4. Installation (in Canada)',
-          body: 'On-site: installation, styling and photography. Remotely: a clear set-up plan, step by step.',
+          title: '3. On-site (if local)',
+          body: 'In Canada: styling, installation, photography — the place becomes truly livable.',
         },
       ],
-      ctaTitle: 'Not sure which format to choose?',
+      ctaTitle: 'Not sure which format?',
       ctaBody:
-        'That’s exactly what the free call is for: in 15 minutes, we tell you whether remote, on-site or both fits your project and your budget.',
-      cta: 'Book my free call (15 min)',
+        'Write to us. In one orientation we will say whether remote, on-site, or both fits.',
+      cta: 'Request an orientation',
     },
     blog: {
-      title: 'Interior Design & Decorating Blog: Practical Tips | Najesty',
+      title: 'Blog — Najesty | Interior design & decoration',
       description:
-        'Practical interior design, decorating, home staging and sourcing tips for your home in Canada, Europe or Africa.',
+        'Najesty guides for Canadian homes, sellers, hospitality, and clients in Europe and Africa: remote design, decoration, home staging, sourcing.',
       eyebrow: 'Najesty Blog',
-      h1: 'Interior design and decorating tips',
-      lead: 'Simple guides to better arrange, decorate or sell your home — and to know when remote design is a good idea.',
+      h1: 'Design you can read — and feel',
+      lead: '25 articles for our audiences: Canadian homes, new owners, sellers, hospitality, and remote Europe & Africa projects.',
       listLabel: 'Blog articles',
       readMore: 'Read article',
       backToBlog: '← Blog',

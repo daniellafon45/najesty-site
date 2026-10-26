@@ -1,8 +1,195 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HomeContent from '../components/HomeContent.astro';
+import Hero from '../components/Hero';
+import Manifesto from '../components/Manifesto';
+import FeaturedCarousel from '../components/FeaturedCarousel';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteCtaBand from '../components/SiteCtaBand.astro';
+import { getContent } from '../data';
+
+const content = getContent('fr');
+const { ctas } = content;
+const featured = content.workItems.find((w) => w.size === 'featured')!;
+const rest = content.workItems.filter((w) => w.size !== 'featured');
+const gridSlots = [
+  'work__item--lg',
+  'work__item--md',
+  'work__item--sm',
+  'work__item--sm',
+  'work__item--sm',
+  'work__item--sm work__row-offset-left',
+  'work__item--lg work__row-offset-right',
+  'work__item--md',
+  'work__item--sm work__row-offset-right-sm',
+  'work__item--lg',
+  'work__item--md',
+  'work__item--sm work__row-offset-right-sm',
+] as const;
+const grid = rest.map((item, i) => ({
+  item,
+  className: gridSlots[i] ?? 'work__item--sm',
+}));
 ---
 
-<BaseLayout locale="fr" activePath="/" includeFaqSchema>
-  <HomeContent locale="fr" />
+<BaseLayout locale="fr" activePath="/">
+  <Hero
+    client:load
+    slides={content.heroSlides}
+    seoH1={content.heroSeoH1}
+    scrollLabel={content.ui.scrollVision}
+    primaryCta={ctas.primary}
+    primaryHref={ctas.primaryHref}
+    secondaryCta={ctas.secondary}
+    secondaryHref={ctas.secondaryHref}
+  />
+
+  <Manifesto
+    client:visible
+    lines={content.manifesto.lines}
+    cta={content.manifesto.cta}
+    ctaHref={content.manifesto.ctaHref}
+    secondaryCta={content.manifesto.secondaryCta}
+    secondaryCtaHref={content.manifesto.secondaryCtaHref}
+  />
+
+  <section class="work" id="work" data-node-id="1:307">
+    <div class="work__grid">
+      <a
+        class="work__item work__item--featured"
+        href="/work"
+        id={`work-${featured.id}`}
+        data-cursor="view"
+        data-cursor-label={featured.name}
+      >
+        <div class="work__featured-copy">
+          <h2 class="work__title">{featured.name}</h2>
+          {
+            featured.description && (
+              <p class="work__desc work__desc--featured">{featured.description}</p>
+            )
+          }
+        </div>
+        <div class="work__frame">
+          {
+            featured.video ? (
+              <FeaturedCarousel
+                client:visible
+                image={featured.image}
+                video={featured.video}
+                alt={featured.alt}
+              />
+            ) : (
+              <img src={featured.image} alt={featured.alt} loading="eager" />
+            )
+          }
+          <span class="work__go" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+              <path
+                d="M5 12h12M13 6l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      {
+        grid.map(({ item, className }) => (
+          <a
+            class={`work__item ${className}`}
+            href={`/work#${item.id}`}
+            id={`work-${item.id}`}
+            data-cursor="view"
+            data-cursor-label={item.name}
+          >
+            <div class="work__frame">
+              <img src={item.image} alt={item.alt} loading="lazy" />
+              <span class="work__go" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+                  <path
+                    d="M5 12h12M13 6l6 6-6 6"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </div>
+            <div class="work__meta">
+              <h3 class="work__name">{item.name}</h3>
+              {item.description && <p class="work__desc">{item.description}</p>}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="atelier" id="atelier">
+    <div class="atelier__inner">
+      <h2>{content.atelier.title}</h2>
+      <div>
+        <p>{content.atelier.body}</p>
+        <ul>
+          {
+            content.atelier.services.map((s) => (
+              <li>
+                <a href={s.href}>{s.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="atelier__actions">
+          <a class="atelier__cta atelier__cta--primary" href={ctas.primaryHref}>
+            {ctas.primary} →
+          </a>
+          <a class="atelier__cta" href={ctas.atelierHref}>
+            {ctas.atelierDiscover} →
+          </a>
+          <a class="atelier__cta" href={ctas.methodHref}>
+            {ctas.methodDiscover} →
+          </a>
+        </p>
+      </div>
+    </div>
+    <div class="atelier__partners">
+      <p class="atelier__partners-label">{content.atelier.partnersLabel}</p>
+      <ul class="atelier__partners-list">
+        {
+          content.atelier.partners.map((partner) => (
+            <li>
+              <a
+                href={partner.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${partner.name} (site officiel)`}
+              >
+                <img
+                  src={partner.logo}
+                  alt=""
+                  loading="lazy"
+                  width={280}
+                  height={72}
+                  decoding="async"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <SiteCtaBand
+    title={ctas.bandTitle}
+    body={ctas.bandBody}
+    primary={ctas.primary}
+    primaryHref={ctas.primaryHref}
+    secondary={ctas.secondary}
+    secondaryHref={ctas.secondaryHref}
+  />
+
+  <SiteFooter locale="fr" />
 </BaseLayout>

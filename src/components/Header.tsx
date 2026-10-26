@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Locale } from '../data/types';
-/* Styles clarté/conversion (chargés après global.css via BaseLayout) */
-import '../styles/conversion.css';
 
-type NavItem = { label: string; href: string; cta?: boolean };
+type NavItem = { label: string; href: string };
 
 type Props = {
   forceLight?: boolean;
@@ -82,11 +80,7 @@ export default function Header({
             <a
               key={item.href}
               href={item.href}
-              className={
-                [isActive(item.href) ? 'is-active' : '', item.cta ? 'site-nav__cta' : '']
-                  .filter(Boolean)
-                  .join(' ') || undefined
-              }
+              className={isActive(item.href) ? 'is-active' : undefined}
               aria-current={isActive(item.href) ? 'page' : undefined}
               onClick={() => setOpen(false)}
             >
@@ -137,7 +131,6 @@ export default function Header({
               <a
                 key={item.href}
                 href={item.href}
-                className={item.cta ? 'site-nav__overlay-cta' : undefined}
                 onClick={() => setOpen(false)}
                 style={{
                   color: 'var(--cream)',

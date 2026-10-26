@@ -31,7 +31,7 @@ const related =
 
 <BaseLayout
   locale="fr"
-  title={category ? `${item.name} — ${category.title} | Najesty` : `${item.name} | Najesty`}
+  title={`${item.name} — Najesty`}
   description={
     item.description ??
     `Projet ${item.name} par Najesty — design d'intérieur et décoration au Canada.`
@@ -43,7 +43,7 @@ const related =
   <main class="page-project">
     <div class="page-project__hero container">
       <p class="page-project__crumb">
-        <a href="/work">Projets</a>
+        <a href="/work">Work</a>
         {
           category && (
             <>
@@ -70,6 +70,8 @@ const related =
         <h2>{ui.expertises}</h2>
         <ul>
           <li>{category?.title ?? content.atelier.services[0]?.label}</li>
+          <li>{content.atelier.services[1]?.label}</li>
+          <li>{content.atelierPage.pillars[2].title}</li>
         </ul>
         <a class="page-project__cta" href="/contact">{ui.talkCta}</a>
       </div>
