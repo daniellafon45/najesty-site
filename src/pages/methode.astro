@@ -56,7 +56,8 @@ const m = content.pages.method;
     <section class="page-method__cta container">
       <h2>{m.ctaTitle}</h2>
       <p>{m.ctaBody}</p>
-      <a class="page-method__btn" href="/contact">{m.cta} →</a>
+      <a class="cv-btn cv-btn--primary" href={content.ctas.primaryHref} data-cursor="cta">{m.cta}</a>
+      <p class="cv-reassure page-method__reassure">{content.ctas.reassurance}</p>
     </section>
   </main>
 
