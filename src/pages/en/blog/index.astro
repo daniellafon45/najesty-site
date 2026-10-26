@@ -13,7 +13,7 @@ import { listKvBlogPosts } from '../../../lib/admin/content';
 
 const locale = 'en' as const;
 const content = getContent(locale);
-const kvPosts = await listKvBlogPosts(Astro.locals, locale);
+const kvPosts = await listKvBlogPosts(locale);
 const posts = mergeBlogPosts(locale, kvPosts);
 const meta = content.pages.blog;
 ---

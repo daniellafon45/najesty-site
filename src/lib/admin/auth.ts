@@ -1,4 +1,5 @@
 import type { APIContext } from 'astro';
+import { adminPassword, contentKv } from './env';
 import { randomToken, sha256Hex, timingSafeEqualString } from './crypto';
 
 export const ADMIN_COOKIE = 'najesty_admin';
@@ -10,14 +11,6 @@ type SessionRecord = {
   csrf: string;
   createdAt: number;
 };
-
-function getContentKv(locals: App.Locals): KVNamespace | null {
-  return locals.runtime?.env?.CONTENT ?? null;
-}
-
-function getAdminPassword(locals: App.Locals): string {
-  return locals.runtime?.env?.ADMIN_PASSWORD ?? '';
-}
 
 export function parseCookies(header: string | null): Record<string, string> {
   if (!header) return {};
@@ -62,10 +55,9 @@ function clientIp(request: Request): string {
 }
 
 export async function checkLoginRateLimit(
-  locals: App.Locals,
   request: Request,
 ): Promise<{ ok: boolean; remaining: number }> {
-  const kv = getContentKv(locals);
+  const kv = contentKv();
   if (!kv) return { ok: false, remaining: 0 };
   const key = `admin:ratelimit:${clientIp(request)}`;
   const raw = await kv.get(key);
@@ -74,8 +66,8 @@ export async function checkLoginRateLimit(
   return { ok: true, remaining: RATE_LIMIT_MAX - count };
 }
 
-export async function bumpLoginRateLimit(locals: App.Locals, request: Request): Promise<void> {
-  const kv = getContentKv(locals);
+export async function bumpLoginRateLimit(request: Request): Promise<void> {
+  const kv = contentKv();
   if (!kv) return;
   const key = `admin:ratelimit:${clientIp(request)}`;
   const raw = await kv.get(key);
@@ -83,20 +75,17 @@ export async function bumpLoginRateLimit(locals: App.Locals, request: Request): 
   await kv.put(key, String(count + 1), { expirationTtl: RATE_LIMIT_WINDOW });
 }
 
-export async function verifyAdminPassword(
-  locals: App.Locals,
-  password: string,
-): Promise<boolean> {
-  const expected = getAdminPassword(locals);
+export async function verifyAdminPassword(password: string): Promise<boolean> {
+  const expected = adminPassword();
   if (!expected || !password) return false;
   return timingSafeEqualString(password, expected);
 }
 
-export async function createAdminSession(locals: App.Locals): Promise<{
+export async function createAdminSession(): Promise<{
   token: string;
   csrf: string;
 } | null> {
-  const kv = getContentKv(locals);
+  const kv = contentKv();
   if (!kv) return null;
   const token = randomToken(32);
   const csrf = randomToken(24);
@@ -108,21 +97,17 @@ export async function createAdminSession(locals: App.Locals): Promise<{
   return { token, csrf };
 }
 
-export async function destroyAdminSession(
-  locals: App.Locals,
-  token: string | undefined,
-): Promise<void> {
-  const kv = getContentKv(locals);
+export async function destroyAdminSession(token: string | undefined): Promise<void> {
+  const kv = contentKv();
   if (!kv || !token) return;
   const tokenHash = await sha256Hex(token);
   await kv.delete(`admin:session:${tokenHash}`);
 }
 
 export async function readAdminSession(
-  locals: App.Locals,
   request: Request,
 ): Promise<{ token: string; csrf: string } | null> {
-  const kv = getContentKv(locals);
+  const kv = contentKv();
   if (!kv) return null;
   const cookies = parseCookies(request.headers.get('cookie'));
   const token = cookies[ADMIN_COOKIE];
@@ -140,9 +125,9 @@ export async function readAdminSession(
 }
 
 export async function requireAdminSession(
-  context: Pick<APIContext, 'locals' | 'request'>,
+  context: Pick<APIContext, 'request'>,
 ): Promise<{ token: string; csrf: string } | null> {
-  return readAdminSession(context.locals, context.request);
+  return readAdminSession(context.request);
 }
 
 export function assertCsrf(sessionCsrf: string, provided: string | null | undefined): boolean {

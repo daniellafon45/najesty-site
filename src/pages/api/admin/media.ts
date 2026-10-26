@@ -24,7 +24,7 @@ function json(data: unknown, status = 200) {
 export const GET: APIRoute = async (context) => {
   const session = await requireAdminSession(context);
   if (!session) return json({ ok: false, error: 'unauthorized' }, 401);
-  const items = await listMedia(context.locals);
+  const items = await listMedia();
   return json({
     ok: true,
     csrf: session.csrf,
@@ -56,7 +56,7 @@ export const POST: APIRoute = async (context) => {
     createdAt: new Date().toISOString(),
     size: file.size,
   };
-  await saveMedia(context.locals, meta, bytes);
+  await saveMedia(meta, bytes);
   return json({ ok: true, item: { ...meta, url: mediaPublicUrl(id) } });
 };
 
@@ -75,6 +75,6 @@ export const DELETE: APIRoute = async (context) => {
   }
   const id = String(body.id ?? '').replace(/[^a-f0-9]/gi, '');
   if (!id) return json({ ok: false, error: 'validation' }, 400);
-  await deleteMedia(context.locals, id);
+  await deleteMedia(id);
   return json({ ok: true });
 };

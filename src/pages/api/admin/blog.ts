@@ -71,10 +71,10 @@ export const GET: APIRoute = async (context) => {
   const locale = (context.url.searchParams.get('locale') === 'en' ? 'en' : 'fr') as BlogLocale;
   const slug = context.url.searchParams.get('slug');
   if (slug) {
-    const post = await getKvBlogPost(context.locals, locale, slug);
+    const post = await getKvBlogPost(locale, slug);
     return json({ ok: true, post, csrf: session.csrf });
   }
-  const posts = await listKvBlogPosts(context.locals, locale);
+  const posts = await listKvBlogPosts(locale);
   return json({ ok: true, posts, csrf: session.csrf });
 };
 
@@ -97,7 +97,7 @@ export const POST: APIRoute = async (context) => {
   const post = normalizePost(body.post as Partial<BlogPost>, locale);
   if (!post) return json({ ok: false, error: 'validation' }, 400);
 
-  await saveKvBlogPost(context.locals, post);
+  await saveKvBlogPost(post);
   return json({ ok: true, post });
 };
 
@@ -122,6 +122,6 @@ export const DELETE: APIRoute = async (context) => {
     .toLowerCase();
   if (!slug || !SLUG_RE.test(slug)) return json({ ok: false, error: 'validation' }, 400);
 
-  await deleteKvBlogPost(context.locals, locale, slug);
+  await deleteKvBlogPost(locale, slug);
   return json({ ok: true });
 };

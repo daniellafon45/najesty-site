@@ -2,7 +2,7 @@
 import '../../styles/global.css';
 import { readAdminSession } from '../../lib/admin/auth';
 
-const session = await readAdminSession(Astro.locals, Astro.request);
+const session = await readAdminSession(Astro.request);
 if (session) {
   return Astro.redirect('/n_admin');
 }

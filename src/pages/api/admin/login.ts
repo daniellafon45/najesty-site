@@ -13,7 +13,7 @@ const jsonHeaders = {
   'Cache-Control': 'no-store',
 };
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   const secure = new URL(request.url).protocol === 'https:';
 
   if (!request.headers.get('content-type')?.includes('application/json')) {
@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   }
 
-  const rate = await checkLoginRateLimit(locals, request);
+  const rate = await checkLoginRateLimit(request);
   if (!rate.ok) {
     return new Response(JSON.stringify({ ok: false, error: 'rate_limit' }), {
       status: 429,
@@ -42,9 +42,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   }
 
-  const valid = await verifyAdminPassword(locals, password);
+  const valid = await verifyAdminPassword(password);
   if (!valid) {
-    await bumpLoginRateLimit(locals, request);
+    await bumpLoginRateLimit(request);
     return new Response(JSON.stringify({ ok: false, error: 'credentials' }), {
       status: 401,
       headers: {
@@ -54,7 +54,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   }
 
-  const session = await createAdminSession(locals);
+  const session = await createAdminSession();
   if (!session) {
     return new Response(JSON.stringify({ ok: false, error: 'kv' }), {
       status: 503,

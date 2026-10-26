@@ -21,7 +21,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
 
-  const session = await readAdminSession(context.locals, context.request);
+  const session = await readAdminSession(context.request);
   if (!session) {
     if (isAdminApi) {
       return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), {

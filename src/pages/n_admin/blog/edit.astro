@@ -4,11 +4,11 @@ import { getKvBlogPost } from '../../../lib/admin/content';
 import { readAdminSession } from '../../../lib/admin/auth';
 import type { BlogLocale } from '../../../data/blog/types';
 
-const session = await readAdminSession(Astro.locals, Astro.request);
+const session = await readAdminSession(Astro.request);
 const csrf = session?.csrf ?? '';
 const locale = (Astro.url.searchParams.get('locale') === 'en' ? 'en' : 'fr') as BlogLocale;
 const slugParam = Astro.url.searchParams.get('slug') ?? '';
-const existing = slugParam ? await getKvBlogPost(Astro.locals, locale, slugParam) : null;
+const existing = slugParam ? await getKvBlogPost(locale, slugParam) : null;
 ---
 
 <AdminLayout title={existing ? 'Éditer article' : 'Nouvel article'} active="blog">

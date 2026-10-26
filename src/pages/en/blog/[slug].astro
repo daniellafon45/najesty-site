@@ -19,8 +19,8 @@ const locale = 'en' as const;
 const content = getContent(locale);
 const meta = content.pages.blog;
 const { slug } = Astro.params;
-const kvPosts = await listKvBlogPosts(Astro.locals, locale);
-const kvPostsFr = await listKvBlogPosts(Astro.locals, 'fr');
+const kvPosts = await listKvBlogPosts(locale);
+const kvPostsFr = await listKvBlogPosts('fr');
 const posts = mergeBlogPosts(locale, kvPosts);
 const post = resolveBlogPost(locale, slug!, kvPosts);
 

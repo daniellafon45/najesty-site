@@ -3,10 +3,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 import { listKvBlogPosts } from '../../../lib/admin/content';
 import { readAdminSession } from '../../../lib/admin/auth';
 
-const session = await readAdminSession(Astro.locals, Astro.request);
+const session = await readAdminSession(Astro.request);
 const csrf = session?.csrf ?? '';
-const frPosts = await listKvBlogPosts(Astro.locals, 'fr');
-const enPosts = await listKvBlogPosts(Astro.locals, 'en');
+const frPosts = await listKvBlogPosts('fr');
+const enPosts = await listKvBlogPosts('en');
 ---
 
 <AdminLayout title="Blogues" active="blog">

@@ -14,3 +14,7 @@ declare namespace App {
     };
   }
 }
+
+declare module 'cloudflare:workers' {
+  export const env: Env;
+}

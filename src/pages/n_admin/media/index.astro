@@ -3,9 +3,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 import { listMedia, mediaPublicUrl } from '../../../lib/admin/content';
 import { readAdminSession } from '../../../lib/admin/auth';
 
-const session = await readAdminSession(Astro.locals, Astro.request);
+const session = await readAdminSession(Astro.request);
 const csrf = session?.csrf ?? '';
-const items = await listMedia(Astro.locals);
+const items = await listMedia();
 ---
 
 <AdminLayout title="Photos" active="media">
