@@ -26,7 +26,7 @@ const { title, active = 'dashboard' } = Astro.props;
           <a href="/n_admin" class={active === 'dashboard' ? 'is-active' : undefined}>Tableau</a>
           <a href="/n_admin/blog" class={active === 'blog' ? 'is-active' : undefined}>Blogues</a>
           <a href="/n_admin/media" class={active === 'media' ? 'is-active' : undefined}>Photos</a>
-          <button type="button" id="admin-logout" class="admin-btn" style="padding:0.35rem 0.7rem;font-size:0.75rem;">
+          <button type="button" id="admin-logout" class="admin-btn" style="padding:0.35rem 0.7rem;font-size:0.75rem;color:#fff;-webkit-text-fill-color:#fff;">
             Déconnexion
           </button>
         </nav>
@@ -41,5 +41,16 @@ const { title, active = 'dashboard' } = Astro.props;
         window.location.href = '/n_admin/login';
       });
     </script>
+    <style is:global>
+      /* Contraste forcé : les liens admin héritent sinon du texte sombre */
+      .admin-shell a.admin-btn:not(.admin-btn--ghost) {
+        color: #fff !important;
+        -webkit-text-fill-color: #fff;
+      }
+      .admin-shell a.admin-btn--ghost {
+        color: #111 !important;
+        -webkit-text-fill-color: #111;
+      }
+    </style>
   </body>
 </html>

@@ -1,16 +1,57 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const welcomePhotos = [
+  {
+    src: '/images/admin/eliahna-welcome-01.png',
+    alt: 'Eliahna — portrait au reflet',
+  },
+  {
+    src: '/images/admin/eliahna-welcome-02.png',
+    alt: 'Eliahna dans la neige',
+  },
+  {
+    src: '/images/admin/eliahna-welcome-03.png',
+    alt: 'Eliahna à Venise',
+  },
+  {
+    src: '/images/admin/eliahna-welcome-04.png',
+    alt: 'Eliahna en route',
+  },
+];
 ---
 
 <AdminLayout title="Tableau de bord" active="dashboard">
-  <h1>Tableau de bord</h1>
+  <section class="admin-welcome" aria-labelledby="admin-welcome-title">
+    <div class="admin-welcome__photos" aria-hidden="true">
+      {
+        welcomePhotos.map((photo) => (
+          <figure class="admin-welcome__frame">
+            <img src={photo.src} alt="" loading="eager" width={320} height={400} />
+          </figure>
+        ))
+      }
+    </div>
+    <div class="admin-welcome__copy">
+      <p class="admin-welcome__eyebrow">Espace fondatrice</p>
+      <h1 id="admin-welcome-title">Bonjour Eliahna</h1>
+      <p class="admin-welcome__message">
+        Bienvenue dans ton atelier numérique. Ici tu peux publier un blogue, ajouter des photos et
+        faire vivre Najesty à ton rythme — avec le même soin que tu mets dans chaque espace.
+      </p>
+      <p class="admin-welcome__note">
+        Prends une minute, respire, puis choisis ce que tu veux faire aujourd’hui.
+      </p>
+    </div>
+  </section>
+
   <p class="admin-lead">Gérez les blogues et photos publiés via Cloudflare KV.</p>
 
   <div class="admin-card">
     <h2>Blogues</h2>
     <p>Créer, modifier ou supprimer des articles (FR/EN) stockés en KV — fusionnés au blog existant.</p>
     <p style="margin-top:1rem;">
-      <a class="admin-btn" href="/n_admin/blog">Ouvrir les blogues</a>
+      <a class="admin-btn" href="/n_admin/blog" style="color:#fff;-webkit-text-fill-color:#fff;">Ouvrir les blogues</a>
     </p>
   </div>
 
@@ -18,7 +59,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     <h2>Photos</h2>
     <p>Téléverser des images (JPEG/PNG/WebP, max 2 Mo) et récupérer leur URL publique.</p>
     <p style="margin-top:1rem;">
-      <a class="admin-btn" href="/n_admin/media">Ouvrir les photos</a>
+      <a class="admin-btn" href="/n_admin/media" style="color:#fff;-webkit-text-fill-color:#fff;">Ouvrir les photos</a>
     </p>
   </div>
 </AdminLayout>

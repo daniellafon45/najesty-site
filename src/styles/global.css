@@ -3116,7 +3116,7 @@ ul.atelier__partners-list a:focus-visible {
   font-family: Manrope, system-ui, sans-serif;
 }
 
-.admin-shell a {
+.admin-shell a:not(.admin-btn) {
   color: inherit;
 }
 
@@ -3166,6 +3166,68 @@ ul.atelier__partners-list a:focus-visible {
   color: var(--muted);
 }
 
+.admin-welcome {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+}
+
+.admin-welcome__photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.55rem;
+}
+
+.admin-welcome__frame {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #eeeae4;
+}
+
+.admin-welcome__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-welcome__eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.admin-welcome__copy h1 {
+  margin: 0 0 0.65rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.admin-welcome__message {
+  margin: 0 0 0.65rem;
+  max-width: 40rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.admin-welcome__note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .admin-welcome__photos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .admin-card {
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -3178,10 +3240,15 @@ ul.atelier__partners-list a:focus-visible {
   font-size: 1.15rem;
 }
 
-.admin-card p {
+.admin-card > p {
   margin: 0;
   color: var(--ink-soft);
   font-size: 0.95rem;
+}
+
+.admin-card .admin-btn {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
 }
 
 .admin-form {
@@ -3221,9 +3288,10 @@ ul.atelier__partners-list a:focus-visible {
   justify-content: center;
   font: inherit;
   padding: 0.7rem 1.1rem;
-  border: 0;
+  border: 1px solid #111;
   background: #111;
-  color: #fff;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
   cursor: pointer;
   text-decoration: none;
   width: fit-content;
@@ -3231,12 +3299,16 @@ ul.atelier__partners-list a:focus-visible {
 
 .admin-btn--ghost {
   background: transparent;
-  color: #111;
+  color: #111 !important;
+  -webkit-text-fill-color: #111;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .admin-btn--danger {
   background: #8b1e1e;
+  border-color: #8b1e1e;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
 }
 
 .admin-error {
