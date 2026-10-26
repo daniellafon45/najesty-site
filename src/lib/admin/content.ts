@@ -1,3 +1,4 @@
+import { getBlogPost, getBlogPosts, mergeBlogPosts } from '../../data/blog';
 import type { BlogLocale, BlogPost } from '../../data/blog/types';
 import { contentKv } from './env';
 
@@ -8,6 +9,36 @@ export type MediaMeta = {
   createdAt: string;
   size: number;
 };
+
+export type GallerySlide = {
+  src: string;
+  alt: string;
+};
+
+export type AdminBlogRow = BlogPost & {
+  source: 'static' | 'kv' | 'override';
+};
+
+const FOUNDER_GALLERY_KEY = 'gallery:founder';
+
+const DEFAULT_FOUNDER_SLIDES: GallerySlide[] = [
+  {
+    src: '/images/founder/eliahna-01-reflet.png',
+    alt: 'Eliahna, fondatrice de Najesty — portrait au reflet',
+  },
+  {
+    src: '/images/founder/eliahna-02-neige.png',
+    alt: 'Eliahna dans un paysage enneigé au Canada',
+  },
+  {
+    src: '/images/founder/eliahna-03-route.png',
+    alt: 'Eliahna au volant — portrait en noir et blanc',
+  },
+  {
+    src: '/images/founder/eliahna-04-venise.png',
+    alt: 'Eliahna souriante devant les gondoles à Venise',
+  },
+];
 
 export async function listKvBlogSlugs(locale: BlogLocale): Promise<string[]> {
   const store = contentKv();
@@ -47,6 +78,67 @@ export async function listKvBlogPosts(locale: BlogLocale): Promise<BlogPost[]> {
   return posts.sort(
     (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
   );
+}
+
+/** Static + KV for admin (KV wins on same slug). */
+export async function listAdminBlogPosts(
+  locale: BlogLocale,
+): Promise<AdminBlogRow[]> {
+  const kvPosts = await listKvBlogPosts(locale);
+  const kvSlugs = new Set(kvPosts.map((p) => p.slug));
+  const staticSlugs = new Set(getBlogPosts(locale).map((p) => p.slug));
+  return mergeBlogPosts(locale, kvPosts).map((post) => {
+    const inKv = kvSlugs.has(post.slug);
+    const inStatic = staticSlugs.has(post.slug);
+    const source: AdminBlogRow['source'] = inKv
+      ? inStatic
+        ? 'override'
+        : 'kv'
+      : 'static';
+    return { ...post, source };
+  });
+}
+
+export async function resolveAdminBlogPost(
+  locale: BlogLocale,
+  slug: string,
+): Promise<BlogPost | null> {
+  return (
+    (await getKvBlogPost(locale, slug)) ?? getBlogPost(locale, slug) ?? null
+  );
+}
+
+export async function getFounderGallery(): Promise<GallerySlide[]> {
+  const store = contentKv();
+  if (!store) return [...DEFAULT_FOUNDER_SLIDES];
+  const raw = await store.get(FOUNDER_GALLERY_KEY);
+  if (!raw) return [...DEFAULT_FOUNDER_SLIDES];
+  try {
+    const list = JSON.parse(raw) as GallerySlide[];
+    if (!Array.isArray(list) || list.length === 0) {
+      return [...DEFAULT_FOUNDER_SLIDES];
+    }
+    return list
+      .filter((s) => s && typeof s.src === 'string' && s.src.trim())
+      .map((s) => ({
+        src: String(s.src).trim(),
+        alt: String(s.alt ?? '').trim() || 'Photo Najesty',
+      }));
+  } catch {
+    return [...DEFAULT_FOUNDER_SLIDES];
+  }
+}
+
+export async function saveFounderGallery(slides: GallerySlide[]): Promise<void> {
+  const store = contentKv();
+  if (!store) throw new Error('CONTENT KV unavailable');
+  const cleaned = slides
+    .filter((s) => s && typeof s.src === 'string' && s.src.trim())
+    .map((s) => ({
+      src: String(s.src).trim(),
+      alt: String(s.alt ?? '').trim() || 'Photo Najesty',
+    }));
+  await store.put(FOUNDER_GALLERY_KEY, JSON.stringify(cleaned));
 }
 
 export async function saveKvBlogPost(post: BlogPost): Promise<void> {

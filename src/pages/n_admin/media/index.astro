@@ -1,17 +1,73 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { listMedia, mediaPublicUrl } from '../../../lib/admin/content';
+import {
+  getFounderGallery,
+  listMedia,
+  mediaPublicUrl,
+} from '../../../lib/admin/content';
 import { readAdminSession } from '../../../lib/admin/auth';
 
 const session = await readAdminSession(Astro.request);
 const csrf = session?.csrf ?? '';
 const items = await listMedia();
+const founderSlides = await getFounderGallery();
 ---
 
 <AdminLayout title="Photos" active="media">
   <h1>Photos</h1>
-  <p class="admin-lead">JPEG, PNG ou WebP — 2 Mo max. URL publique réutilisable dans les articles.</p>
+  <p class="admin-lead">
+    Téléversez des images (JPEG/PNG/WebP, 2 Mo max), puis ajoutez-les à la galerie fondatrice
+    (accueil admin + page Vision).
+  </p>
 
+  <section class="admin-card" style="margin-bottom:2rem;">
+    <h2>Galerie fondatrice</h2>
+    <p>
+      Ces photos apparaissent sur le tableau de bord admin et le carrousel Vision du site public.
+      Ajoutez une URL (téléversée ci-dessous ou chemin `/images/...`), réordonnez, enregistrez.
+    </p>
+
+    <div id="founder-gallery-editor" class="admin-gallery-editor">
+      {
+        founderSlides.map((slide, i) => (
+          <div class="admin-gallery-row" data-index={i}>
+            <img src={slide.src} alt="" width="72" height="90" />
+            <label>
+              URL
+              <input type="text" name="src" value={slide.src} />
+            </label>
+            <label>
+              Alt
+              <input type="text" name="alt" value={slide.alt} />
+            </label>
+            <div class="admin-actions">
+              <button type="button" class="admin-btn admin-btn--ghost js-gallery-up">↑</button>
+              <button type="button" class="admin-btn admin-btn--ghost js-gallery-down">↓</button>
+              <button type="button" class="admin-btn admin-btn--danger js-gallery-remove">
+                Retirer
+              </button>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="admin-actions" style="margin-top:1rem;">
+      <button type="button" id="gallery-add" class="admin-btn admin-btn--ghost">
+        + Ajouter une photo
+      </button>
+      <button
+        type="button"
+        id="gallery-save"
+        class="admin-btn"
+        style="color:#fff;-webkit-text-fill-color:#fff;">Enregistrer la galerie</button
+      >
+    </p>
+    <p class="admin-error" id="gallery-error" hidden></p>
+    <p class="admin-ok" id="gallery-ok" hidden>Galerie enregistrée.</p>
+  </section>
+
+  <h2 style="margin:0 0 0.75rem;font-size:1.1rem;">Téléverser une image</h2>
   <form class="admin-form" id="media-form" style="margin-bottom:2rem;">
     <input type="hidden" name="csrf" value={csrf} />
     <label>
@@ -23,32 +79,138 @@ const items = await listMedia();
       <input type="text" name="alt" placeholder="Description de l’image" />
     </label>
     <p class="admin-error" id="media-error" hidden></p>
-    <button type="submit">Téléverser</button>
+    <button type="submit" style="color:#fff;-webkit-text-fill-color:#fff;">Téléverser</button>
   </form>
 
+  <h2 style="margin:0 0 0.75rem;font-size:1.1rem;">Bibliothèque ({items.length})</h2>
   <div class="admin-media-grid">
     {
-      items.map((m) => (
-        <div class="admin-media-item">
-          <img src={mediaPublicUrl(m.id)} alt={m.alt} loading="lazy" />
-          <code>{mediaPublicUrl(m.id)}</code>
-          <p style="margin:0.35rem 0;font-size:0.8rem;">{m.alt}</p>
-          <button
-            type="button"
-            class="admin-btn admin-btn--danger js-delete-media"
-            data-id={m.id}
-            style="font-size:0.75rem;padding:0.4rem 0.6rem;"
-          >
-            Supprimer
-          </button>
-        </div>
-      ))
+      items.length === 0 ? (
+        <p class="admin-lead">Aucune image téléversée pour l’instant.</p>
+      ) : (
+        items.map((m) => (
+          <div class="admin-media-item">
+            <img src={mediaPublicUrl(m.id)} alt={m.alt} loading="lazy" />
+            <code>{mediaPublicUrl(m.id)}</code>
+            <p style="margin:0.35rem 0;font-size:0.8rem;">{m.alt}</p>
+            <div class="admin-actions">
+              <button
+                type="button"
+                class="admin-btn admin-btn--ghost js-use-in-gallery"
+                data-url={mediaPublicUrl(m.id)}
+                data-alt={m.alt}
+                style="font-size:0.75rem;padding:0.4rem 0.6rem;"
+              >
+                Ajouter à la galerie
+              </button>
+              <button
+                type="button"
+                class="admin-btn admin-btn--danger js-delete-media"
+                data-id={m.id}
+                style="font-size:0.75rem;padding:0.4rem 0.6rem;"
+              >
+                Supprimer
+              </button>
+            </div>
+          </div>
+        ))
+      )
     }
   </div>
+
+  <template id="gallery-row-template">
+    <div class="admin-gallery-row">
+      <img src="" alt="" width="72" height="90" />
+      <label>
+        URL
+        <input type="text" name="src" value="" placeholder="/api/media/... ou /images/..." />
+      </label>
+      <label>
+        Alt
+        <input type="text" name="alt" value="" placeholder="Description" />
+      </label>
+      <div class="admin-actions">
+        <button type="button" class="admin-btn admin-btn--ghost js-gallery-up">↑</button>
+        <button type="button" class="admin-btn admin-btn--ghost js-gallery-down">↓</button>
+        <button type="button" class="admin-btn admin-btn--danger js-gallery-remove">Retirer</button>
+      </div>
+    </div>
+  </template>
 
   <script define:vars={{ csrf }}>
     const form = document.getElementById('media-form');
     const err = document.getElementById('media-error');
+    const editor = document.getElementById('founder-gallery-editor');
+    const tpl = document.getElementById('gallery-row-template');
+    const galleryErr = document.getElementById('gallery-error');
+    const galleryOk = document.getElementById('gallery-ok');
+
+    function bindRow(row) {
+      row.querySelector('.js-gallery-remove')?.addEventListener('click', () => row.remove());
+      row.querySelector('.js-gallery-up')?.addEventListener('click', () => {
+        const prev = row.previousElementSibling;
+        if (prev) editor?.insertBefore(row, prev);
+      });
+      row.querySelector('.js-gallery-down')?.addEventListener('click', () => {
+        const next = row.nextElementSibling;
+        if (next) editor?.insertBefore(next, row);
+      });
+      const srcInput = row.querySelector('input[name="src"]');
+      const img = row.querySelector('img');
+      srcInput?.addEventListener('change', () => {
+        if (img) img.src = srcInput.value;
+      });
+    }
+
+    editor?.querySelectorAll('.admin-gallery-row').forEach(bindRow);
+
+    function addRow(src = '', alt = '') {
+      if (!tpl || !editor) return;
+      const node = tpl.content.cloneNode(true);
+      const row = node.querySelector('.admin-gallery-row');
+      if (!row) return;
+      const srcInput = row.querySelector('input[name="src"]');
+      const altInput = row.querySelector('input[name="alt"]');
+      const img = row.querySelector('img');
+      if (srcInput) srcInput.value = src;
+      if (altInput) altInput.value = alt;
+      if (img && src) img.src = src;
+      editor.appendChild(row);
+      bindRow(row);
+    }
+
+    document.getElementById('gallery-add')?.addEventListener('click', () => addRow());
+
+    document.querySelectorAll('.js-use-in-gallery').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        addRow(btn.getAttribute('data-url') || '', btn.getAttribute('data-alt') || '');
+        editor?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    document.getElementById('gallery-save')?.addEventListener('click', async () => {
+      if (galleryErr) galleryErr.hidden = true;
+      if (galleryOk) galleryOk.hidden = true;
+      const slides = [...(editor?.querySelectorAll('.admin-gallery-row') || [])].map((row) => ({
+        src: row.querySelector('input[name="src"]')?.value?.trim() || '',
+        alt: row.querySelector('input[name="alt"]')?.value?.trim() || '',
+      }));
+      const res = await fetch('/api/admin/gallery', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ csrf, slides }),
+      });
+      if (!res.ok) {
+        if (galleryErr) {
+          galleryErr.hidden = false;
+          galleryErr.textContent = 'Enregistrement impossible.';
+        }
+        return;
+      }
+      if (galleryOk) galleryOk.hidden = false;
+    });
+
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (err) err.hidden = true;

@@ -1,28 +1,48 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { listKvBlogPosts } from '../../../lib/admin/content';
+import { listAdminBlogPosts } from '../../../lib/admin/content';
 import { readAdminSession } from '../../../lib/admin/auth';
+import type { AdminBlogRow } from '../../../lib/admin/content';
 
 const session = await readAdminSession(Astro.request);
 const csrf = session?.csrf ?? '';
-const frPosts = await listKvBlogPosts('fr');
-const enPosts = await listKvBlogPosts('en');
+const frPosts = await listAdminBlogPosts('fr');
+const enPosts = await listAdminBlogPosts('en');
+
+function sourceLabel(source: AdminBlogRow['source'], lang: 'fr' | 'en') {
+  if (lang === 'en') {
+    if (source === 'static') return 'Static';
+    if (source === 'override') return 'Edited';
+    return 'KV';
+  }
+  if (source === 'static') return 'Site';
+  if (source === 'override') return 'Modifié';
+  return 'KV';
+}
 ---
 
 <AdminLayout title="Blogues" active="blog">
-  <h1>Blogues (KV)</h1>
-  <p class="admin-lead">Articles ajoutés depuis l’admin — en plus du contenu statique du site.</p>
-
-  <p style="margin-bottom:1.5rem;">
-    <a class="admin-btn" href="/n_admin/blog/edit" style="color:#fff;-webkit-text-fill-color:#fff;">Nouvel article FR</a>
+  <h1>Blogues</h1>
+  <p class="admin-lead">
+    Tous les articles du site (contenu d’origine + versions enregistrées en KV). Éditer un article
+    « Site » le sauvegarde en dynamique sans toucher au code.
   </p>
 
-  <h2 style="margin:0 0 0.75rem;font-size:1.1rem;">Français</h2>
+  <p style="margin-bottom:1.5rem;">
+    <a
+      class="admin-btn"
+      href="/n_admin/blog/edit"
+      style="color:#fff;-webkit-text-fill-color:#fff;">Nouvel article FR</a
+    >
+  </p>
+
+  <h2 style="margin:0 0 0.75rem;font-size:1.1rem;">Français ({frPosts.length})</h2>
   <table class="admin-table">
     <thead>
       <tr>
         <th>Titre</th>
         <th>Slug</th>
+        <th>Source</th>
         <th></th>
       </tr>
     </thead>
@@ -30,7 +50,7 @@ const enPosts = await listKvBlogPosts('en');
       {
         frPosts.length === 0 ? (
           <tr>
-            <td colspan="3">Aucun article KV en français.</td>
+            <td colspan="4">Aucun article.</td>
           </tr>
         ) : (
           frPosts.map((p) => (
@@ -39,18 +59,27 @@ const enPosts = await listKvBlogPosts('en');
               <td>
                 <code>{p.slug}</code>
               </td>
+              <td>
+                <span class={`admin-tag admin-tag--${p.source}`}>{sourceLabel(p.source, 'fr')}</span>
+              </td>
               <td class="admin-actions">
-                <a class="admin-btn admin-btn--ghost" href={`/n_admin/blog/edit?locale=fr&slug=${p.slug}`}>
+                <a
+                  class="admin-btn admin-btn--ghost"
+                  href={`/n_admin/blog/edit?locale=fr&slug=${p.slug}`}
+                >
                   Éditer
                 </a>
-                <button
-                  type="button"
-                  class="admin-btn admin-btn--danger js-delete-post"
-                  data-locale="fr"
-                  data-slug={p.slug}
-                >
-                  Supprimer
-                </button>
+                {p.source !== 'static' && (
+                  <button
+                    type="button"
+                    class="admin-btn admin-btn--danger js-delete-post"
+                    data-locale="fr"
+                    data-slug={p.slug}
+                    data-static={p.source === 'override' ? '1' : '0'}
+                  >
+                    {p.source === 'override' ? 'Rétablir' : 'Supprimer'}
+                  </button>
+                )}
               </td>
             </tr>
           ))
@@ -59,12 +88,13 @@ const enPosts = await listKvBlogPosts('en');
     </tbody>
   </table>
 
-  <h2 style="margin:2rem 0 0.75rem;font-size:1.1rem;">English</h2>
+  <h2 style="margin:2rem 0 0.75rem;font-size:1.1rem;">English ({enPosts.length})</h2>
   <table class="admin-table">
     <thead>
       <tr>
         <th>Title</th>
         <th>Slug</th>
+        <th>Source</th>
         <th></th>
       </tr>
     </thead>
@@ -72,7 +102,7 @@ const enPosts = await listKvBlogPosts('en');
       {
         enPosts.length === 0 ? (
           <tr>
-            <td colspan="3">No KV posts in English.</td>
+            <td colspan="4">No posts.</td>
           </tr>
         ) : (
           enPosts.map((p) => (
@@ -81,18 +111,27 @@ const enPosts = await listKvBlogPosts('en');
               <td>
                 <code>{p.slug}</code>
               </td>
+              <td>
+                <span class={`admin-tag admin-tag--${p.source}`}>{sourceLabel(p.source, 'en')}</span>
+              </td>
               <td class="admin-actions">
-                <a class="admin-btn admin-btn--ghost" href={`/n_admin/blog/edit?locale=en&slug=${p.slug}`}>
+                <a
+                  class="admin-btn admin-btn--ghost"
+                  href={`/n_admin/blog/edit?locale=en&slug=${p.slug}`}
+                >
                   Edit
                 </a>
-                <button
-                  type="button"
-                  class="admin-btn admin-btn--danger js-delete-post"
-                  data-locale="en"
-                  data-slug={p.slug}
-                >
-                  Delete
-                </button>
+                {p.source !== 'static' && (
+                  <button
+                    type="button"
+                    class="admin-btn admin-btn--danger js-delete-post"
+                    data-locale="en"
+                    data-slug={p.slug}
+                    data-static={p.source === 'override' ? '1' : '0'}
+                  >
+                    {p.source === 'override' ? 'Revert' : 'Delete'}
+                  </button>
+                )}
               </td>
             </tr>
           ))
@@ -106,7 +145,11 @@ const enPosts = await listKvBlogPosts('en');
       btn.addEventListener('click', async () => {
         const locale = btn.getAttribute('data-locale');
         const slug = btn.getAttribute('data-slug');
-        if (!confirm(`Supprimer ${slug} ?`)) return;
+        const isOverride = btn.getAttribute('data-static') === '1';
+        const msg = isOverride
+          ? `Rétablir la version d’origine de ${slug} ?`
+          : `Supprimer ${slug} ?`;
+        if (!confirm(msg)) return;
         const res = await fetch('/api/admin/blog', {
           method: 'DELETE',
           credentials: 'same-origin',

@@ -1,24 +1,8 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getFounderGallery } from '../../lib/admin/content';
 
-const welcomePhotos = [
-  {
-    src: '/images/admin/eliahna-welcome-01.png',
-    alt: 'Eliahna — portrait au reflet',
-  },
-  {
-    src: '/images/admin/eliahna-welcome-02.png',
-    alt: 'Eliahna dans la neige',
-  },
-  {
-    src: '/images/admin/eliahna-welcome-03.png',
-    alt: 'Eliahna à Venise',
-  },
-  {
-    src: '/images/admin/eliahna-welcome-04.png',
-    alt: 'Eliahna en route',
-  },
-];
+const welcomePhotos = await getFounderGallery();
 ---
 
 <AdminLayout title="Tableau de bord" active="dashboard">
@@ -45,11 +29,11 @@ const welcomePhotos = [
     </div>
   </section>
 
-  <p class="admin-lead">Gérez les blogues et photos publiés via Cloudflare KV.</p>
+  <p class="admin-lead">Gérez les articles du site et la galerie photos (contenu dynamique via Cloudflare KV).</p>
 
   <div class="admin-card">
     <h2>Blogues</h2>
-    <p>Créer, modifier ou supprimer des articles (FR/EN) stockés en KV — fusionnés au blog existant.</p>
+    <p>Voir et modifier tous les articles (contenu d’origine + ajouts). Une sauvegarde publie la version dynamique.</p>
     <p style="margin-top:1rem;">
       <a class="admin-btn" href="/n_admin/blog" style="color:#fff;-webkit-text-fill-color:#fff;">Ouvrir les blogues</a>
     </p>

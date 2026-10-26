@@ -5,9 +5,11 @@ import SiteCtaBand from '../../components/SiteCtaBand.astro';
 import LazyVideo from '../../components/LazyVideo.astro';
 import FounderCarousel from '../../components/FounderCarousel';
 import { brand, getContent } from '../../data';
+import { getFounderGallery } from '../../lib/admin/content';
 
 const content = getContent('en');
 const { visionPage, faq, pages, ctas, ui } = content;
+const founderSlides = await getFounderGallery();
 ---
 
 <BaseLayout
@@ -54,7 +56,7 @@ const { visionPage, faq, pages, ctas, ui } = content;
         </h2>
         <FounderCarousel
           client:visible
-          slides={visionPage.founder.slides}
+          slides={founderSlides}
           label={visionPage.founder.carouselLabel}
           caption={visionPage.founder.caption}
           prevLabel={ui.prev}

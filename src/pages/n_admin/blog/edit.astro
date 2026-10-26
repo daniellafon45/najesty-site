@@ -1,6 +1,6 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { getKvBlogPost } from '../../../lib/admin/content';
+import { resolveAdminBlogPost } from '../../../lib/admin/content';
 import { readAdminSession } from '../../../lib/admin/auth';
 import type { BlogLocale } from '../../../data/blog/types';
 
@@ -8,15 +8,27 @@ const session = await readAdminSession(Astro.request);
 const csrf = session?.csrf ?? '';
 const locale = (Astro.url.searchParams.get('locale') === 'en' ? 'en' : 'fr') as BlogLocale;
 const slugParam = Astro.url.searchParams.get('slug') ?? '';
-const existing = slugParam ? await getKvBlogPost(locale, slugParam) : null;
+const existing = slugParam ? await resolveAdminBlogPost(locale, slugParam) : null;
+const bodyText = existing?.sections?.flatMap((s) => s.paragraphs).join('\n') ?? '';
 ---
 
 <AdminLayout title={existing ? 'Éditer article' : 'Nouvel article'} active="blog">
   <h1>{existing ? 'Éditer l’article' : 'Nouvel article'}</h1>
-  <p class="admin-lead">Champs structurés (même modèle que le blog du site).</p>
+  <p class="admin-lead">
+    {
+      existing
+        ? 'Enregistrer publie la version dynamique (KV) sur le site public.'
+        : 'Champs structurés (même modèle que le blog du site).'
+    }
+  </p>
 
   <form class="admin-form" id="blog-form" style="max-width:40rem;">
     <input type="hidden" name="csrf" value={csrf} />
+    <input type="hidden" name="key" value={existing?.key ?? ''} />
+    <input type="hidden" name="pubDate" value={existing?.pubDate ?? ''} />
+    <input type="hidden" name="category" value={existing?.category ?? 'pratique'} />
+    <input type="hidden" name="audience" value={existing?.audience ?? 'canada-foyers'} />
+    <input type="hidden" name="readingMinutes" value={String(existing?.readingMinutes ?? 4)} />
     <label>
       Locale
       <select name="locale">
@@ -32,6 +44,7 @@ const existing = slugParam ? await getKvBlogPost(locale, slugParam) : null;
         pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
         value={existing?.slug ?? ''}
         placeholder="mon-article"
+        readonly={Boolean(existing)}
       />
     </label>
     <label>
@@ -56,13 +69,11 @@ const existing = slugParam ? await getKvBlogPost(locale, slugParam) : null;
     </label>
     <label>
       Corps (paragraphes, un par ligne)
-      <textarea name="body" required>
-        {existing?.sections?.[0]?.paragraphs?.join('\n') ?? ''}
-      </textarea>
+      <textarea name="body" required>{bodyText}</textarea>
     </label>
     <p class="admin-error" id="blog-error" hidden></p>
     <p class="admin-ok" id="blog-ok" hidden>Enregistré.</p>
-    <button type="submit">Enregistrer</button>
+    <button type="submit" style="color:#fff;-webkit-text-fill-color:#fff;">Enregistrer</button>
     <a class="admin-btn admin-btn--ghost" href="/n_admin/blog">Retour</a>
   </form>
 
@@ -83,6 +94,7 @@ const existing = slugParam ? await getKvBlogPost(locale, slugParam) : null;
         .split('\n')
         .map((l) => l.trim())
         .filter(Boolean);
+
       const res = await fetch('/api/admin/blog', {
         method: 'POST',
         credentials: 'same-origin',
@@ -92,9 +104,13 @@ const existing = slugParam ? await getKvBlogPost(locale, slugParam) : null;
           locale,
           post: {
             slug,
-            key: slug,
+            key: String(fd.get('key') || slug).trim() || slug,
             title,
             description,
+            pubDate: String(fd.get('pubDate') || '') || undefined,
+            category: String(fd.get('category') || 'pratique'),
+            audience: String(fd.get('audience') || 'canada-foyers'),
+            readingMinutes: Number(fd.get('readingMinutes') || 4),
             answerBlock: String(fd.get('answerBlock') || ''),
             image: String(fd.get('image') || ''),
             imageAlt: String(fd.get('imageAlt') || title),

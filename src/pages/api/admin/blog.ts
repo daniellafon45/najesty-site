@@ -3,8 +3,8 @@ import type { BlogLocale, BlogPost } from '../../../data/blog/types';
 import { assertCsrf, requireAdminSession } from '../../../lib/admin/auth';
 import {
   deleteKvBlogPost,
-  getKvBlogPost,
-  listKvBlogPosts,
+  listAdminBlogPosts,
+  resolveAdminBlogPost,
   saveKvBlogPost,
 } from '../../../lib/admin/content';
 
@@ -71,10 +71,10 @@ export const GET: APIRoute = async (context) => {
   const locale = (context.url.searchParams.get('locale') === 'en' ? 'en' : 'fr') as BlogLocale;
   const slug = context.url.searchParams.get('slug');
   if (slug) {
-    const post = await getKvBlogPost(locale, slug);
+    const post = await resolveAdminBlogPost(locale, slug);
     return json({ ok: true, post, csrf: session.csrf });
   }
-  const posts = await listKvBlogPosts(locale);
+  const posts = await listAdminBlogPosts(locale);
   return json({ ok: true, posts, csrf: session.csrf });
 };
 
@@ -94,7 +94,41 @@ export const POST: APIRoute = async (context) => {
   }
 
   const locale = (body.locale === 'en' ? 'en' : 'fr') as BlogLocale;
-  const post = normalizePost(body.post as Partial<BlogPost>, locale);
+  const raw = body.post as Partial<BlogPost>;
+  const previous = raw.slug
+    ? await resolveAdminBlogPost(locale, String(raw.slug).trim().toLowerCase())
+    : null;
+
+  let sections = previous?.sections;
+  if (Array.isArray(raw.sections) && raw.sections.length > 0) {
+    if (previous?.sections?.length) {
+      const [first, ...rest] = previous.sections;
+      const incoming = raw.sections[0];
+      sections = [
+        {
+          h2: String(incoming?.h2 || first.h2 || raw.title || ''),
+          paragraphs: Array.isArray(incoming?.paragraphs)
+            ? incoming.paragraphs.map((p) => String(p))
+            : first.paragraphs,
+          list: incoming?.list ?? first.list,
+        },
+        ...rest,
+      ];
+    } else {
+      sections = raw.sections;
+    }
+  }
+
+  const post = normalizePost(
+    {
+      ...(previous ?? {}),
+      ...raw,
+      faq: raw.faq ?? previous?.faq,
+      cta: raw.cta ?? previous?.cta,
+      sections,
+    },
+    locale,
+  );
   if (!post) return json({ ok: false, error: 'validation' }, 400);
 
   await saveKvBlogPost(post);
