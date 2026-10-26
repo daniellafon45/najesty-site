@@ -16,7 +16,7 @@
 /images/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
 
-/videos/*
+/video-files/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
 
 /_astro/*
