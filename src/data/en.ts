@@ -270,7 +270,7 @@ export const en: SiteContent = {
         body: 'Design and styling know-how, with concrete visuals at every step so you can decide with confidence.',
       },
     ],
-    welcomeImageAlt: 'Eliahna, founder of Najesty — portrait with reflection',
+    welcomeImageAlt: 'Najet, founder of Najesty — portrait with reflection',
   },
   visionPage: {
     wordmark: 'HEART',
@@ -278,25 +278,25 @@ export const en: SiteContent = {
     video: '/videos/Najesty-Au-Coeur-3D.mp4',
     sectionTitle: ['OUR', 'APPROACH'],
     founder: {
-      name: 'Eliahna',
-      caption: 'Eliahna — founder',
-      carouselLabel: 'Portraits of Eliahna, founder of Najesty',
+      name: 'Najet',
+      caption: 'Najet — founder',
+      carouselLabel: 'Portraits of Najet, founder of Najesty',
       slides: [
         {
           src: '/images/founder/eliahna-01-reflet.png',
-          alt: 'Eliahna, founder of Najesty — portrait with reflection',
+          alt: 'Najet, founder of Najesty — portrait with reflection',
         },
         {
           src: '/images/founder/eliahna-02-neige.png',
-          alt: 'Eliahna in a snowy Canadian landscape',
+          alt: 'Najet in a snowy Canadian landscape',
         },
         {
           src: '/images/founder/eliahna-03-route.png',
-          alt: 'Eliahna driving — black and white portrait',
+          alt: 'Najet driving — black and white portrait',
         },
         {
           src: '/images/founder/eliahna-04-venise.png',
-          alt: 'Eliahna smiling by the gondolas in Venice',
+          alt: 'Najet smiling by the gondolas in Venice',
         },
       ],
     },
@@ -803,7 +803,7 @@ export const en: SiteContent = {
     atelier: {
       title: 'About — Najesty | Interior design studio in Canada',
       description:
-        'Najesty is a Canadian interior design and decoration studio founded by Eliahna. Beautiful, practical spaces, within your budget.',
+        'Najesty is a Canadian interior design and decoration studio founded by Najet. Beautiful, practical spaces, within your budget.',
     },
     contact: {
       title: 'Free 15-min call — Contact | Najesty',

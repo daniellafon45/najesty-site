@@ -271,7 +271,7 @@ export const fr: SiteContent = {
         body: 'Le savoir-faire du design et du stylisme, avec des visuels concrets à chaque étape pour décider en toute confiance.',
       },
     ],
-    welcomeImageAlt: 'Eliahna, fondatrice de Najesty — portrait au reflet',
+    welcomeImageAlt: 'Najet, fondatrice de Najesty — portrait au reflet',
   },
   visionPage: {
     wordmark: 'CŒUR',
@@ -279,25 +279,25 @@ export const fr: SiteContent = {
     video: '/videos/Najesty-Au-Coeur-3D.mp4',
     sectionTitle: ['NOTRE', 'APPROCHE'],
     founder: {
-      name: 'Eliahna',
-      caption: 'Eliahna — fondatrice',
-      carouselLabel: 'Portraits d’Eliahna, fondatrice de Najesty',
+      name: 'Najet',
+      caption: 'Najet — fondatrice',
+      carouselLabel: 'Portraits de Najet, fondatrice de Najesty',
       slides: [
         {
           src: '/images/founder/eliahna-01-reflet.png',
-          alt: 'Eliahna, fondatrice de Najesty — portrait au reflet',
+          alt: 'Najet, fondatrice de Najesty — portrait au reflet',
         },
         {
           src: '/images/founder/eliahna-02-neige.png',
-          alt: 'Eliahna dans un paysage enneigé au Canada',
+          alt: 'Najet dans un paysage enneigé au Canada',
         },
         {
           src: '/images/founder/eliahna-03-route.png',
-          alt: 'Eliahna au volant — portrait en noir et blanc',
+          alt: 'Najet au volant — portrait en noir et blanc',
         },
         {
           src: '/images/founder/eliahna-04-venise.png',
-          alt: 'Eliahna souriante devant les gondoles à Venise',
+          alt: 'Najet souriante devant les gondoles à Venise',
         },
       ],
     },
@@ -805,7 +805,7 @@ export const fr: SiteContent = {
     atelier: {
       title: 'À propos — Najesty | Atelier de design d’intérieur au Canada',
       description:
-        'Najesty est un atelier canadien de design d’intérieur et de décoration fondé par Eliahna. Des espaces beaux et pratiques, dans votre budget.',
+        'Najesty est un atelier canadien de design d’intérieur et de décoration fondé par Najet. Des espaces beaux et pratiques, dans votre budget.',
     },
     contact: {
       title: 'Appel gratuit de 15 min — Contact | Najesty',

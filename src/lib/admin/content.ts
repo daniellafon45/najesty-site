@@ -24,19 +24,19 @@ const FOUNDER_GALLERY_KEY = 'gallery:founder';
 const DEFAULT_FOUNDER_SLIDES: GallerySlide[] = [
   {
     src: '/images/founder/eliahna-01-reflet.png',
-    alt: 'Eliahna, fondatrice de Najesty — portrait au reflet',
+    alt: 'Najet, fondatrice de Najesty — portrait au reflet',
   },
   {
     src: '/images/founder/eliahna-02-neige.png',
-    alt: 'Eliahna dans un paysage enneigé au Canada',
+    alt: 'Najet dans un paysage enneigé au Canada',
   },
   {
     src: '/images/founder/eliahna-03-route.png',
-    alt: 'Eliahna au volant — portrait en noir et blanc',
+    alt: 'Najet au volant — portrait en noir et blanc',
   },
   {
     src: '/images/founder/eliahna-04-venise.png',
-    alt: 'Eliahna souriante devant les gondoles à Venise',
+    alt: 'Najet souriante devant les gondoles à Venise',
   },
 ];
 
