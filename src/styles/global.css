@@ -3442,3 +3442,167 @@ ul.atelier__partners-list a:focus-visible {
   font-size: 0.7rem;
   word-break: break-all;
 }
+
+/* ==========================================================================
+   Responsive mobile & tablette — ajustements de mise en page uniquement
+   (tailles, espacements, empilement, zones tactiles). Aucune règle ici ne
+   s'applique au-delà de 1279px : le rendu desktop reste strictement identique.
+   ========================================================================== */
+
+/* Zones tactiles ≥ 44px sur écrans tactiles, sans changement visuel :
+   un pseudo-élément transparent élargit la cible autour du contrôle. */
+@media (max-width: 1279px) and (hover: none) {
+  .site-nav a,
+  .page-blog__card h2 a,
+  .footer__links a,
+  .footer__email,
+  .footer__bottom a,
+  ul.atelier__partners-list a,
+  .atelier__cta,
+  .page-work__filters a,
+  .page-work__voir,
+  .page-work__hero-cta,
+  .page-blog__read,
+  .page-blog__eyebrow a,
+  .page-blog-post__lang a,
+  .page-blog-post__btn,
+  .page-service__cta,
+  .page-method__btn,
+  .page-project__cta,
+  .page-project__related-head a,
+  .page-contact__social a,
+  .page-contact__legal a,
+  .page-vision__faq-item summary,
+  .page-blog-post__faq summary,
+  .founder-carousel__nav,
+  .site-nav__burger,
+  .hero__dot,
+  .work__featured-dot,
+  .founder-carousel__dot {
+    position: relative;
+  }
+
+  .site-nav a::before,
+  .page-blog__card h2 a::before,
+  .footer__links a::before,
+  .footer__email::before,
+  .footer__bottom a::before,
+  ul.atelier__partners-list a::before,
+  .atelier__cta::before,
+  .page-work__filters a::before,
+  .page-work__voir::before,
+  .page-work__hero-cta::before,
+  .page-blog__read::before,
+  .page-blog__eyebrow a::before,
+  .page-blog-post__lang a::before,
+  .page-blog-post__btn::before,
+  .page-service__cta::before,
+  .page-method__btn::before,
+  .page-project__cta::before,
+  .page-project__related-head a::before,
+  .page-contact__social a::before,
+  .page-contact__legal a::before,
+  .page-vision__faq-item summary::before,
+  .page-blog-post__faq summary::before,
+  .founder-carousel__nav::before,
+  .site-nav__burger::before,
+  .hero__dot::before,
+  .work__featured-dot::before,
+  .founder-carousel__dot::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+    background: transparent;
+  }
+
+  /* Points de pagination : la cible couvre aussi l'espace entre les points,
+     sans empiéter sur le point voisin. */
+  .hero__dot::before {
+    width: calc(100% + 14px);
+  }
+
+  .work__featured-dot::before {
+    width: calc(100% + 0.4rem);
+  }
+
+  .founder-carousel__dot::before {
+    width: calc(100% + 0.45rem);
+  }
+}
+
+/* Grille projets (accueil) : la règle ≤900px existante était écrasée par des
+   sélecteurs plus spécifiques — on empile réellement les projets. */
+@media (max-width: 900px) {
+  .work__grid > .work__item.work__item {
+    grid-column: 1 / -1;
+  }
+
+  /* Menu mobile : le bouton (devenu « fermer ») reste visible au-dessus
+     du panneau plein écran. */
+  .site-header__inner {
+    position: relative;
+    z-index: 100;
+  }
+
+  .site-nav__burger[aria-expanded='true'] span:first-child {
+    transform: translateY(4.25px) rotate(45deg);
+  }
+
+  .site-nav__burger[aria-expanded='true'] span:last-child {
+    transform: translateY(-4.25px) rotate(-45deg);
+  }
+
+  /* Hero : le cercle « scroll » ne chevauche plus la légende ni les boutons. */
+  .hero__scroll {
+    width: 88px;
+    height: 88px;
+    bottom: 1.5rem;
+  }
+
+  .hero__scroll-arrow {
+    width: 22px;
+    height: 32px;
+  }
+}
+
+/* Tablette portrait : projets sur deux colonnes plutôt qu'une seule. */
+@media (min-width: 601px) and (max-width: 900px) {
+  .work__grid > .work__item.work__item:not(.work__item--featured) {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 700px) {
+  /* Logo un peu plus compact : l'en-tête fixe masque moins le contenu. */
+  .site-header__logo {
+    height: 56px;
+    padding: 5px 8px;
+  }
+
+  .site-header__logo img {
+    height: 44px;
+  }
+
+  /* Manifeste : chaque ligne tient sur une seule ligne, comme sur desktop. */
+  .manifesto__line {
+    font-size: min(6.3vw, 1.75rem);
+  }
+
+  /* Boutons du manifeste : libellé sur une ligne. */
+  .manifesto__cta {
+    font-size: min(3.7vw, 19px);
+    padding: 0.95rem 1.15rem;
+  }
+}
+
+/* Page Projets — tablette portrait : on garde les rangées de trois projets
+   (comme sur desktop) au lieu d'une colonne unique très longue. */
+@media (min-width: 601px) and (max-width: 960px) {
+  .page-work__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
