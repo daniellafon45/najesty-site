@@ -38,6 +38,16 @@ export function stripLocalePath(pathname: string): string {
 /**
  * Map a pathname to the alternate locale URL (for hreflang + language switcher).
  */
+/** FR slug → EN slug for service pages (shared category id) */
+const SERVICE_SLUG_PAIRS: { fr: string; en: string }[] = [
+  { fr: 'design-interieur', en: 'interior-design' },
+  { fr: 'decoration', en: 'decoration' },
+  { fr: 'home-staging', en: 'home-staging' },
+  { fr: 'photographie', en: 'photography' },
+  { fr: 'sourcing-et-magasinage', en: 'sourcing' },
+  { fr: 'mise-en-place-et-stylisme', en: 'styling' },
+];
+
 export function alternateLocaleUrl(pathname: string, target: Locale): string {
   const bare = stripLocalePath(pathname);
 
@@ -49,6 +59,16 @@ export function alternateLocaleUrl(pathname: string, target: Locale): string {
   }
   if (bare === '/blogue' || bare === '/blog') {
     return target === 'en' ? SLUG_MAP.blog.en : SLUG_MAP.blog.fr;
+  }
+
+  const serviceMatch = bare.match(/^\/services\/([^/]+)$/);
+  if (serviceMatch) {
+    const slug = serviceMatch[1];
+    const pair =
+      SERVICE_SLUG_PAIRS.find((p) => p.fr === slug || p.en === slug) ?? null;
+    if (pair) {
+      return target === 'en' ? `/en/services/${pair.en}` : `/services/${pair.fr}`;
+    }
   }
 
   const blogFr = bare.match(/^\/blogue\/([^/]+)$/);

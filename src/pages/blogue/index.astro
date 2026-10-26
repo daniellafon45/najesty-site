@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import { getContent } from '../../data';
@@ -9,12 +7,14 @@ import {
   blogCategories,
   blogPostPath,
   formatBlogDate,
-  getBlogPosts,
+  mergeBlogPosts,
 } from '../../data/blog';
+import { listKvBlogPosts } from '../../lib/admin/content';
 
 const locale = 'fr' as const;
 const content = getContent(locale);
-const posts = getBlogPosts(locale);
+const kvPosts = await listKvBlogPosts(Astro.locals, locale);
+const posts = mergeBlogPosts(locale, kvPosts);
 const meta = content.pages.blog;
 ---
 

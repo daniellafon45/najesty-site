@@ -27,6 +27,21 @@ export type WorkCategory = {
   projects: { id: string; name: string; image: string; alt: string }[];
 };
 
+export type ServicePage = {
+  /** Matches workCategories.id */
+  id: string;
+  slug: string;
+  title: string;
+  metaTitle: string;
+  metaDescription: string;
+  intro: string;
+  body: string;
+  projectsLabel: string;
+  ctaLabel: string;
+  image: string;
+  imageAlt: string;
+};
+
 export type FaqItem = {
   question: string;
   answer: string;
@@ -89,10 +104,11 @@ export type SiteContent = {
   atelier: {
     title: string;
     body: string;
-    services: string[];
+    services: { label: string; href: string }[];
     partnersLabel: string;
     partners: { name: string; logo: string; href: string }[];
   };
+  servicePages: ServicePage[];
   atelierPage: {
     marquee: string;
     intro: string;
@@ -107,6 +123,12 @@ export type SiteContent = {
     ticker: string;
     video: string;
     sectionTitle: string[];
+    founder: {
+      name: string;
+      caption: string;
+      carouselLabel: string;
+      slides: { src: string; alt: string }[];
+    };
     blocks: { title: string; body: string }[];
     quote: { text: string; author: string };
     faqTitle: string;

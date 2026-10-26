@@ -1,0 +1,85 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { listMedia, mediaPublicUrl } from '../../../lib/admin/content';
+import { readAdminSession } from '../../../lib/admin/auth';
+
+const session = await readAdminSession(Astro.locals, Astro.request);
+const csrf = session?.csrf ?? '';
+const items = await listMedia(Astro.locals);
+---
+
+<AdminLayout title="Photos" active="media">
+  <h1>Photos</h1>
+  <p class="admin-lead">JPEG, PNG ou WebP — 2 Mo max. URL publique réutilisable dans les articles.</p>
+
+  <form class="admin-form" id="media-form" style="margin-bottom:2rem;">
+    <input type="hidden" name="csrf" value={csrf} />
+    <label>
+      Fichier
+      <input type="file" name="file" accept="image/jpeg,image/png,image/webp" required />
+    </label>
+    <label>
+      Texte alternatif
+      <input type="text" name="alt" placeholder="Description de l’image" />
+    </label>
+    <p class="admin-error" id="media-error" hidden></p>
+    <button type="submit">Téléverser</button>
+  </form>
+
+  <div class="admin-media-grid">
+    {
+      items.map((m) => (
+        <div class="admin-media-item">
+          <img src={mediaPublicUrl(m.id)} alt={m.alt} loading="lazy" />
+          <code>{mediaPublicUrl(m.id)}</code>
+          <p style="margin:0.35rem 0;font-size:0.8rem;">{m.alt}</p>
+          <button
+            type="button"
+            class="admin-btn admin-btn--danger js-delete-media"
+            data-id={m.id}
+            style="font-size:0.75rem;padding:0.4rem 0.6rem;"
+          >
+            Supprimer
+          </button>
+        </div>
+      ))
+    }
+  </div>
+
+  <script define:vars={{ csrf }}>
+    const form = document.getElementById('media-form');
+    const err = document.getElementById('media-error');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (err) err.hidden = true;
+      const fd = new FormData(form);
+      const res = await fetch('/api/admin/media', {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: fd,
+      });
+      if (!res.ok) {
+        if (err) {
+          err.hidden = false;
+          err.textContent = 'Upload refusé (type, taille ou session).';
+        }
+        return;
+      }
+      window.location.reload();
+    });
+
+    document.querySelectorAll('.js-delete-media').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        if (!confirm('Supprimer cette photo ?')) return;
+        const res = await fetch('/api/admin/media', {
+          method: 'DELETE',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ csrf, id }),
+        });
+        if (res.ok) window.location.reload();
+      });
+    });
+  </script>
+</AdminLayout>

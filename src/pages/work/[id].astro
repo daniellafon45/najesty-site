@@ -69,8 +69,8 @@ const related =
       <div>
         <h2>{ui.expertises}</h2>
         <ul>
-          <li>{category?.title ?? content.atelier.services[0]}</li>
-          <li>{content.atelier.services[1]}</li>
+          <li>{category?.title ?? content.atelier.services[0]?.label}</li>
+          <li>{content.atelier.services[1]?.label}</li>
           <li>{content.atelierPage.pillars[2].title}</li>
         </ul>
         <a class="page-project__cta" href="/contact">{ui.talkCta}</a>

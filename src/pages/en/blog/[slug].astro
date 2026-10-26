@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import { brand, getContent } from '../../../data';
@@ -11,29 +9,27 @@ import {
   blogIndexPath,
   blogPostPath,
   formatBlogDate,
-  getBlogPost,
-  getBlogPostByKey,
-  getBlogPosts,
+  mergeBlogPosts,
+  resolveBlogPost,
+  resolveBlogPostByKey,
 } from '../../../data/blog';
-
-export function getStaticPaths() {
-  return getBlogPosts('en').map((post) => ({
-    params: { slug: post.slug },
-  }));
-}
+import { listKvBlogPosts } from '../../../lib/admin/content';
 
 const locale = 'en' as const;
 const content = getContent(locale);
 const meta = content.pages.blog;
 const { slug } = Astro.params;
-const post = getBlogPost(locale, slug!);
+const kvPosts = await listKvBlogPosts(Astro.locals, locale);
+const kvPostsFr = await listKvBlogPosts(Astro.locals, 'fr');
+const posts = mergeBlogPosts(locale, kvPosts);
+const post = resolveBlogPost(locale, slug!, kvPosts);
 
 if (!post) {
   return Astro.redirect('/en/blog');
 }
 
-const frTwin = getBlogPostByKey('fr', post.key);
-const related = getBlogPosts(locale)
+const frTwin = resolveBlogPostByKey('fr', post.key, kvPostsFr);
+const related = posts
   .filter((p) => p.key !== post.key && (p.category === post.category || p.audience === post.audience))
   .slice(0, 3);
 

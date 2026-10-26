@@ -1,0 +1,116 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getKvBlogPost } from '../../../lib/admin/content';
+import { readAdminSession } from '../../../lib/admin/auth';
+import type { BlogLocale } from '../../../data/blog/types';
+
+const session = await readAdminSession(Astro.locals, Astro.request);
+const csrf = session?.csrf ?? '';
+const locale = (Astro.url.searchParams.get('locale') === 'en' ? 'en' : 'fr') as BlogLocale;
+const slugParam = Astro.url.searchParams.get('slug') ?? '';
+const existing = slugParam ? await getKvBlogPost(Astro.locals, locale, slugParam) : null;
+---
+
+<AdminLayout title={existing ? 'Éditer article' : 'Nouvel article'} active="blog">
+  <h1>{existing ? 'Éditer l’article' : 'Nouvel article'}</h1>
+  <p class="admin-lead">Champs structurés (même modèle que le blog du site).</p>
+
+  <form class="admin-form" id="blog-form" style="max-width:40rem;">
+    <input type="hidden" name="csrf" value={csrf} />
+    <label>
+      Locale
+      <select name="locale">
+        <option value="fr" selected={locale === 'fr'}>FR</option>
+        <option value="en" selected={locale === 'en'}>EN</option>
+      </select>
+    </label>
+    <label>
+      Slug (URL)
+      <input
+        name="slug"
+        required
+        pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+        value={existing?.slug ?? ''}
+        placeholder="mon-article"
+      />
+    </label>
+    <label>
+      Titre
+      <input name="title" required value={existing?.title ?? ''} />
+    </label>
+    <label>
+      Description
+      <textarea name="description" required>{existing?.description ?? ''}</textarea>
+    </label>
+    <label>
+      Réponse courte (GEO)
+      <textarea name="answerBlock">{existing?.answerBlock ?? ''}</textarea>
+    </label>
+    <label>
+      Image (URL)
+      <input name="image" value={existing?.image ?? '/images/work/01-featured-najesty.jpg'} />
+    </label>
+    <label>
+      Alt image
+      <input name="imageAlt" value={existing?.imageAlt ?? ''} />
+    </label>
+    <label>
+      Corps (paragraphes, un par ligne)
+      <textarea name="body" required>
+        {existing?.sections?.[0]?.paragraphs?.join('\n') ?? ''}
+      </textarea>
+    </label>
+    <p class="admin-error" id="blog-error" hidden></p>
+    <p class="admin-ok" id="blog-ok" hidden>Enregistré.</p>
+    <button type="submit">Enregistrer</button>
+    <a class="admin-btn admin-btn--ghost" href="/n_admin/blog">Retour</a>
+  </form>
+
+  <script>
+    const form = document.getElementById('blog-form');
+    const err = document.getElementById('blog-error');
+    const ok = document.getElementById('blog-ok');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (err) err.hidden = true;
+      if (ok) ok.hidden = true;
+      const fd = new FormData(form);
+      const locale = String(fd.get('locale') || 'fr');
+      const slug = String(fd.get('slug') || '').trim().toLowerCase();
+      const title = String(fd.get('title') || '').trim();
+      const description = String(fd.get('description') || '').trim();
+      const paragraphs = String(fd.get('body') || '')
+        .split('\n')
+        .map((l) => l.trim())
+        .filter(Boolean);
+      const res = await fetch('/api/admin/blog', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          csrf: String(fd.get('csrf') || ''),
+          locale,
+          post: {
+            slug,
+            key: slug,
+            title,
+            description,
+            answerBlock: String(fd.get('answerBlock') || ''),
+            image: String(fd.get('image') || ''),
+            imageAlt: String(fd.get('imageAlt') || title),
+            sections: [{ h2: title, paragraphs }],
+          },
+        }),
+      });
+      if (!res.ok) {
+        if (err) {
+          err.hidden = false;
+          err.textContent = 'Enregistrement impossible. Vérifiez le slug et les champs.';
+        }
+        return;
+      }
+      if (ok) ok.hidden = false;
+      window.location.href = '/n_admin/blog';
+    });
+  </script>
+</AdminLayout>

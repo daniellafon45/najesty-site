@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  active?: 'dashboard' | 'blog' | 'media';
+}
+
+const { title, active = 'dashboard' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Administration Najesty" />
+    <title>{title} — Najesty Admin</title>
+  </head>
+  <body>
+    <div class="admin-shell">
+      <header class="admin-top">
+        <strong>Najesty · Admin</strong>
+        <nav aria-label="Admin">
+          <a href="/n_admin" class={active === 'dashboard' ? 'is-active' : undefined}>Tableau</a>
+          <a href="/n_admin/blog" class={active === 'blog' ? 'is-active' : undefined}>Blogues</a>
+          <a href="/n_admin/media" class={active === 'media' ? 'is-active' : undefined}>Photos</a>
+          <button type="button" id="admin-logout" class="admin-btn" style="padding:0.35rem 0.7rem;font-size:0.75rem;">
+            Déconnexion
+          </button>
+        </nav>
+      </header>
+      <main class="admin-main">
+        <slot />
+      </main>
+    </div>
+    <script>
+      document.getElementById('admin-logout')?.addEventListener('click', async () => {
+        await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+        window.location.href = '/n_admin/login';
+      });
+    </script>
+  </body>
+</html>

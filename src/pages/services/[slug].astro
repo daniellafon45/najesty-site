@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteCtaBand from '../../components/SiteCtaBand.astro';
+import { getContent } from '../../data';
+
+const content = getContent('fr');
+const { servicePages, workCategories, ctas, ui } = content;
+const slug = Astro.params.slug!;
+const service = servicePages.find((s) => s.slug === slug);
+
+if (!service) {
+  return Astro.redirect('/atelier');
+}
+
+const category = workCategories.find((c) => c.id === service.id);
+const workBase = '/work';
+---
+
+<BaseLayout
+  locale="fr"
+  title={service.metaTitle}
+  description={service.metaDescription}
+  forceLightHeader
+  activePath={`/services/${service.slug}`}
+>
+  <main class="page-service">
+    <header class="page-service__hero container">
+      <p class="page-service__eyebrow">{ui.expertises}</p>
+      <h1>{service.title}</h1>
+      <p class="page-service__intro">{service.intro}</p>
+    </header>
+
+    <section class="page-service__body container">
+      <div class="page-service__media">
+        <img src={service.image} alt={service.imageAlt} loading="eager" width={1200} height={900} />
+      </div>
+      <div class="page-service__copy">
+        <p>{service.body}</p>
+        <p class="page-service__actions">
+          <a class="page-service__cta page-service__cta--primary" href={ctas.primaryHref}>
+            {service.ctaLabel} →
+          </a>
+          <a class="page-service__cta" href={workBase}>
+            {ui.allProjects} →
+          </a>
+        </p>
+      </div>
+    </section>
+
+    {
+      category && category.projects.length > 0 && (
+        <section class="page-service__projects container" aria-labelledby="service-projects">
+          <h2 id="service-projects">{service.projectsLabel}</h2>
+          <div class="page-service__grid">
+            {category.projects.map((p) => (
+              <a class="page-service__card" href={`${workBase}/${p.id}`} data-cursor="view" data-cursor-label={p.name}>
+                <div class="page-service__frame">
+                  <img src={p.image} alt={p.alt} loading="lazy" />
+                </div>
+                <h3>{p.name}</h3>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </main>
+
+  <SiteCtaBand
+    title={ctas.bandTitle}
+    body={ctas.bandBody}
+    primary={ctas.primary}
+    primaryHref={ctas.primaryHref}
+    secondary={ctas.secondary}
+    secondaryHref={ctas.secondaryHref}
+  />
+
+  <SiteFooter locale="fr" />
+</BaseLayout>

@@ -76,6 +76,35 @@ export function getBlogPostByKey(
   return byLocale[locale].find((p) => p.key === key);
 }
 
+/** Merge static posts with KV admin posts (KV wins on same slug). */
+export function mergeBlogPosts(
+  locale: BlogLocale,
+  kvPosts: BlogPost[],
+): BlogPost[] {
+  const map = new Map<string, BlogPost>();
+  for (const p of byLocale[locale]) map.set(p.slug, p);
+  for (const p of kvPosts) map.set(p.slug, p);
+  return [...map.values()].sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
+  );
+}
+
+export function resolveBlogPost(
+  locale: BlogLocale,
+  slug: string,
+  kvPosts: BlogPost[],
+): BlogPost | undefined {
+  return kvPosts.find((p) => p.slug === slug) ?? getBlogPost(locale, slug);
+}
+
+export function resolveBlogPostByKey(
+  locale: BlogLocale,
+  key: string,
+  kvPosts: BlogPost[],
+): BlogPost | undefined {
+  return kvPosts.find((p) => p.key === key) ?? getBlogPostByKey(locale, key);
+}
+
 export function blogIndexPath(locale: BlogLocale): string {
   return locale === 'en' ? '/en/blog' : '/blogue';
 }

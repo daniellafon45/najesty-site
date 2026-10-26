@@ -133,7 +133,13 @@ const grid = rest.map((item, i) => ({
       <div>
         <p>{content.atelier.body}</p>
         <ul>
-          {content.atelier.services.map((s) => <li>{s}</li>)}
+          {
+            content.atelier.services.map((s) => (
+              <li>
+                <a href={s.href}>{s.label}</a>
+              </li>
+            ))
+          }
         </ul>
         <p class="atelier__actions">
           <a class="atelier__cta atelier__cta--primary" href={ctas.primaryHref}>

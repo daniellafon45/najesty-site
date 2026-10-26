@@ -12,3 +12,7 @@ routes = [
 [[kv_namespaces]]
 binding = "SESSION"
 id = "f6852911c94846f79209682f052562bd"
+
+[[kv_namespaces]]
+binding = "CONTENT"
+id = "46215c32e157435d9f85d5dc37f1e353"

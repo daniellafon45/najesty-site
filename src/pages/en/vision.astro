@@ -3,10 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteCtaBand from '../../components/SiteCtaBand.astro';
 import LazyVideo from '../../components/LazyVideo.astro';
+import FounderCarousel from '../../components/FounderCarousel';
 import { brand, getContent } from '../../data';
 
 const content = getContent('en');
-const { visionPage, faq, pages, ctas } = content;
+const { visionPage, faq, pages, ctas, ui } = content;
 ---
 
 <BaseLayout
@@ -47,9 +48,19 @@ const { visionPage, faq, pages, ctas } = content;
     </section>
 
     <section class="page-vision__body container" data-node-id="2:3180">
-      <h2 class="page-vision__title">
-        {visionPage.sectionTitle.map((line) => <span>{line}</span>)}
-      </h2>
+      <div class="page-vision__brand">
+        <h2 class="page-vision__title">
+          {visionPage.sectionTitle.map((line) => <span>{line}</span>)}
+        </h2>
+        <FounderCarousel
+          client:visible
+          slides={visionPage.founder.slides}
+          label={visionPage.founder.carouselLabel}
+          caption={visionPage.founder.caption}
+          prevLabel={ui.prev}
+          nextLabel={ui.next}
+        />
+      </div>
 
       <div class="page-vision__blocks">
         {

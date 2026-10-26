@@ -123,12 +123,12 @@ export const fr: SiteContent = {
     title: "L'Atelier",
     body: 'Avant le décor, le ressenti : un intérieur vivable, productif, zen. Najesty y met l’expertise et beaucoup d’émotion — pour décorer juste, dans votre budget.',
     services: [
-      "Design d'intérieur",
-      'Décoration',
-      'Home staging',
-      'Photographie',
-      'Sourcing et magasinage',
-      'Mise en place et stylisme',
+      { label: "Design d'intérieur", href: '/services/design-interieur' },
+      { label: 'Décoration', href: '/services/decoration' },
+      { label: 'Home staging', href: '/services/home-staging' },
+      { label: 'Photographie', href: '/services/photographie' },
+      { label: 'Sourcing et magasinage', href: '/services/sourcing-et-magasinage' },
+      { label: 'Mise en place et stylisme', href: '/services/mise-en-place-et-stylisme' },
     ],
     partnersLabel: 'Partenaires sourcing',
     partners: [
@@ -157,6 +157,93 @@ export const fr: SiteContent = {
       },
     ],
   },
+  servicePages: [
+    {
+      id: 'interieur',
+      slug: 'design-interieur',
+      title: "Design d'intérieur",
+      metaTitle: "Design d'intérieur au Canada — Najesty",
+      metaDescription:
+        "Design d'intérieur vivable, productif et zen : plans, direction et émotion — dans votre budget, au Canada et à distance.",
+      intro:
+        'Une direction claire avant le moindre achat : usages, circulation, lumière et ressenti.',
+      body: 'Nous concevons des intérieurs qui servent vraiment votre rythme — calme pour souffler, clair pour avancer. Plans, matières et scénario émotionnel, avec une image nette à chaque étape.',
+      projectsLabel: 'Projets associés',
+      ctaLabel: 'Demander une orientation',
+      image: '/images/work/03-somewhere-else.jpg',
+      imageAlt: "Projet de design d'intérieur Najesty",
+    },
+    {
+      id: 'decoration',
+      slug: 'decoration',
+      title: 'Décoration',
+      metaTitle: 'Décoration d’intérieur — Najesty',
+      metaDescription:
+        'Décoration juste et émotionnelle : identité du lieu, matières et stylisme dans votre budget.',
+      intro: 'Plus qu’un beau décor : l’identité du lieu, au quotidien.',
+      body: 'Couleurs, textures, mobilier et objets : on décore avec métier pour que l’émotion reste — sans tout racheter, sans improvisation.',
+      projectsLabel: 'Projets associés',
+      ctaLabel: 'Parler décoration',
+      image: '/images/work/05-brise.jpg',
+      imageAlt: 'Décoration intérieure par Najesty',
+    },
+    {
+      id: 'home-staging',
+      slug: 'home-staging',
+      title: 'Home staging',
+      metaTitle: 'Home staging Canada — Najesty',
+      metaDescription:
+        'Home staging pour vendre mieux : premier regard, circulation claire, émotion qui convertit.',
+      intro: 'Préparer le lieu pour qu’il se vende — et qu’il se sente.',
+      body: 'Désencombrement, lumière, stylisme ciblé : le home staging Najesty met l’émotion au service de la mise en marché, avec une image claire pour les annonces.',
+      projectsLabel: 'Projets associés',
+      ctaLabel: 'Préparer une vente',
+      image: '/images/work/07-seconde-vie.jpg',
+      imageAlt: 'Home staging réalisé par Najesty',
+    },
+    {
+      id: 'photographie',
+      slug: 'photographie',
+      title: 'Photographie',
+      metaTitle: 'Photographie d’intérieur — Najesty',
+      metaDescription:
+        'Photographie d’espaces : images qui racontent l’émotion du lieu pour le web, la vente ou la marque.',
+      intro: 'L’image qui porte le ressenti de l’espace.',
+      body: 'Lumières, cadrages, détails : une photographie pensée pour le design et la décoration — utile pour vendre, publier ou documenter le projet.',
+      projectsLabel: 'Projets associés',
+      ctaLabel: 'Réserver une séance',
+      image: '/images/work/09-bon-coup.jpg',
+      imageAlt: 'Photographie d’intérieur Najesty',
+    },
+    {
+      id: 'sourcing',
+      slug: 'sourcing-et-magasinage',
+      title: 'Sourcing et magasinage',
+      metaTitle: 'Sourcing et magasinage déco — Najesty',
+      metaDescription:
+        'Sourcing décoration et magasinage : choix lucides, partenaires canadiens, budget respecté.',
+      intro: 'Trouver juste — pas trop, pas au hasard.',
+      body: 'Liste d’achats, alternatives, magasinage ciblé chez nos partenaires : on source pour coller à la direction et au budget, sans stock inutile.',
+      projectsLabel: 'Projets associés',
+      ctaLabel: 'Lancer un sourcing',
+      image: '/images/work/02-longue-vie.jpg',
+      imageAlt: 'Sourcing décoration Najesty',
+    },
+    {
+      id: 'mise-en-place',
+      slug: 'mise-en-place-et-stylisme',
+      title: 'Mise en place et stylisme',
+      metaTitle: 'Mise en place et stylisme — Najesty',
+      metaDescription:
+        'Mise en place et stylisme sur place au Canada : installer, ajuster, faire ressentir l’espace.',
+      intro: 'Transformer le plan en lieu vécu.',
+      body: 'Sur place au Canada : installation, stylisme, derniers gestes. À distance : direction claire pour que la mise en scène reste fidèle à l’émotion du projet.',
+      projectsLabel: 'Projets associés',
+      ctaLabel: 'Planifier une mise en place',
+      image: '/images/work/04-night.jpg',
+      imageAlt: 'Mise en place et stylisme Najesty',
+    },
+  ],
   atelierPage: {
     marquee: "L'ATELIER",
     intro:
@@ -191,6 +278,29 @@ export const fr: SiteContent = {
     ticker: 'Le cœur de notre expertise est l’espace',
     video: '/videos/Najesty-Au-Coeur-3D.mp4',
     sectionTitle: ['LA MARQUE', 'AU CŒUR'],
+    founder: {
+      name: 'Eliahna',
+      caption: 'Eliahna — fondatrice',
+      carouselLabel: 'Portraits d’Eliahna, fondatrice de Najesty',
+      slides: [
+        {
+          src: '/images/founder/eliahna-01-reflet.png',
+          alt: 'Eliahna, fondatrice de Najesty — portrait au reflet',
+        },
+        {
+          src: '/images/founder/eliahna-02-neige.png',
+          alt: 'Eliahna dans un paysage enneigé au Canada',
+        },
+        {
+          src: '/images/founder/eliahna-03-route.png',
+          alt: 'Eliahna au volant — portrait en noir et blanc',
+        },
+        {
+          src: '/images/founder/eliahna-04-venise.png',
+          alt: 'Eliahna souriante devant les gondoles à Venise',
+        },
+      ],
+    },
     blocks: [
       {
         title: 'Des stratégies',

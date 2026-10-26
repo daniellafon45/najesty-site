@@ -1,0 +1,24 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Tableau de bord" active="dashboard">
+  <h1>Tableau de bord</h1>
+  <p class="admin-lead">Gérez les blogues et photos publiés via Cloudflare KV.</p>
+
+  <div class="admin-card">
+    <h2>Blogues</h2>
+    <p>Créer, modifier ou supprimer des articles (FR/EN) stockés en KV — fusionnés au blog existant.</p>
+    <p style="margin-top:1rem;">
+      <a class="admin-btn" href="/n_admin/blog">Ouvrir les blogues</a>
+    </p>
+  </div>
+
+  <div class="admin-card">
+    <h2>Photos</h2>
+    <p>Téléverser des images (JPEG/PNG/WebP, max 2 Mo) et récupérer leur URL publique.</p>
+    <p style="margin-top:1rem;">
+      <a class="admin-btn" href="/n_admin/media">Ouvrir les photos</a>
+    </p>
+  </div>
+</AdminLayout>

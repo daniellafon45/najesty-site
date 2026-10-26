@@ -26,9 +26,19 @@ function urlEntry(loc: string, alternates: { fr: string; en: string }) {
 }
 
 export const GET: APIRoute = () => {
-  const workIds = getContent('fr').workItems.map((w) => w.id);
+  const fr = getContent('fr');
+  const en = getContent('en');
+  const workIds = fr.workItems.map((w) => w.id);
+  const servicePairs = fr.servicePages.map((s) => {
+    const enPage = en.servicePages.find((x) => x.id === s.id);
+    return {
+      fr: `/services/${s.slug}`,
+      en: `/en/services/${enPage?.slug ?? s.slug}`,
+    };
+  });
   const pairs = [
     ...STATIC_PAIRS,
+    ...servicePairs,
     ...workIds.map((id) => ({ fr: `/work/${id}`, en: `/en/work/${id}` })),
   ];
 

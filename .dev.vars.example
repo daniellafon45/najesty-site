@@ -1,0 +1,2 @@
+# Copier vers .dev.vars (non versionné) pour le développement local
+ADMIN_PASSWORD=change-me-local-only

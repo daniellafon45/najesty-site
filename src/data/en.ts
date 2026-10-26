@@ -123,12 +123,12 @@ export const en: SiteContent = {
     title: 'The Studio',
     body: 'Before the décor, the feeling: a livable, productive, calm interior. Najesty brings expertise and real emotion — to decorate well, within your budget.',
     services: [
-      'Interior design',
-      'Decoration',
-      'Home staging',
-      'Photography',
-      'Sourcing and shopping',
-      'Styling and installation',
+      { label: 'Interior design', href: '/en/services/interior-design' },
+      { label: 'Decoration', href: '/en/services/decoration' },
+      { label: 'Home staging', href: '/en/services/home-staging' },
+      { label: 'Photography', href: '/en/services/photography' },
+      { label: 'Sourcing and shopping', href: '/en/services/sourcing' },
+      { label: 'Styling and installation', href: '/en/services/styling' },
     ],
     partnersLabel: 'Sourcing partners',
     partners: [
@@ -157,6 +157,92 @@ export const en: SiteContent = {
       },
     ],
   },
+  servicePages: [
+    {
+      id: 'interieur',
+      slug: 'interior-design',
+      title: 'Interior design',
+      metaTitle: 'Interior design in Canada — Najesty',
+      metaDescription:
+        'Livable, productive, calm interior design: plans, direction and emotion — within budget, in Canada and remotely.',
+      intro: 'A clear direction before a single purchase: uses, flow, light and feeling.',
+      body: 'We design interiors that truly serve your rhythm — calm to recharge, clear to move forward. Plans, materials and emotional direction, with a sharp image at every step.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Request a direction',
+      image: '/images/work/03-somewhere-else.jpg',
+      imageAlt: 'Najesty interior design project',
+    },
+    {
+      id: 'decoration',
+      slug: 'decoration',
+      title: 'Decoration',
+      metaTitle: 'Interior decoration — Najesty',
+      metaDescription:
+        'Thoughtful, emotional decoration: place identity, materials and styling within your budget.',
+      intro: 'More than pretty décor: the identity of the place, every day.',
+      body: 'Colors, textures, furniture and objects: we decorate with craft so the emotion lasts — without buying everything again, without improvisation.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Talk decoration',
+      image: '/images/work/05-brise.jpg',
+      imageAlt: 'Interior decoration by Najesty',
+    },
+    {
+      id: 'home-staging',
+      slug: 'home-staging',
+      title: 'Home staging',
+      metaTitle: 'Home staging Canada — Najesty',
+      metaDescription:
+        'Home staging to sell better: first glance, clear circulation, emotion that converts.',
+      intro: 'Prepare the place so it sells — and so it feels right.',
+      body: 'Declutter, light, targeted styling: Najesty home staging puts emotion at the service of the listing, with a clear image for marketing.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Prepare a sale',
+      image: '/images/work/07-seconde-vie.jpg',
+      imageAlt: 'Home staging by Najesty',
+    },
+    {
+      id: 'photographie',
+      slug: 'photography',
+      title: 'Photography',
+      metaTitle: 'Interior photography — Najesty',
+      metaDescription:
+        'Space photography: images that tell the feeling of the place for web, sales or brand.',
+      intro: 'The image that carries how the space feels.',
+      body: 'Light, framing, detail: photography designed for design and decoration — useful to sell, publish or document the project.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Book a shoot',
+      image: '/images/work/09-bon-coup.jpg',
+      imageAlt: 'Interior photography by Najesty',
+    },
+    {
+      id: 'sourcing',
+      slug: 'sourcing',
+      title: 'Sourcing and shopping',
+      metaTitle: 'Decoration sourcing — Najesty',
+      metaDescription:
+        'Decoration sourcing and shopping: lucid choices, Canadian partners, respected budget.',
+      intro: 'Find what fits — not too much, not at random.',
+      body: 'Shopping lists, alternatives, targeted sourcing with our partners: we buy to match the direction and the budget, without useless stock.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Start a sourcing',
+      image: '/images/work/02-longue-vie.jpg',
+      imageAlt: 'Decoration sourcing by Najesty',
+    },
+    {
+      id: 'mise-en-place',
+      slug: 'styling',
+      title: 'Styling and installation',
+      metaTitle: 'Styling and installation — Najesty',
+      metaDescription:
+        'On-site styling and installation in Canada: install, refine, make the space feel right.',
+      intro: 'Turn the plan into a lived-in place.',
+      body: 'On site in Canada: installation, styling, finishing touches. Remotely: clear direction so the scene stays true to the project’s emotion.',
+      projectsLabel: 'Related projects',
+      ctaLabel: 'Plan an installation',
+      image: '/images/work/04-night.jpg',
+      imageAlt: 'Styling and installation by Najesty',
+    },
+  ],
   atelierPage: {
     marquee: 'THE STUDIO',
     intro:
@@ -191,6 +277,29 @@ export const en: SiteContent = {
     ticker: 'The heart of our expertise is space',
     video: '/videos/Najesty-Au-Coeur-3D.mp4',
     sectionTitle: ['THE BRAND', 'AT HEART'],
+    founder: {
+      name: 'Eliahna',
+      caption: 'Eliahna — founder',
+      carouselLabel: 'Portraits of Eliahna, founder of Najesty',
+      slides: [
+        {
+          src: '/images/founder/eliahna-01-reflet.png',
+          alt: 'Eliahna, founder of Najesty — portrait with reflection',
+        },
+        {
+          src: '/images/founder/eliahna-02-neige.png',
+          alt: 'Eliahna in a snowy Canadian landscape',
+        },
+        {
+          src: '/images/founder/eliahna-03-route.png',
+          alt: 'Eliahna driving — black and white portrait',
+        },
+        {
+          src: '/images/founder/eliahna-04-venise.png',
+          alt: 'Eliahna smiling by the gondolas in Venice',
+        },
+      ],
+    },
     blocks: [
       {
         title: 'Strategy',

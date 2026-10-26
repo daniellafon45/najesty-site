@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /n_admin
+Disallow: /n_admin/
+Disallow: /api/admin
+Disallow: /api/admin/
 
 # AI search / citation crawlers (GEO)
 User-agent: GPTBot

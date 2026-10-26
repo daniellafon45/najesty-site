@@ -62,7 +62,13 @@ const { atelier, atelierPage, pages, ctas } = content;
         <p class="page-atelier__role">{atelierPage.welcome.role}</p>
         <p>{atelierPage.welcome.body}</p>
         <ul class="page-atelier__services">
-          {atelier.services.map((s) => <li>{s}</li>)}
+          {
+            atelier.services.map((s) => (
+              <li>
+                <a href={s.href}>{s.label}</a>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </section>

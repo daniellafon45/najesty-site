@@ -1,0 +1,69 @@
+---
+import '../../styles/global.css';
+import { readAdminSession } from '../../lib/admin/auth';
+
+const session = await readAdminSession(Astro.locals, Astro.request);
+if (session) {
+  return Astro.redirect('/n_admin');
+}
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Connexion — Najesty Admin</title>
+  </head>
+  <body>
+    <div class="admin-shell">
+      <main class="admin-main" style="padding-top:4rem;">
+        <h1>Connexion admin</h1>
+        <p class="admin-lead">Accès réservé. Les tentatives sont limitées.</p>
+        <form class="admin-form" id="admin-login-form">
+          <label>
+            Mot de passe
+            <input type="password" name="password" autocomplete="current-password" required />
+          </label>
+          <p class="admin-error" id="admin-login-error" hidden></p>
+          <button type="submit">Entrer</button>
+        </form>
+      </main>
+    </div>
+    <script>
+      const form = document.getElementById('admin-login-form');
+      const err = document.getElementById('admin-login-error');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (err) {
+          err.hidden = true;
+          err.textContent = '';
+        }
+        const fd = new FormData(form);
+        const password = String(fd.get('password') ?? '');
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          if (err) {
+            err.hidden = false;
+            err.textContent =
+              data.error === 'rate_limit'
+                ? 'Trop de tentatives. Réessayez plus tard.'
+                : 'Mot de passe incorrect.';
+          }
+          return;
+        }
+        const params = new URLSearchParams(window.location.search);
+        const next = params.get('next');
+        window.location.href =
+          next && next.startsWith('/n_admin') ? next : '/n_admin';
+      });
+    </script>
+  </body>
+</html>
