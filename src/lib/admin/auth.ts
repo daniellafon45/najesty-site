@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro';
-import { adminPassword, contentKv } from './env';
+import { adminEmail, adminPassword, contentKv } from './env';
 import { randomToken, sha256Hex, timingSafeEqualString } from './crypto';
 
 export const ADMIN_COOKIE = 'najesty_admin';
@@ -75,10 +75,27 @@ export async function bumpLoginRateLimit(request: Request): Promise<void> {
   await kv.put(key, String(count + 1), { expirationTtl: RATE_LIMIT_WINDOW });
 }
 
-export async function verifyAdminPassword(password: string): Promise<boolean> {
-  const expected = adminPassword();
-  if (!expected || !password) return false;
-  return timingSafeEqualString(password, expected);
+/** Vérifie email + mot de passe (comparaisons timing-safe). Jamais de credentials en dur. */
+export async function verifyAdminCredentials(
+  email: string,
+  password: string,
+): Promise<boolean> {
+  const expectedEmail = adminEmail();
+  const expectedPassword = adminPassword();
+  if (!expectedEmail || !expectedPassword) return false;
+
+  const emailNorm = email.trim().toLowerCase();
+  if (!emailNorm || !password) {
+    // Garde un coût crypto similaire même si champs vides
+    await timingSafeEqualString('x', expectedPassword);
+    return false;
+  }
+
+  const [emailOk, passwordOk] = await Promise.all([
+    timingSafeEqualString(emailNorm, expectedEmail),
+    timingSafeEqualString(password, expectedPassword),
+  ]);
+  return emailOk && passwordOk;
 }
 
 export async function createAdminSession(): Promise<{

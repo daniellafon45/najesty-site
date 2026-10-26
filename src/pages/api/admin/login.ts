@@ -5,13 +5,17 @@ import {
   clearSessionCookieHeader,
   createAdminSession,
   sessionCookieHeader,
-  verifyAdminPassword,
+  verifyAdminCredentials,
 } from '../../../lib/admin/auth';
 
 const jsonHeaders = {
   'Content-Type': 'application/json',
   'Cache-Control': 'no-store',
 };
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_EMAIL = 254;
+const MAX_PASSWORD = 256;
 
 export const POST: APIRoute = async ({ request }) => {
   const secure = new URL(request.url).protocol === 'https:';
@@ -31,9 +35,11 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
+  let email = '';
   let password = '';
   try {
     const body = await request.json();
+    email = String(body?.email ?? '').trim().toLowerCase();
     password = String(body?.password ?? '');
   } catch {
     return new Response(JSON.stringify({ ok: false, error: 'invalid' }), {
@@ -42,7 +48,24 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const valid = await verifyAdminPassword(password);
+  if (
+    !email ||
+    !password ||
+    email.length > MAX_EMAIL ||
+    password.length > MAX_PASSWORD ||
+    !EMAIL_RE.test(email)
+  ) {
+    await bumpLoginRateLimit(request);
+    return new Response(JSON.stringify({ ok: false, error: 'credentials' }), {
+      status: 401,
+      headers: {
+        ...jsonHeaders,
+        'Set-Cookie': clearSessionCookieHeader(secure),
+      },
+    });
+  }
+
+  const valid = await verifyAdminCredentials(email, password);
   if (!valid) {
     await bumpLoginRateLimit(request);
     return new Response(JSON.stringify({ ok: false, error: 'credentials' }), {

@@ -3,6 +3,7 @@ import { env } from 'cloudflare:workers';
 type WorkerEnv = {
   CONTENT?: KVNamespace;
   SESSION?: KVNamespace;
+  ADMIN_EMAIL?: string;
   ADMIN_PASSWORD?: string;
 };
 
@@ -13,6 +14,10 @@ export function workerEnv(): WorkerEnv {
 
 export function contentKv(): KVNamespace | null {
   return workerEnv().CONTENT ?? null;
+}
+
+export function adminEmail(): string {
+  return (workerEnv().ADMIN_EMAIL ?? '').trim().toLowerCase();
 }
 
 export function adminPassword(): string {

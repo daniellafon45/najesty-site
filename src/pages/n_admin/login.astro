@@ -20,11 +20,27 @@ if (session) {
     <div class="admin-shell">
       <main class="admin-main" style="padding-top:4rem;">
         <h1>Connexion admin</h1>
-        <p class="admin-lead">Accès réservé. Les tentatives sont limitées.</p>
+        <p class="admin-lead">Accès réservé. Email + mot de passe. Tentatives limitées.</p>
         <form class="admin-form" id="admin-login-form">
           <label>
+            Email
+            <input
+              type="email"
+              name="email"
+              autocomplete="username"
+              required
+              maxlength="254"
+            />
+          </label>
+          <label>
             Mot de passe
-            <input type="password" name="password" autocomplete="current-password" required />
+            <input
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              required
+              maxlength="256"
+            />
           </label>
           <p class="admin-error" id="admin-login-error" hidden></p>
           <button type="submit">Entrer</button>
@@ -41,12 +57,13 @@ if (session) {
           err.textContent = '';
         }
         const fd = new FormData(form);
+        const email = String(fd.get('email') ?? '').trim();
         const password = String(fd.get('password') ?? '');
         const res = await fetch('/api/admin/login', {
           method: 'POST',
           credentials: 'same-origin',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password }),
+          body: JSON.stringify({ email, password }),
         });
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
@@ -55,7 +72,7 @@ if (session) {
             err.textContent =
               data.error === 'rate_limit'
                 ? 'Trop de tentatives. Réessayez plus tard.'
-                : 'Mot de passe incorrect.';
+                : 'Identifiants incorrects.';
           }
           return;
         }
