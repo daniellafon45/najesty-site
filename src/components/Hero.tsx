@@ -25,109 +25,93 @@ export default function Hero({
 }: Props) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
+  const [failedIndex, setFailedIndex] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const active = slides[index];
+  const showsVideo = Boolean(active.video) && failedIndex !== index;
 
+  // Slides image : défilement automatique, en pause tant que la souris survole le hero.
   useEffect(() => {
-    setVideoFailed(false);
-  }, [index]);
+    if (showsVideo || paused) return;
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, IMAGE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [showsVideo, paused, slides.length]);
 
+  // Slide vidéo : lecture jusqu'au bout puis slide suivante (le survol ne la fige pas).
   useEffect(() => {
-    if (paused) return;
-
-    const slide = slides[index];
-    const hasVideo = Boolean(slide.video) && !videoFailed;
-
-    if (!hasVideo) {
-      const id = window.setInterval(() => {
-        setIndex((i) => (i + 1) % slides.length);
-      }, IMAGE_INTERVAL_MS);
-      return () => window.clearInterval(id);
-    }
-
+    if (!showsVideo) return;
     const video = videoRef.current;
-    let advanced = false;
+    if (!video) return;
+
+    let done = false;
+    let fallback = 0;
     const advance = () => {
-      if (advanced) return;
-      advanced = true;
+      if (done) return;
+      done = true;
       setIndex((i) => (i + 1) % slides.length);
     };
-
-    const onEnded = () => advance();
-    const onError = () => {
-      setVideoFailed(true);
-      advance();
+    const fail = () => {
+      if (done) return;
+      done = true;
+      setFailedIndex(index);
+    };
+    // Filet de sécurité si `ended` n'arrive jamais (durée réelle + marge).
+    const armFallback = () => {
+      window.clearTimeout(fallback);
+      const ms =
+        Number.isFinite(video.duration) && video.duration > 0
+          ? video.duration * 1000 + 2000
+          : VIDEO_FALLBACK_MS;
+      fallback = window.setTimeout(advance, ms);
     };
 
-    let fallback = 0;
-    let removed = false;
-
-    const startPlayback = () => {
-      if (removed || !video) return;
-      try {
-        if (video.readyState >= 1) {
-          video.currentTime = 0;
-        }
-      } catch {
-        /* ignore seek before metadata */
-      }
-      void video.play().catch(() => {
-        setVideoFailed(true);
-      });
-    };
-
-    if (video) {
-      video.addEventListener('ended', onEnded);
-      video.addEventListener('error', onError);
-      if (video.readyState >= 2) {
-        startPlayback();
-      } else {
-        video.addEventListener('canplay', startPlayback, { once: true });
-        video.load();
-      }
+    video.addEventListener('ended', advance);
+    video.addEventListener('error', fail);
+    video.addEventListener('playing', armFallback);
+    try {
+      video.currentTime = 0;
+    } catch {
+      /* ignore seek before metadata */
     }
-
-    fallback = window.setTimeout(advance, VIDEO_FALLBACK_MS);
+    video.play().catch((err: unknown) => {
+      if ((err as { name?: string } | null)?.name !== 'AbortError') fail();
+    });
 
     return () => {
-      removed = true;
-      video?.removeEventListener('ended', onEnded);
-      video?.removeEventListener('error', onError);
-      video?.removeEventListener('canplay', startPlayback);
+      done = true;
+      video.removeEventListener('ended', advance);
+      video.removeEventListener('error', fail);
+      video.removeEventListener('playing', armFallback);
+      window.clearTimeout(fallback);
       try {
-        video?.pause();
+        video.pause();
       } catch {
         /* ignore */
       }
-      window.clearTimeout(fallback);
     };
-  }, [index, paused, slides, videoFailed]);
-
-  useEffect(() => {
-    if (!paused) return;
-    try {
-      videoRef.current?.pause();
-    } catch {
-      /* ignore */
-    }
-  }, [paused]);
+  }, [showsVideo, index, slides.length]);
 
   return (
     <section
       className="hero"
       id="hero"
       data-node-id="1:6"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onPointerEnter={(e) => {
+        if (e.pointerType === 'mouse') setPaused(true);
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType === 'mouse') setPaused(false);
+      }}
     >
       <h1 className="visually-hidden">{seoH1}</h1>
 
       <div className="hero__slides">
         {slides.map((slide, i) => {
           const activeSlide = i === index;
-          const slideShowVideo = activeSlide && Boolean(slide.video) && !videoFailed;
+          const slideShowVideo = activeSlide && Boolean(slide.video) && failedIndex !== i;
           return (
             <div
               key={slide.id}
