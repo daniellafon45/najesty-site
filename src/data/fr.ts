@@ -271,7 +271,7 @@ export const fr: SiteContent = {
         body: 'Le métier du design et du stylisme, et le ressenti au centre — avec une image claire à chaque étape pour avancer sereinement.',
       },
     ],
-    welcomeImageAlt: 'Salon résidentiel conçu par Najesty — lumière naturelle et matières sobres',
+    welcomeImageAlt: 'Eliahna, fondatrice de Najesty — portrait au reflet',
   },
   visionPage: {
     wordmark: 'CŒUR',

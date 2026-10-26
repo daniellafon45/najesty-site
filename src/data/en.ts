@@ -270,7 +270,7 @@ export const en: SiteContent = {
         body: 'The craft of design and styling, with feeling at the centre — and a clear image at every step so you move forward calmly.',
       },
     ],
-    welcomeImageAlt: 'Residential living room by Najesty — natural light and quiet materials',
+    welcomeImageAlt: 'Eliahna, founder of Najesty — portrait with reflection',
   },
   visionPage: {
     wordmark: 'HEART',
