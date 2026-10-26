@@ -36,6 +36,12 @@ export type ServicePage = {
   metaDescription: string;
   intro: string;
   body: string;
+  /** « Pour vous si… » — situations concrètes du client */
+  forYouTitle: string;
+  forYou: string[];
+  /** Ce que le client obtient concrètement */
+  includesTitle: string;
+  includes: string[];
   projectsLabel: string;
   ctaLabel: string;
   image: string;
@@ -55,7 +61,8 @@ export type SiteContent = {
     homeTitle: string;
     homeDescription: string;
   };
-  nav: { label: string; href: string }[];
+  /** `cta: true` = lien mis en avant (appel gratuit) */
+  nav: { label: string; href: string; cta?: boolean }[];
   ui: {
     navLabel: string;
     openMenu: string;
@@ -80,6 +87,36 @@ export type SiteContent = {
   };
   heroSlides: HeroSlide[];
   heroSeoH1: string;
+  /** Hero d'accueil : titre visible + sous-titre + réassurance */
+  hero: {
+    eyebrow: string;
+    headline: string;
+    subline: string;
+    reassurance: string;
+    slideLabel: string;
+  };
+  /** Sections de la page d'accueil (offre claire → conversion) */
+  home: {
+    servicesEyebrow: string;
+    servicesTitle: string;
+    servicesLead: string;
+    services: { situation: string; title: string; result: string; href: string }[];
+    servicesLinkLabel: string;
+    stepsEyebrow: string;
+    stepsTitle: string;
+    steps: { title: string; body: string }[];
+    formats: { title: string; where: string; body: string }[];
+    projectsEyebrow: string;
+    projectsTitle: string;
+    projectsLead: string;
+    founderEyebrow: string;
+    founderTitle: string;
+    founderBody: string[];
+    founderLink: string;
+    founderImageAlt: string;
+    faqEyebrow: string;
+    faqTitle: string;
+  };
   /** CTAs conversion — labels + liens par locale */
   ctas: {
     primary: string;
@@ -90,16 +127,11 @@ export type SiteContent = {
     atelierHref: string;
     methodDiscover: string;
     methodHref: string;
+    /** Réassurance répétée près des CTA (gratuit, 15 min, sans engagement) */
+    reassurance: string;
     bandTitle: string;
     bandBody: string;
     sectionEnd: string;
-  };
-  manifesto: {
-    lines: { text: string; accent?: 'arrow' }[];
-    cta: string;
-    ctaHref: string;
-    secondaryCta: string;
-    secondaryCtaHref: string;
   };
   atelier: {
     title: string;
@@ -135,6 +167,10 @@ export type SiteContent = {
   };
   contactPage: {
     headline: string;
+    lead: string;
+    nextTitle: string;
+    nextSteps: string[];
+    emailLabel: string;
     email: string;
     addressLabel: string;
     phoneLabel: string;

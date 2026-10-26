@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import type { HeroSlide } from '../data/types';
+import '../styles/conversion.css';
 
 const IMAGE_INTERVAL_MS = 5500;
 const VIDEO_FALLBACK_MS = 16000;
 
 type Props = {
   slides: HeroSlide[];
-  seoH1: string;
+  /** Titre visible (h1) : le résultat pour le client, en mots simples */
+  headline: string;
+  subline: string;
+  eyebrow: string;
+  /** Réassurance sous les CTA : gratuit · 15 min · sans engagement */
+  reassurance: string;
+  slideLabel: string;
   scrollLabel: string;
+  scrollHref?: string;
   primaryCta: string;
   primaryHref: string;
   secondaryCta: string;
@@ -16,8 +24,13 @@ type Props = {
 
 export default function Hero({
   slides,
-  seoH1,
+  headline,
+  subline,
+  eyebrow,
+  reassurance,
+  slideLabel,
   scrollLabel,
+  scrollHref = '#services',
   primaryCta,
   primaryHref,
   secondaryCta,
@@ -122,8 +135,6 @@ export default function Hero({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <h1 className="visually-hidden">{seoH1}</h1>
-
       <div className="hero__slides">
         {slides.map((slide, i) => {
           const activeSlide = i === index;
@@ -168,9 +179,12 @@ export default function Hero({
         })}
       </div>
 
-      <div className="hero__copy">
-        <p className="hero__title">{active.title}</p>
-        <p className="hero__caption">{active.caption}</p>
+      <div className="hero__scrim" aria-hidden="true" />
+
+      <div className="hero__copy hero__copy--offer">
+        <p className="hero__eyebrow">{eyebrow}</p>
+        <h1 className="hero__headline">{headline}</h1>
+        <p className="hero__subline">{subline}</p>
         <div className="hero__actions">
           <a
             className="hero__cta hero__cta--primary"
@@ -188,7 +202,13 @@ export default function Hero({
             {secondaryCta}
           </a>
         </div>
+        <p className="hero__reassurance">{reassurance}</p>
       </div>
+
+      <p className="hero__slide-label">
+        <span className="hero__slide-label-kicker">{slideLabel}</span>
+        <span className="hero__slide-label-title">{active.title}</span>
+      </p>
 
       <div className="hero__dots" role="tablist" aria-label="Slides">
         {slides.map((slide, i) => (
@@ -203,7 +223,7 @@ export default function Hero({
         ))}
       </div>
 
-      <a className="hero__scroll" href="#vision" aria-label={scrollLabel}>
+      <a className="hero__scroll" href={scrollHref} aria-label={scrollLabel}>
         <span className="hero__scroll-ring" />
         <img
           className="hero__scroll-arrow"

@@ -45,6 +45,22 @@ const workBase = '/en/work';
             {ui.allProjects} →
           </a>
         </p>
+        <p class="page-service__reassure">{ctas.reassurance}</p>
+      </div>
+    </section>
+
+    <section class="cv-service-lists container">
+      <div class="cv-service-list">
+        <h2>{service.forYouTitle}</h2>
+        <ul>
+          {service.forYou.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="cv-service-list">
+        <h2>{service.includesTitle}</h2>
+        <ul>
+          {service.includes.map((item) => <li>{item}</li>)}
+        </ul>
       </div>
     </section>
 

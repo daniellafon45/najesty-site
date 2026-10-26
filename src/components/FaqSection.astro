@@ -1,0 +1,37 @@
+---
+/** FAQ « objections » (prix, distance, délais, livrables) + CTA unique. */
+import '../styles/conversion.css';
+import { getContent, type Locale } from '../data';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { home, faq, ctas } = getContent(locale);
+---
+
+<section class="cv-section cv-faq" id="faq" aria-labelledby="cv-faq-title">
+  <div class="container cv-faq__inner">
+    <header class="cv-head">
+      <p class="cv-eyebrow">{home.faqEyebrow}</p>
+      <h2 class="cv-title" id="cv-faq-title">{home.faqTitle}</h2>
+      <div class="cv-actions cv-actions--left">
+        <a class="cv-btn cv-btn--primary" href={ctas.primaryHref} data-cursor="cta">
+          {ctas.primary}
+        </a>
+        <p class="cv-reassure">{ctas.reassurance}</p>
+      </div>
+    </header>
+    <div class="cv-faq__list">
+      {
+        faq.map((item) => (
+          <details class="cv-faq__item">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
